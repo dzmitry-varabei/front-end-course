@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Untitled Page</title>
+</head>
+<body>
+<button onclick="fibTest(fib);">Begin test</button>
+<button onclick="fib = memoize(fib); this.disabled = true;">Enable memo</button>
+
+<button onclick="clearLog();">clear log</button>
+<script type="text/javascript">
+	var fib = function(n) {
+		return n < 2 ? n : fib(n - 1) + fib(n - 2);
+	};
+
+	function fibTest(fibFunc) {
+		var startTime = new Date();
+
+		for (var i = 0; i <= 40; i += 1) {
+			log('// ' + i + ': ' + fibFunc(i));
+		}
+
+		var testTime = (new Date()) - startTime;
+		log(testTime + 'ms');
+	}
+
+	function memoize( fn ) {
+		return function () {
+			var args = Array.prototype.slice.call(arguments),
+					hash = "",
+					i = args.length;
+			currentArg = null;
+			while (i--) {
+				currentArg = args[i];
+				hash += (currentArg === Object(currentArg)) ?
+						JSON.stringify(currentArg) : currentArg;
+				fn.memoize || (fn.memoize = {});
+			}
+			return (hash in fn.memoize) ? fn.memoize[hash] :
+					fn.memoize[hash] = fn.apply(this, args);
+		};
+	}
+
+	function log(message) {
+		if (message != null) {
+			message += "<br />";
+			if (!log.container) {
+				log.container = document.createElement("div");
+				document.body.appendChild(log.container);
+			}
+			log.container.innerHTML += message;
+		}
+	}
+
+	function clearLog() {
+		if (log.container) {
+			log.container.innerHTML = "";
+		}
+	}
+
+	function getTime() {
+		var time = new Date();
+		var h = time.getHours();
+		var m = time.getMinutes();
+		var s = time.getSeconds();
+
+		m = checkTime(m);
+		s = checkTime(s);
+		return h + ":" + m + ":" + s;
+	}
+
+	function checkTime(i) {
+		if (i < 10) {
+			i = "0" + i;
+		}
+		return i;
+	}
+
+</script>
+
+</body>
+</html>

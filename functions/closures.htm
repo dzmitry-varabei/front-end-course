@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Untitled Page</title>
+</head>
+<style type="text/css">
+	DIV {border:2px solid #ccc; width:150px; height:20px; margin:5px; background-color:#F7E1AB; text-align:center; font-weight:bold;}
+</style>
+<body>
+<button onclick="makeDIVs();">Make DIVs</button>
+<button onclick="makeDIVsFixed();">Make DIVs - fixed</button>
+	   <script type="text/javascript" language="javascript">
+	   	function Assert(fact) {
+	   		if (!fact) {
+	   			alert("Assert failure!");
+	   		}
+	   	}
+
+	   	function makeDIVs() {
+	   		for (var i = 0; i < 10; i++) {
+	   			var div = document.createElement("div");
+	   			
+	   			div.innerHTML = "div #" + i;
+	   			div.onclick = function () {alert(i); };;
+	   			
+	   			document.body.appendChild(div);
+	   		}
+	   	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	   	function makeDIVsFixed() {
+	   		for (var i = 0; i < 10; i++) {
+	   			var div = document.createElement("div");
+	   			div.innerHTML = "div #" + i;
+	   			div.style.backgroundColor = "#DBE89A";
+	   			div.onclick = function(i) {
+	   								return function() { alert(i); } 
+	   							}(i);
+	   			document.body.appendChild(div);
+	   		}
+	   	}
+	   </script>
+</body>
+</html>

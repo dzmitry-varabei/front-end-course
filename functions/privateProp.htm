@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Untitled Page</title>
+</head>
+<body>
+	  <script type="text/javascript">
+	  	debugger;
+	  	var obj = { "name": "Dima" };
+	  	obj.name = 2;
+
+	  	function makeProperty(obj, name, predicate) {
+	  		var value;
+	  		obj["get" + name] = function () { return value; };
+	  		obj["set" + name] = function (v) {
+	  			if (predicate && !predicate(v)) return;
+	  			value = v;
+	  		};
+	  	}
+
+	  	var obj2 = {};
+	  	makeProperty(obj2, "Name", function (x) { return typeof x == "string"; });
+	  	debugger;
+
+	  	obj2.setName("Dima");
+	  	obj2.setName(12356);
+	  	obj2.getName();
+
+		makeProperty(obj2, "LastName", function (x) { return typeof x == "string"; });
+		obj2.setLastName("Varabei");
+	  	obj2.setLastName(12356);
+	  	obj2.getLastName();
+
+
+
+	 
+	  </script>
+</body>
+</html>

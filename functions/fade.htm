@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Untitled Page</title>
+</head>
+<body>
+ <h2>FadeTest</h2>
+<div id="myDiv" style="border:2px solid #ccc; width:200px; height:200px">DIV</div>
+<button onclick="fade(document.getElementById('myDiv'));">Fade</button><br />
+<h2>SetTimeoutTest</h2>
+<div style="border:1px solid #000; background-color:Yellow; width:200px;" onmouseout="doNothing('Div#1')">Div#1</div>
+<div style="border:1px solid #000; background-color:Green; width:200px;" onmouseover="doNothing('Div#2')">Div#2</div>
+<button onclick="document.getElementById('statistics').innerHTML = '';">Clear log</button><br />
+<div id="statistics"></div>
+
+<script type="text/javascript">
+	function fade(node) {
+	
+		var level = 1;
+		var step = function() {
+			var hex = level.toString(16);
+			node.style.backgroundColor = '#FFFF' + hex + hex;
+			if (level < 15) {
+				level += 1;
+				setTimeout(step, 100);
+			}
+		};
+		setTimeout(step, 100);
+	};
+
+	function doNothing(text) {
+		log(text + " " + getTime());
+		for (var i = 0; i < 300000; i++) {
+			var result = String(1 + "2" + true);
+		}
+		var f = function() {
+			log("<b>Timeout</b> " + text + " " + getTime());
+		}
+		window.setTimeout(f, 0);
+	}
+
+	function log(text) {
+		text = text || "";
+		text += "<br />";
+		document.getElementById("statistics").innerHTML += text;
+	}
+
+	function getTime() {
+		var time = new Date();
+		var h = time.getHours();
+		var m = time.getMinutes();
+		var s = time.getSeconds();
+
+		m = checkTime(m);
+		s = checkTime(s);
+		return h + ":" + m + ":" + s;
+	}
+
+	function checkTime(i) {
+		if (i < 10) {
+			i = "0" + i;
+		}
+		return i;
+	}
+	
+</script>
+
+
+</body>
+</html>

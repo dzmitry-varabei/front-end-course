@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Untitled Page</title>
+</head>
+<body>
+<script type="text/javascript">
+	function add(x, y) {
+		return x + y;
+	}
+
+	function mul(x, y) {
+		return x * y;
+	}
+	
+	function make(/* ??? */){
+		/*
+			??? 
+		*/
+	}
+
+	var s = make(1)(2)(3)(4)(5);
+	console.assert(s(add) == 15);
+	console.assert(s(mul) == 120);
+
+	s(10)(7)(0);
+	console.assert(s(add) == 32);
+	console.assert(s(mul) == 0);
+
+	var x = make(5)(10)(15);
+	console.assert(x(add) == 30);
+	console.assert(x(mul) == 750);
+
+
+
+
+
+
+
+
+	
+	function make(arg) {
+		var store = [arg];
+		var f = function (arg) {
+			if (typeof arg == "number") {
+				store.push(arg);
+				return f;
+			} else {
+				var result = store[0];
+
+				for (var i = 1, l = store.length; i < l; i++) {
+					result = arg.call(null, result, store[i]);
+				}
+
+				return result;
+			}
+		}
+		return f;
+	}
+
+//    var make = function() {
+//        var args = Array.prototype.slice.call(arguments, 0);
+//        if (args[0] instanceof Function) {
+//            var result = args[1];
+//            for (i = 2; i < args.length; i++) {
+//                result = args[0].apply(this, [result, args[i]]);
+//            }
+//            return result;
+//        } else {
+//            var curry_args = args;
+//            return function() {
+//                var args = Array.prototype.slice.call(arguments, 0);
+//                return make.apply(this, args.concat(curry_args));
+//            }
+//        }
+//    }
+
+//    var make = function (value) {
+//        return (function (f, g) {
+//            return f(g, f);
+//        })(function (cont, loop) {
+//            return function (v) {
+//                return (
+//                        v instanceof Function ?
+//                                cont(v) :
+//                                loop(function (reducer) {
+//                                    return reducer(v, cont(reducer));
+//                                }, loop));
+//            };
+//        }, function () {
+//            return value;
+//        });
+//    }
+
+</script>
+
+</body>
+</html>
