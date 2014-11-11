@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Untitled Page</title>
+</head>
+<script type="text/javascript">
+	var arrayA = [];
+	var arrayB = [];
+
+	function ClassA() {
+		this.method1 = function() { };
+		this.method2 = function() { };
+		this.method3 = function() { };
+		this.method4 = function() { };
+		this.method5 = function() { };
+	}
+	
+	function ClassB() {
+	}
+	ClassB.prototype.method1 = function() { };
+	ClassB.prototype.method2 = function() { };
+	ClassB.prototype.method3 = function() { };
+	ClassB.prototype.method4 = function() { };
+	ClassB.prototype.method5 = function() { };
+
+	function testClassA() {
+		for (var i = 0, l = 10000; i < l; i++) {
+			arrayA.push(new ClassA());
+		}
+	}
+
+	function testClassB() {
+		for (var i = 0, l = 10000; i < l; i++) {
+			arrayB.push(new ClassB());
+		}
+	}
+</script>
+<body>
+<button onclick="testClassA();">Test ClassA</button>
+<button onclick="testClassB();">Test ClassB</button>
+</body>
+</html>

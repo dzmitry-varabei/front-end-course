@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Untitled Page</title>
+</head>
+<body>
+<script type="text/javascript">
+	function Assert(fact) {
+		if (!fact) {
+			alert("Assert failure!");
+		}
+	}
+
+	debugger;
+
+	function phone(spec, _secret) {
+		spec.model = spec.model || "";
+		spec.color = spec.color || "";
+
+		_secret = _secret || {};
+		_secret.volume = 0;
+		
+		var that = {};
+		that.getModel = function() {
+			return spec.model;
+		}
+		that.getColor = function() {
+			return spec.color;
+		}
+		that.increaseVolume = function() {
+			_secret.volume++;
+		}
+		that.decreaseVolume = function() {
+			if (_secret.volume) _secret.volume--;
+		}
+		that.getVolume = function() {
+			return _secret.volume;
+		}
+
+		//function privateFunction() {}
+		//var privateVariable
+		return that;
+	}
+
+	var philipsPhone = phone({ model: "Philips1", color: "Black" });
+	Assert(philipsPhone.getColor() == "Black");
+	Assert(philipsPhone.getModel() == "Philips1");
+	philipsPhone.increaseVolume();
+	Assert(philipsPhone.getVolume() == 1);
+
+	function mobilePhone(spec, _secret) {
+		_secret = _secret || {};
+
+		var that = phone(spec, _secret);
+
+		var oldGetModel = that.getModel;
+
+		that.getModel = function() {
+			return oldGetModel() + " mobile phone";
+		} 
+		
+		that.sendSMS = function() {
+			return "mobilePhone.sendSMS";
+		}
+		that.setMaxVolume = function() {
+			_secret.volume = 50;
+		}
+		return that;
+	}
+
+	var nokiaPhone = mobilePhone({ model: "Nokia1", color: "Ultramarine" })
+
+	Assert(nokiaPhone.getColor() == "Ultramarine");
+	Assert(nokiaPhone.getModel() == "Nokia1 mobile phone");
+	nokiaPhone.increaseVolume();
+	Assert(nokiaPhone.getVolume() == 1);
+	nokiaPhone.setMaxVolume();
+	Assert(nokiaPhone.getVolume() == 50);
+	debugger;
+</script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+var y5_sLinkHead = 'http://an.yandex.ru/count/1qjtnUqgiIC40000ZhsFpSy4XPTt0vwULWAMgXZEo96yeh7x0fED2Nm3';
+var y5_iDirectCounter = 0;
+var y5_iDirectAdsCounter = 0;
+
+function yandex_direct_print() {
+ if (window.y5_isTransform)
+  y5_getYandexDirect();
+}
+
+function y5_getYandexDirect() {
+ var aAds = [  ['<div class="ad-link"><a href="http://an.yandex.ru/count/1qjtnVZPjIC40000ZhsFpSy4XPTt0vK2cm5kGoi1YAHFKmw9fdKH9vY2ivwULWATd1UsbgeOpiYIhEmo4ugaIqWDfP6uof6yeh7x0e-tYOp_1P-ov6Dj1fED2PapYwgQEtX2Z90r3A2G6MH_2m00" target="_blank">Читательская премия Имхонета.</a></div><div>Регистрируйся и голосуй рублем за любимых писателей! 50 р. уже на счете!</div> <span class="url">premia.imhonet.ru</span>','=0u4-9PK2cm5kGuccTH4dc8ApagpiCXETd1UsZxU9ZFy5dxBaOsq6cJEWa1baGNe5','0'],
+  ['<div class="ad-link"><a href="http://an.yandex.ru/count/1qjtnVWXYsm40000ZhsFpSy4XPTt0vK2cm5kGoi1CeYYyraDYPPP3vY2ivwULWATgrzH1PQg6Cx8ag7XlH6AeSy-3AMVe9wHlAAn-mAFjucC_mMVikHZRGQJZGcPCukiYoLfGeoGKmUWaCG9U0m0" target="_blank">Сказки для детей</a></div><div>Подарите Вашему ребенку сказку о нем самом! Незабываемый детский подарок!</div> <span class="url">www.skazki4you.ru</span>','=fUA1PfK2cm5kGpA9bbaFc8Apag7XlH6TgrzH1O-tYOp_1P-ov6Dj1fape9342K5x1G00','0'],
+  ['<div class="ad-link"><a href="http://an.yandex.ru/count/1qjtnRgy7PC40000ZhsFpSy4XPTt0vK2cm5kGoi1CuYlq3SDYPFk19W5dfvM0fsiMvi1dBjyt2m5bgeOpiYQhoBdKfAlPeSHYg5T5WobbGoSaRoYiVi2Zx-1HZO8dxU-pQiCauq9cGQBfdKGPqACaE84e93Y17eD" target="_blank">Мастер-классы по проф. Javascript</a></div><div>ООП, AJAX/COMET, оптимизация, jQuery. Повышает уровень. Для умных.</div> <span class="url">javascript.ru</span>','=nmVZivK2cm5kGpE9a-u4c0MSktpSB0MQhoBdKfAlPeSHdQnRcm6Flu56DWYVjxxDgmoP1g2GuWH1VGO0','0'],
+  ['<div class="ad-link"><a href="http://an.yandex.ru/count/1qjtnTHo-AS40000ZhsFpSy4XPTt0vK2cm5kGoi1D8YyBmW00OcWX7C8c0MUdbO2dQJ6o0MMgXZEo9AiSF0KYgB-d0wbdKtKaRoYiVi2ZxvUOfqFdxsPlw46auq9cJEBfxEqb4ACaE84e93Y17aC" target="_blank">Заработать деньги в MANDURA</a></div><div>Заработать деньги в MANDURA с помощью интернета может каждый желающий!</div> <span class="url">www.zolotuhinalife.com</span>','=BEMmQ9K2cm5kGpI9e8Hp29W5agnmy1ITfCR81O--NcAT3v-zcR-X1fape93Y145x1G00','0'],
+  ['<div class="ad-link"><a href="http://an.yandex.ru/count/1qjtnSBiXam40000ZhsFpSy4XPTt0vK2cm5kGoi1DOYZL0WCYQ5jPo6OWhEUdbO2dQj4kWIMgXZEo9AWtyqFYgJDmmgbaO2gaRoYiVi2ZxU9ZFy5dxBaOsq6auq9cJEBhlTsJ4ACaE84e93Y17aC" target="_blank">Подарок для Вашего ребенка!</a></div><div>Книга со сказками, где Он - Главный герой! На обложке - его фото! От 600 р.</div> <span class="url">skazkinov.narod.ru</span>','=MZLK89K2cm5kGpM9eMrd8PY2ivAWtyqFdQj4kWIFjucC_mMVikHZRGQPCw2GuWH1V0K0','0'],
+  ['<div class="ad-link"><a href="http://an.yandex.ru/count/1qjtnOTRyDe40000ZhsFpSy4XPTt0vK2cm5kGoi1DeYdemQmYQMoA2kO1PwULWATessB1PoxVDmi1PQg6Cx8cgyYvrAIhCdS58giq8qEfPYPr96yeh7x0e-_WKOs29-tlish39ED2Pa6YwCqQfD2Z91n0g2GSG9x3G00" target="_blank">Подробное руководство JavaScript.</a></div><div>Закажи руководство JavaScript с нуля на DVD за 2350р.! 20 способов оплаты!</div> <span class="url">info-dvd-j.rabota-dosug.r<wbr>u</span>','=IAbgGvK2cm5kGpQ9fR8eAvW5dBjyt2m5cgyYvrAIhCdS59sZROi5Zx-1HZO8dxU-pQiCcGQWa742GNu6','0'],
+  ['<div class="ad-link"><a href="http://an.yandex.ru/count/1qjtnRL5uNy40000ZhsFpSy4XPTt0vK2cm5kGoi1DuYlBPiEYPsg49W5dfvM0fsc4uG5dBjyt2m5bgeOpiYQbcGMag0Dd1EAg2-K3QMQ9SsHlAAn-mAFlBBvCW6VjL6jWmsJZGcP1ekgjx1-GeoGSGAWa742UGq0" target="_blank">Помогу в контекстной рекламе</a></div><div>Консультация по AdWords, Директ, Бегуну. Техники создания и продвижения.</div> <span class="url">www.tipmeet.com</span>','=7s_KJfK2cm5kGpU9dQeGc0MSktpSB0MQbcGMag0Dd1ETfXE41O-yilao0P-rKQs33Pa6e91n0a5y1W00','0'],
+  ['<div class="ad-link"><a href="http://an.yandex.ru/count/1qjtnGJyC6e40000ZhsFpSy4XPTt0vK2cm5kGoi1E068faws28ce07CPc36UdbO2dQz2JWISktpSB0MMgXZEo9gUWIYIgh552ugbP5i7fPOtd96yeh7x0e-tAIlr1f-_qZXY3vED2Pa6YwSRoJD2Z91n0g2GSG9x3G00" target="_blank">Магазин Basic</a></div><div>Все магазины Минска на портале relax.by</div> <span class="url">basic.relax.by</span>','=e7ronfK2cm5kGpW1YQW0SncOCPoxVDmi1PgUWIYIgh552vslGau4ZxSfA_K6dx_IE68FcGQWa742GNu6','0'],
+  ['<div class="ad-link"><a href="http://an.yandex.ru/count/1qjtnIBTTAu40000ZhsFpSy4XPTt0vK2cm5kGoi1EG68hWW6O8cRLGEO1PwULWATftuz1PoxVDmi1PQg6Cx8ceyEag0msHIAeLAA3gMUmSAHlAAn-mAFktn_Q0oVkSg6OW-JZGcP1ekiDZgJGeoGSGAWa742UGq0" target="_blank">Профессиональный сайт за 1 день</a></div><div>Создать мощный новостной сайт за 1 день! Видеообучение на DVD за 1577р...</div> <span class="url">1popov.ru</span>','=wVcNK9K2cm5kGpa1YPjL0vW5dBjyt2m5ceyEag0msHITftuz1O-xV7ze39-voePY3va6e91n0a5y1W00','0'] ];
+ var aLinkHow = ['<a target="_blank" href="http://advertising.yandex.ru/welcome/?from=context">Дать объявление</a>','=kw7INfK2cmHhK3i1ceyEagPnRWoFktn_Q0oVkSg6OWzy0m00'];
+ var aLinkAll = ['<a href="http://direct.yandex.ru/search?from=http://habrahabr.ru/blogs/javascript/108915/&ref-page=14199" target=_blank>Все объявления</a>','=Rp19IfK2cmDeJpe1ceyEagUPRWoFktn_Q0oVkSg6OWzy0m00']; var sLinkDirectText = '<em>Я</em>ндекс.Директ';
+ var sLinkDirectUrl = 'http://direct.yandex.ru/?partner';
+ var aDomainList = ['www.habrahabr.ru','habrahabr.ru'];
+
+ y5_iDirectCounter++;
+ y5_showYandexDirect(aAds, sLinkDirectText, sLinkDirectUrl, aLinkHow, aLinkAll, aDomainList);
+}
+
+
+function y5_defAdFormat() {
+ var aFormats = ['direct', 'market', 'media', 'compatibility', 'banner_market'];
+ var sAdFormat = (window.yandex_ad_format) ? y5_checkEntry(yandex_ad_format.toString(), aFormats) : aFormats[0];
+ switch (sAdFormat) {
+  case aFormats[0]:
+   y5_getYandexDirect();
+   break;
+  case aFormats[1]:
+   y5_getYandexMarket();
+   break;
+  case aFormats[2]:
+   y5_getMediaBanner();
+   break;
+  case aFormats[4]:
+   y5_getBannerMarket();
+   break;
+  case aFormats[3]:
+   break;
+ }
+}
+y5_defAdFormat();

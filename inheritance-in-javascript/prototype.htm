@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>Untitled Page</title>
+</head>
+<body>
+<script type="text/javascript">
+	function Assert(fact) {
+		if (!fact) {
+			alert("Assert failure!");
+		}
+	}
+
+	debugger;
+	function Rectangle(w, h) {
+		this.width = w;
+		this.height = h;
+	}
+
+	var rect = new Rectangle(2, 4);
+	Assert(rect.constructor == Rectangle);
+	
+	Assert(typeof rect.area == "undefined");
+
+	Rectangle.prototype.area = function() {
+		return this.width * this.height;
+	}
+
+	Assert(typeof rect.area == "function");
+
+	Rectangle.prototype.id = 1;
+	Assert(rect.hasOwnProperty("id") == false);
+	rect.id++;
+	Assert(rect.hasOwnProperty("id") == true);
+	
+	Assert(rect.id == 2);
+	Assert(Rectangle.prototype.id == 1);
+
+	Rectangle.prototype.defaultParams = { width: 10, height: 15 };
+	rect.defaultParams.perimeter = 50;
+
+	Assert(Rectangle.prototype.defaultParams.perimeter == 50);
+
+	rect.defaultParams = { width: 5, height: 10 };
+
+	Assert(typeof rect.defaultParams.perimeter == "undefined");
+	delete rect.defaultParams;
+	Assert(typeof rect.defaultParams.perimeter == "number");
+	
+
+	debugger;
+</script>
+
+</body>
+</html>

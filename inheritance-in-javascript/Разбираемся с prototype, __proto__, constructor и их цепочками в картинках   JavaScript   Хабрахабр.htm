@@ -1,0 +1,4459 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0044)http://habrahabr.ru/blogs/javascript/108915/ -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8">
+	<title>Разбираемся с prototype, __proto__, constructor и их цепочками в картинках / JavaScript / Хабрахабр</title>
+
+	<link href="http://habrahabr.ru/css/1289918127/all.css" rel="stylesheet" media="all">
+
+
+    <meta name="application-name" content="Хабрахабр"> 
+    <meta name="msapplication-tooltip" content="Хабрахабр"> 
+    <meta name="msapplication-starturl" content="http://habrahabr.ru/"> 
+
+    <meta name="msapplication-task" content="name=посты;action-uri=http://habrahabr.ru/;icon-uri=http://habrahabr.ru/favicon.ico">
+    <meta name="msapplication-task" content="name=q&amp;a;action-uri=http://habrahabr.ru/qa/;icon-uri=http://habrahabr.ru/favicon.ico">
+    <meta name="msapplication-task" content="name=блоги;action-uri=http://habrahabr.ru/bloglist/;icon-uri=http://habrahabr.ru/favicon.ico">
+    <meta name="msapplication-task" content="name=люди;action-uri=http://habrahabr.ru/people/;icon-uri=http://habrahabr.ru/favicon.ico">
+    <meta name="msapplication-task" content="name=компании;action-uri=http://habrahabr.ru/companies/;icon-uri=http://habrahabr.ru/favicon.ico">
+<!-- /ie9 -->
+
+	
+	
+	
+	
+	<link rel="shortcut icon" href="http://habrahabr.ru/i/favicon.ico">
+	<link rel="image_src" href="http://habrahabr.ru/i/logo.gif">
+	
+	
+		<meta name="description" content="Есть javascript код:  var A = function () {}; A.prototype.b = 100; var a = new A(); A.prototype.c = 101; a.c = -100; A.prototype = {}; A.prototype.b = 536; /* 1..."> 
+	
+
+	
+	<link title="" type="application/rss+xml" rel="alternate" href="http://habrahabr.ru/rss/blogs/javascript/108915/">
+
+	<!--[if IE 6]><link rel="stylesheet" href="http://habrahabr.ru/css/1289918127/ie6.css" media="all" /><![endif]-->
+	<!--[if IE 7]><link rel="stylesheet" href="http://habrahabr.ru/css/1289918127/ie7.css" media="all" /><![endif]-->
+	
+	
+	<link href="http://habrahabr.ru/css/karma.css" rel="stylesheet" media="all">
+	<link href="http://habrahabr.ru/css/profile.css" rel="stylesheet" media="all">
+	
+
+
+	<link rel="help" href="http://habrahabr.ru/info/help/">
+	<link rel="search" href="http://habrahabr.ru/search/">
+	<link rel="home" href="http://habrahabr.ru/">
+	<script type="text/javascript" src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/mootools-1.2-core-yc.js"></script>
+	<script type="text/javascript" src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/system.js"></script>
+	<script type="text/javascript" src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/init.js"></script>
+	<script type="text/javascript" src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/common.js"></script>
+	
+	<!--script type="text/javascript" src="http://habrahabr.ru/js/1289918127/old-stuff-v-1.js"></script-->
+	<script type="text/javascript" src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/all.js"></script>
+	
+		
+
+	<script type="text/javascript" src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/validation.js"></script>
+	<script type="text/javascript" src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/xmlhandler.js"></script>
+	<script type="text/javascript" src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/control.js"></script>
+	<script type="text/javascript" src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/favourites_add.js"></script>
+	<script type="text/javascript" src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/button.js"></script>
+	<script type="text/javascript" src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/form.js"></script>
+	<script type="text/javascript" src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/autosuggest.js"></script>
+	<script type="text/javascript" src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/highlight.js"></script>
+	
+	<script type="text/javascript">
+	/*<![CDATA[*/
+	var ya = document.createElement('script');
+		ya.src = 'http://an.yandex.ru/system/context.js';
+	/* ]]>*/
+	</script>
+	<script type="text/javascript">
+	/*<![CDATA[*/
+	var ga = document.createElement('script');
+		ga.setAttribute('async', 'true');
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	/* ]]>*/
+	</script>
+	
+	<script type="text/javascript">
+	/*<![CDATA[*/
+		var temp=temp||{};
+		window.temp=temp;
+		temp.base = (window.base_full_url = 'http://habrahabr.ru/');
+		temp.base_short = 'habrahabr.ru';
+		hljs.initHighlightingOnLoad();
+	/* ]]>*/
+	</script> 
+	
+	<script type="text/javascript" src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/commentForm.js"></script>
+	<script type="text/javascript" src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/voting.js"></script>
+	<script type="text/javascript" src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/swfobject.js"></script>
+	<script type="text/javascript" src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/postsHandler.js"></script>
+
+		
+<script async="true" src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/ga.js"></script></head>
+
+<body id="main-page" class="blogs blog-panel  guest" lang="ru"><script type="text/javascript" async="" defer="" src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/14199"></script>
+		
+			
+
+			
+
+			
+			
+			
+			
+			
+			
+			
+
+			
+
+			
+
+			
+			<script>
+			var mb_random = Math.round(Math.random() * 100000);
+			document.write("<script src='http://pink.habralab.ru/cgi-bin/iframe/habr_others_90?"+mb_random+"&options=FT'></scr"+"ipt>");
+			</script><script src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/habr_others_90"></script><object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=4,0,2,0" width="100%" height="90"><param name="movie" value="http://pink.habralab.ru/cgi-bin/banner/662?30130&amp;login=habr_others_90&amp;referer=http%3A//habrahabr.ru/blogs/javascript/108915/"><param name="flashvars" value="banner_href=http%3A//pink.habralab.ru/cgi-bin/href/662%3F30130%26login%3Dhabr_others_90%26options%3DFT%26referer%3Dhttp%373A//habrahabr.ru/blogs/javascript/108915/&amp;banner_target=_blank&amp;link1=http%3A//pink.habralab.ru/cgi-bin/href/662%3F30130%26login%3Dhabr_others_90%26options%3DFT%26referer%3Dhttp%373A//habrahabr.ru/blogs/javascript/108915/&amp;rb_link=http%3A//pink.habralab.ru/cgi-bin/href/662%3F30130%26login%3Dhabr_others_90%26options%3DFT%26referer%3Dhttp%373A//habrahabr.ru/blogs/javascript/108915/&amp;targetURL=http%3A//pink.habralab.ru/cgi-bin/href/662%3F30130%26login%3Dhabr_others_90%26options%3DFT%26referer%3Dhttp%373A//habrahabr.ru/blogs/javascript/108915/&amp;clickTAG=http%3A//pink.habralab.ru/cgi-bin/href/662%3F30130%26login%3Dhabr_others_90%26options%3DFT%26referer%3Dhttp%373A//habrahabr.ru/blogs/javascript/108915/&amp;targetWindow=_blank"><param name="quality" value="high"><param name="menu" value="false"><param name="wmode" value="transparent"><param name="scale" value="noscale"><param name="salign" value="TC"><param name="AllowScriptAccess" value="always"><embed src="http://pink.habralab.ru/cgi-bin/banner/662?30130&amp;login=habr_others_90&amp;referer=http%3A//habrahabr.ru/blogs/javascript/108915/" width="100%" height="90" wmode="transparent" menu="false" quality="high" scale="noscale" salign="TC" swliveconnect="true" allowscriptaccess="always" flashvars="banner_href=http%3A//pink.habralab.ru/cgi-bin/href/662%3F30130%26login%3Dhabr_others_90%26options%3DFT%26referer%3Dhttp%373A//habrahabr.ru/blogs/javascript/108915/&amp;banner_target=_blank&amp;link1=http%3A//pink.habralab.ru/cgi-bin/href/662%3F30130%26login%3Dhabr_others_90%26options%3DFT%26referer%3Dhttp%373A//habrahabr.ru/blogs/javascript/108915/&amp;rb_link=http%3A//pink.habralab.ru/cgi-bin/href/662%3F30130%26login%3Dhabr_others_90%26options%3DFT%26referer%3Dhttp%373A//habrahabr.ru/blogs/javascript/108915/&amp;targetURL=http%3A//pink.habralab.ru/cgi-bin/href/662%3F30130%26login%3Dhabr_others_90%26options%3DFT%26referer%3Dhttp%373A//habrahabr.ru/blogs/javascript/108915/&amp;clickTAG=http%3A//pink.habralab.ru/cgi-bin/href/662%3F30130%26login%3Dhabr_others_90%26options%3DFT%26referer%3Dhttp%373A//habrahabr.ru/blogs/javascript/108915/&amp;targetWindow=_blank" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash"><noembed></noembed></object>
+			
+
+			
+
+			
+
+								
+
+		
+
+
+
+<div class="header">
+	
+		<dl class="panel-personal">
+	<dt><!-- Мы впишем сюда твой %username% --></dt>
+	<dd><a href="http://habrahabr.ru/login/">войти</a> <a href="http://habrahabr.ru/register/">зарегистрироваться</a></dd>
+</dl>
+	
+	 
+	<div class="panel-tools">
+		 
+		<form class="panel-search js-autosuggest-holder " action="http://habrahabr.ru/search/" method="get" accept-charset="utf-8">
+			<p>
+				<label class="panel-search-label input-placeholding" for="search">
+					<input id="search" class="in-text js-autosuggest-field " title="поиск по сайту" type="text" name="q" value="" autocomplete="off"> 
+					<span>поиск по сайту</span>
+				</label>
+				<input class="in-submit" type="submit" id="do" value="" title="Enter!">
+			</p>
+			<div class="js-autosuggest-output-container"><div class="js-autosuggest-output hidden"></div></div>
+		</form>
+	</div>
+	<a class="logo " href="http://habrahabr.ru/" title="На главную страницу"></a>
+	
+
+	<ul class="panel-nav-top">
+	
+		
+		
+		
+			<li><a href="http://habrahabr.ru/">Посты</a></li>
+		
+	
+		
+		
+		
+			<li><a href="http://habrahabr.ru/qa/">Q&amp;A</a></li>
+		
+	
+		
+			
+			
+				<li class="current"><a href="http://habrahabr.ru/bloglist/">Блоги</a></li>
+			
+		
+		
+		
+	
+		
+		
+		
+			<li><a href="http://habrahabr.ru/people/">Люди</a></li>
+		
+	
+		
+		
+		
+			<li><a href="http://habrahabr.ru/companies/">Компании</a></li>
+		
+	
+	
+	
+	
+	
+	<li style="margin-bottom:0;
+		margin-left:0;
+		margin-right:0;
+		margin-top:-14px;">
+		<span>
+			<script type="text/javascript">
+			/*<![CDATA[*/
+			var mb_random = Math.round(Math.random() * 100000);
+			document.write("<script src=\'http://pink.habralab.ru/cgi-bin/iframe/special?"+mb_random+"&options=FT\'></scr"+"ipt>");
+			/* ]]>*/
+			</script><script src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/special"></script><a href="http://pink.habralab.ru/cgi-bin/href/1419?8546&login=special&options=FT&referer=http%3A//habrahabr.ru/blogs/javascript/108915/" target="_top"><img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/1419" width="125" height="60" title="http://habrahabr.ru/special/bitrix/" alt="" border="0"></a>
+		</span>
+		
+	</li>
+	<li style="margin-bottom:0;
+		margin-left:15px;
+		margin-right:0;
+		margin-top:-9px;">
+		<span>
+		<script type="text/javascript">
+		/*<![CDATA[*/
+		var mb_random = Math.round(Math.random() * 100000);
+		document.write("<script src=\'http://pink.habralab.ru/cgi-bin/iframe/special_2?"+mb_random+"&options=FT\'></scr"+"ipt>");
+		/* ]]>*/
+		</script><script src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/special_2"></script><a href="http://pink.habralab.ru/cgi-bin/href/1405?14214&login=special_2&options=FT&referer=http%3A//habrahabr.ru/blogs/javascript/108915/" target="_top"><img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/1405" width="125" height="60" title=" http://cross.decoded.org.ua/" alt="" border="0"></a>
+		</span>
+	</li>
+	
+	
+
+	</ul>
+
+</div>
+
+
+<div id="wrapper">
+
+
+	<div id="main-content">
+		
+
+	
+			<div id="viva-la-w3c">
+	
+		<div class="blog-title">
+			
+			<h2 class="blog-header">
+				
+				<span>
+					<a href="http://habrahabr.ru/blogs/javascript/" class="silentlink">JavaScript</a>
+					<a class="blog-whois js-serv" href="http://habrahabr.ru/blogs/javascript/108915/#whois" onclick="blogsHandler.toggleBlogInfo(357,this); return false;">whois</a>
+				</span>
+				
+				
+				
+			</h2>
+			 <dl class="blog-index">
+			 	<dt>индекс</dt>
+				<dd>202,36</dd>
+			 </dl>
+				
+
+		</div>
+		<div class="blog-about-text hidden" id="js-blog_info">
+			<a href="" class="close-blog-info">×</a>
+			<h2>Информация о блоге</h2>
+			<div class="blog-about-text-content">
+				<div class="blog-counts">
+					3136 читателей, 305 постов
+				</div>
+				<div id="js-admins_moderators_holder" class="js-not_loaded">
+					<h3>Администрация</h3>
+					<div id="admins"></div>
+					<h3>Модераторы</h3>
+					<div id="coauthors"></div>
+				</div>
+				<div class="blog-text-descr">Все, что касается этого языка программирования</div>
+			</div>
+		</div>
+
+	</div>
+	
+	
+
+	
+<div class="page-navigation">
+	<table class="page-menu">
+		<tbody><tr>
+			<td id="write" width="20">
+				
+				
+			</td>
+			
+				
+					<td class=" current"><div><a href="http://habrahabr.ru/blogs/javascript/">Захабренные</a></div></td>
+				
+				
+			
+				
+				
+					<td class=""><div><a href="http://habrahabr.ru/blogs/javascript/new/">Новые</a> <span class="new">+1</span></div></td>
+				
+			
+				
+				
+					<td class=""><div><a href="http://habrahabr.ru/blogs/javascript/unhabred/">Отхабренные</a></div></td>
+				
+			
+		</tr>
+	</tbody></table>
+	
+</div>
+
+	
+	
+
+
+
+
+	
+
+	
+		<div class="hentry ">
+
+			<h2 class="entry-title single-entry-title">
+				
+				
+				
+				
+				
+				
+					
+					
+						<span title="http://habrahabr.ru/blogs/javascript/108915/" class="topic">Разбираемся с prototype, __proto__, constructor и их цепочками в картинках</span>
+					
+				
+				
+				
+				
+				
+				
+			</h2>
+
+			
+
+<div class="content">
+	Есть javascript код:<br>
+<blockquote><code><font color="black"><ol>
+<li><font color="#003366"><b>var</b></font> A <font color="#339933">=</font> <font color="#003366"><b>function</b></font> <font color="#009900">(</font><font color="#009900">)</font> <font color="#009900">{</font><font color="#009900">}</font><font color="#339933">;</font></li>
+<li>A.<font color="#660066">prototype</font>.<font color="#660066">b</font> <font color="#339933">=</font> <font color="#CC0000">100</font><font color="#339933">;</font></li>
+<li><font color="#003366"><b>var</b></font> a <font color="#339933">=</font> <font color="#003366"><b>new</b></font> A<font color="#009900">(</font><font color="#009900">)</font><font color="#339933">;</font></li>
+<li>A.<font color="#660066">prototype</font>.<font color="#660066">c</font> <font color="#339933">=</font> <font color="#CC0000">101</font><font color="#339933">;</font></li>
+<li>a.<font color="#660066">c</font> <font color="#339933">=</font> <font color="#339933">-</font><font color="#CC0000">100</font><font color="#339933">;</font></li>
+<li>A.<font color="#660066">prototype</font> <font color="#339933">=</font> <font color="#009900">{</font><font color="#009900">}</font><font color="#339933">;</font></li>
+<li>A.<font color="#660066">prototype</font>.<font color="#660066">b</font> <font color="#339933">=</font> <font color="#CC0000">536</font><font color="#339933">;</font></li>
+<li><font color="#009966"><i>/* 1 */</i></font> console.<font color="#660066">log</font><font color="#009900">(</font>a.__proto__.<font color="#660066">constructor</font>.<font color="#660066">prototype</font>.<font color="#660066">b</font> <font color="#339933">===</font> <font color="#CC0000">536</font><font color="#009900">)</font><font color="#339933">;</font></li>
+<li><font color="#003366"><b>var</b></font> b <font color="#339933">=</font> <font color="#003366"><b>new</b></font> A<font color="#009900">(</font><font color="#009900">)</font><font color="#339933">;</font></li>
+<li><font color="#009966"><i>/* 2 */</i></font> console.<font color="#660066">log</font><font color="#009900">(</font>a.__proto__.__proto__.<font color="#660066">constructor</font> <font color="#339933">===</font> a.__proto__.<font color="#660066">constructor</font>.<font color="#660066">prototype</font>.<font color="#660066">constructor</font><font color="#009900">)</font><font color="#339933">;</font></li>
+<li><font color="#009966"><i>/* 3 */</i></font> console.<font color="#660066">log</font><font color="#009900">(</font>b <font color="#000066"><b>instanceof</b></font> A<font color="#009900">)</font><font color="#339933">;</font></li>
+<li><font color="#009966"><i>/* 4 */</i></font> console.<font color="#660066">log</font><font color="#009900">(</font><font color="#339933">!</font><font color="#009900">(</font>a <font color="#000066"><b>instanceof</b></font> Object<font color="#009900">)</font><font color="#009900">)</font><font color="#339933">;</font></li>
+</ol></font></code></blockquote>Вопрос. Что возвратят выражения 1-4 и почему?<br>
+<br>
+Затрудняетесь ответить? <br>
+Тогда вам стоит пройти под кат ;-) (Далее 600 Кб <strong>больших</strong> изображений)<br>
+<a name="habracut"></a><br>
+<br>
+Итак, я думаю многие заинтересованные данной темой читали мануалы и умные книги по javascript, да и не раз, но в голове никак не могут отложиться основы псевдо-ОО (т.е. Prototype-based) части языка. В этой статье вы не найдете сухих фактов и мануалов, после <strike>прочтения</strike> просмотра станет все просто и понятно.<br>
+<br>
+<b>Что за схемы? </b><br>
+Справа на схеме текущий выполненный код, слева состояние объектов. Черные стрелки — ссылки на объект. Подписи над стрелками — имя свойства по ссылке. Серые стрелки — свои неявные свойства — ссылки на свойства прототипа. Красными отмечены глобальные javascript объекты. Синими переменные. Зелеными локальные объекты. Все console.log'и возвращают true.<br>
+<br>
+<strong>Все изображения кликабильны</strong><br>
+<br>
+Можно не листать, а скачать исходники (png + bmml): <a href="http://narod.ru/disk/400270001/javascript_prototype.zip.html">http://narod.ru/disk/400270001/javascript_prototype.zip.html</a><br>
+<br>
+<h3>Слайд 1</h3><br>
+<br>
+<a href="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/javascriptinh0.png"><img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/javascriptinh0.png"></a><br>
+<br>
+<h3>Слайд 2</h3><br>
+<br>
+<a href="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/javascriptinh1.png"><img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/javascriptinh1.png"></a><br>
+<br>
+<h3>Слайд 3</h3><br>
+<br>
+<a href="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/javascriptinh2.png"><img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/javascriptinh2.png"></a><br>
+<br>
+<h3>Слайд 4</h3><br>
+<br>
+<a href="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/javascriptinh3.png"><img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/javascriptinh3.png"></a><br>
+<br>
+<h3>Слайд 5</h3><br>
+<br>
+<a href="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/javascriptinh4.png"><img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/javascriptinh4.png"></a><br>
+<br>
+Исходники (png + bmml): <a href="http://narod.ru/disk/400270001/javascript_prototype.zip.html">http://narod.ru/disk/400270001/javascript_prototype.zip.html</a><br>
+Исходник кода: <a href="http://pastebin.com/wBchEpxq">pastebin.com/wBchEpxq</a><br>
+<br>
+Надеюсь, моя статья была полезна для вас, а схемы понятны :)<br>
+<br>
+<b>PS</b> Свойство __proto__ является устаревшим начиная с JavaScript 1.8.1 вместо него стоит использовать Object.getPrototypeOf(object), однако, как писал <a href="http://crash.habrahabr.ru/" class="user_link">crash</a> Крокфорд просит не использовать getPrototypeOf если что," если делаете все верно он вам не нужен"
+
+	
+
+	
+
+	
+</div>
+
+
+
+			
+			
+<ul class="tags">
+	<li><a href="http://habrahabr.ru/tag/javascript/" rel="tag">javascript</a></li><li>, <a href="http://habrahabr.ru/tag/prototype/" rel="tag">prototype</a></li><li>, <a href="http://habrahabr.ru/tag/__proto__/" rel="tag">__proto__</a></li><li>, <a href="http://habrahabr.ru/tag/constructor/" rel="tag">constructor</a></li><li>, <a href="http://habrahabr.ru/tag/tutorial/" rel="tag">tutorial</a></li><li>, <a href="http://habrahabr.ru/tag/%D0%BB%D0%B8%D0%BA%D0%B1%D0%B5%D0%B7/" rel="tag">ликбез</a></li>
+</ul>
+
+			
+<div class="entry-info vote_holder" id="infopanel108915">
+
+		<!--  Закруглённые уголки -->
+		
+		<div class="corner tl"></div><div class="corner tr"></div>
+		
+		<div class="entry-info-wrap">
+			
+			
+				<div class="voting positive  no_auth expired">
+					<div class="can-vote"><a title="нравится" href="http://habrahabr.ru/blogs/javascript/108915/#" class="vote_plus" onclick="return Voter.vote(event, this, &#39;post&#39;, &#39;plus&#39;);"></a></div>
+					<div class="cannot-vote"><span title="нравится" class="vote_plus"></span></div>
+					<div class="mark"><span title="всего 75 голосов: ↑58 и ↓17">+41</span></div>
+					<div class="can-vote"><a title="не нравится" href="http://habrahabr.ru/blogs/javascript/108915/#" class="vote_minus" onclick="return Voter.vote(event, this, &#39;post&#39;, &#39;minus&#39;);"></a></div>
+					<div class="cannot-vote"><span class="vote_minus"></span></div>
+				</div>
+			
+			<div class="published"><!-- Дата в формате ISO пихается в title -->
+				<span>27 ноября 2010, 00:52</span>
+			</div>
+			
+			
+			<div class="fav_added js-to_favs_holder">
+				<a class="js-to_favs_remove" href="http://habrahabr.ru/blogs/javascript/108915/#" style="cursor: default" onclick="return false;"></a>
+			</div>
+			
+			
+			<div class="favs_count" title="Количество пользователей, добавивших пост в избранное">131</div>
+			<div class="twitter">
+				<a href="http://twitter.com/home/?status=http://habr.ru/p/108915/+%D0%A0%D0%B0%D0%B7%D0%B1%D0%B8%D1%80%D0%B0%D0%B5%D0%BC%D1%81%D1%8F+%D1%81+prototype,+__proto__,+constructor+%D0%B8+%D0%B8%D1%85+%D1%86%D0%B5%D0%BF%D0%BE%D1%87%D0%BA%D0%B0%D0%BC%D0%B8+%D0%B2+%D0%BA%D0%B0%D1%80%D1%82%D0%B8%D0%BD%D0%BA%D0%B0%D1%85+%23habr" title="в твиттер" target="_blank"></a>
+			</div>
+			<div class="facebook">
+				<a href="http://www.facebook.com/sharer.php?u=http://habrahabr.ru/blogs/javascript/108915/" title="в facebook" onclick="window.open(this.href, &#39;Поделиться ссылкой в facebook&#39;, &#39;width=800,height=300&#39;); return false"></a>
+			</div>
+			
+			
+			
+			
+		
+			
+
+			
+			
+				<div class="vcard author full">
+					<a title="автор текста" href="http://azproduction.habrahabr.ru/" class="fn nickname url"><span>azproduction</span></a>
+				</div>
+			
+			
+			
+			
+
+			
+			
+
+		</div>
+	
+		<div class="corner bl"></div><div class="corner br"></div>
+</div>
+
+
+		</div>
+	
+
+
+
+
+
+	<div class="yandex-direct">
+		<!-- Яндекс.Директ -->
+		<script type="text/javascript">
+		//<![CDATA[
+		yandex_partner_id = 14199;
+		yandex_site_bg_color = 'FFFFFF';
+		yandex_stat_id = 9582;
+		yandex_site_charset = 'utf-8';
+		yandex_ad_format = 'direct';
+		yandex_font_size = 0.9;
+		yandex_direct_type = 'horizontal';
+		yandex_direct_border_type = 'block';
+		yandex_direct_limit = 4;
+		yandex_direct_header_bg_color = 'FFFFFF';
+		yandex_direct_border_color = 'E5E5E5';
+		yandex_direct_title_color = '4D7285';
+		yandex_direct_url_color = '006600';
+		yandex_direct_all_color = 'FFFFFF';
+		yandex_direct_text_color = '666666';
+		yandex_direct_hover_color = '6DA3BD';
+		document.write('<sc'+'ript type="text/javascript" src="http://an.yandex.ru/system/context.js"></sc'+'ript>');
+		//]]>
+		</script><script type="text/javascript" src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/context.js"></script><link rel="stylesheet" type="text/css" href="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/context_r469.css"><script type="text/javascript" src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/context_static_r492.js" yandex_load_check="yes"></script><script type="text/javascript" src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/14199(1)" yandex_load_check="yes"></script><style type="text/css"> #y5_direct1 .y5_ads {border-color: #E5E5E5 !important; border-style: solid !important;} #y5_direct1 .y5_bg {background-color: #FFFFFF !important;} #y5_direct1 .y5_ad div a {color: #4D7285 !important;} #y5_direct1 .y5_ad div {color: #666666 !important;} #y5_direct1 .y5_ad span, #y5_direct1 .y5_ad span a {color: #006600 !important;} #y5_direct1 .y5_all a, #y5_direct1 .y5_how a {color: #FFFFFF !important;} #y5_direct1 .y5_ad div a:hover {color: #6DA3BD !important;} #y5_direct1 .y5_icon em {background-color: #006600 !important;} #y5_direct1 {font-size: 0.9em !important;} </style><div id="y5_direct1" class="y5 y5_nf y5_horizontal snap_noshots"><div class="y5_bb y5_ads4 y5_no_warnings"><div class="y5_h"><div class="y5_all"><span><a class="snap_noshot" href="http://direct.yandex.ru/search?from=http://habrahabr.ru/blogs/javascript/108915/&ref-page=14199" target="_blank">Все объявления</a></span></div><div class="y5_ya"><span class="y5_black"><em>Я</em>ндекс</span><span class="y5_black y5_bg"><a class="snap_noshots" href="http://direct.yandex.ru/?partner" target="_blank">Директ</a></span></div><div class="y5_how"><span><a target="_blank" href="http://advertising.yandex.ru/welcome/?from=context">Дать объявление</a></span></div></div><table class="y5_ads"><tbody><tr><td class="y5_item"><div class="y5_ad"><div class="ad-link"><a class="snap_noshot" href="http://an.yandex.ru/count/1LGmtHttwvS40000ZhUEpSy4XPTt0vK2cm5kGoi1YAHFKmw9fdKH9vY2ivwULWATd1UsbgeOpiYIhEmo4ugaIqWDfP6uof6yeh7x0e-tYOp_1P-ov6Dj1fED2PapYwgQEtX2Z90r3A2G6MH_2m00?stat-id=9582&test-tag=202795193" target="_blank">Читательская премия Имхонета.</a></div><div>Регистрируйся и голосуй рублем за любимых писателей! 50 р. уже на счете!</div> <span class="url">premia.imhonet.ru</span></div></td><td class="y5_nbsp"><div></div></td><td class="y5_item"><div class="y5_ad"><div class="ad-link"><a class="snap_noshot" href="http://an.yandex.ru/count/1LGmtK3o7se40000ZhUEpSy4XPTt0vK2cm5kGoi1CeYYyraDYPPP3vY2ivwULWATgrzH1PQg6Cx8ag7XlH6AeSy-3AMVe9wHlAAn-mAFjucC_mMVikHZRGQJZGcPCukiYoLfGeoGKmUWaCG9U0m0?stat-id=9582&test-tag=202795193" target="_blank">Сказки для детей</a></div><div>Подарите Вашему ребенку сказку о нем самом! Незабываемый детский подарок!</div> <span class="url">www.skazki4you.ru</span></div></td><td class="y5_nbsp"><div></div></td><td class="y5_item"><div class="y5_ad"><div class="ad-link"><a class="snap_noshot" href="http://an.yandex.ru/count/1LGmtQR6dty40000ZhUEpSy4XPTt0vK2cm5kGoi1CuYlq3SDYPFk19W5dfvM0fsiMvi1dBjyt2m5bgeOpiYQhoBdKfAlPeSHYg5T5WobbGoSaRoYiVi2Zx-1HZO8dxU-pQiCauq9cGQBfdKGPqACaE84e93Y17eD?stat-id=9582&test-tag=202795193" target="_blank">Мастер-классы по проф. Javascript</a></div><div>ООП, AJAX/COMET, оптимизация, jQuery. Повышает уровень. Для умных.</div> <span class="url">javascript.ru</span></div></td><td class="y5_nbsp"><div></div></td><td class="y5_item"><div class="y5_ad"><div class="ad-link"><a class="snap_noshot" href="http://an.yandex.ru/count/1LGmtHvnH2u40000ZhUEpSy4XPTt0vK2cm5kGoi1D8YnEmW00OcWX7C8c0MUdbO2dQJ6o0MMgXZEo9AlhF4KYg3zdGwbdKtKaRoYiVi2ZxvUOfqFdxsPlw46auq9cJEBhEx1b4ACaE84e93Y17aC?stat-id=9582&test-tag=202795193" target="_blank">Ищем амбициозных людей, Лидеров</a></div><div>Ищем амбициозных людей, Лидеров Профессионалов Сетевого Бизнеса в интернете</div> <span class="url">www.zolotuhinalife.com</span></div></td></tr></tbody></table></div></div>
+	</div>
+
+
+
+	
+		
+		<div id="comments">
+			<h2 class="comments-header">комментарии (<span class="js-comments-count">44</span>)</h2>
+			
+				<ul class="hentry">
+	
+		<li id="comment_3452302" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://wmasterts.habrahabr.ru/" title="WMasterTS">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/21432_24x24.jpg" alt="WMasterTS">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://wmasterts.habrahabr.ru/" class="url">WMasterTS</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-27T00:58:51+03:00">27 ноября 2010, 00:58</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3452302" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href=''>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3452302">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting negative no_auth expired">
+								<li class="mark"><span>–16</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3452302" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3452302" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only bad5">
+					    Мсье знает толк в извращениях.<br>
+Сначала запутался немного в стрелках но в итоге разобрался, хоть в пятницу вечером это и не просто.<br>
+<br>
+
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3452302" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3452634" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://krakazyabl.habrahabr.ru/" title="Krakazyabl">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/stub-user-small.gif" alt="Krakazyabl">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://krakazyabl.habrahabr.ru/" class="url">Krakazyabl</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-27T05:50:35+03:00">27 ноября 2010, 05:50</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3452634" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#comment_3452302">↑</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3452302'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3452634">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting positive no_auth expired">
+								<li class="mark"><span>+25</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3452634" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3452634" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Достали уже со своим мисье
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3452634" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3453450" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://chvanikoff.habrahabr.ru/" title="Chvanikoff">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/35589_24x24.jpg" alt="Chvanikoff">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://chvanikoff.habrahabr.ru/" class="url">Chvanikoff</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-27T15:23:43+03:00">27 ноября 2010, 15:23</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3453450" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#comment_3452634">↑</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3452634'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3453450">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting positive no_auth expired">
+								<li class="mark"><span>+1</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3453450" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3453450" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    достали уже со своим «достали мсье»!
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3453450" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3454491" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://infernoz.habrahabr.ru/" title="InfernoZ">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/29850_24x24.jpg" alt="InfernoZ">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://infernoz.habrahabr.ru/" class="url">InfernoZ</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-27T22:58:24+03:00">27 ноября 2010, 22:58</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3454491" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#comment_3453450">↑</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3453450'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3454491">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting positive no_auth expired">
+								<li class="mark"><span>+2</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3454491" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3454491" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Девушки не ссортесь 
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3454491" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+
+		</li>
+	
+</ul>
+
+			
+
+		</li>
+	
+</ul>
+
+			
+
+		</li>
+	
+</ul>
+
+			
+
+		</li>
+	
+		<li id="comment_3452374" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://apangin.habrahabr.ru/" title="apangin">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/35049_24x24.jpg" alt="apangin">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://apangin.habrahabr.ru/" class="url">apangin</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-27T01:35:02+03:00">27 ноября 2010, 01:35</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3452374" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href=''>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3452374">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting positive no_auth expired">
+								<li class="mark"><span>+5</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3452374" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3452374" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    «The world's most misunderstood programming language has become the world's most popular programming language.»
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3452374" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+
+		</li>
+	
+		<li id="comment_3452416" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://fr0g.habrahabr.ru/" title="fr0g">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/12511_24x24.jpg" alt="fr0g">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://fr0g.habrahabr.ru/" class="url">fr0g</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-27T02:00:46+03:00">27 ноября 2010, 02:00</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3452416" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href=''>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3452416">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth expired">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3452416" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3452416" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Материал очень вовремя для меня, спасибо!<br>
+Но беглый взгляд на эти «картинки» вгоняет в глубочаюшую дипрессию.<br>
+Поэтому, пока в избраное — разбираться буду завтра.<br>
+Еще раз спасибо!
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3452416" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+
+		</li>
+	
+		<li id="comment_3452491" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://crash.habrahabr.ru/" title="crash">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/3883_24x24.jpg" alt="crash">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://crash.habrahabr.ru/" class="url">crash</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-27T02:33:44+03:00">27 ноября 2010, 02:33</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3452491" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href=''>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3452491">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth expired">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3452491" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3452491" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    крокфорд просит не использовать getPrototypeOf если что," если делаете все верно он вам не нужен"
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3452491" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+
+		</li>
+	
+		<li id="comment_3452697" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://theonlyboy.habrahabr.ru/" title="theOnlyBoy">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/36737_24x24.jpg" alt="theOnlyBoy">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://theonlyboy.habrahabr.ru/" class="url">theOnlyBoy</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-27T08:40:28+03:00">27 ноября 2010, 08:40</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3452697" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href=''>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3452697">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting positive no_auth expired">
+								<li class="mark"><span>+10</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3452697" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3452697" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    <i>Надеюсь, моя статья была полезна для вас, а схемы понятны :)</i><br>
+Честно признаться, нет.<br>
+Ужасное представление информации графически, простите.<br>
+Посмотрите как представлена структура прототипов, скажем, у Закаcа в «Professional JavaScript».
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3452697" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3452926" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://icharmingo.habrahabr.ru/" title="ICharmingo">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/17157_24x24.png" alt="ICharmingo">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://icharmingo.habrahabr.ru/" class="url">ICharmingo</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-27T12:04:34+03:00">27 ноября 2010, 12:04</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3452926" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#comment_3452697">↑</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3452697'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3452926">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting positive no_auth expired">
+								<li class="mark"><span>+2</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3452926" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3452926" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    согласен. картинки конечно тру. но ожидалось, что будет еще их перевод.
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3452926" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3453757" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://azproduction.habrahabr.ru/" title="azproduction">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/7775_24x24.jpg" alt="azproduction">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://azproduction.habrahabr.ru/" class="url">azproduction</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-27T17:19:38+03:00">27 ноября 2010, 17:19</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3453757" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#comment_3452926">↑</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3452926'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3453757">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth expired">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3453757" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3453757" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Думал сделать даже анимацию, чтобы можно было проследить цепочки, но статья была бы уже для совсем другой аудитории. Кода и схем вполне достаточно.
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3453757" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+
+		</li>
+	
+		<li id="comment_3456290" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://sarlv.habrahabr.ru/" title="sarlv">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/stub-user-small.gif" alt="sarlv">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://sarlv.habrahabr.ru/" class="url">sarlv</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-28T23:25:43+03:00">28 ноября 2010, 23:25</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3456290" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#comment_3452926">↑</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3452926'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3456290">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth expired">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3456290" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3456290" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    по мне, лучше потратить время на изучение анг. языка, тем более, что тех. анг. прост, чем каждый раз ломать себе мозг о подобные схемы
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3456290" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+
+		</li>
+	
+</ul>
+
+			
+
+		</li>
+	
+</ul>
+
+			
+
+		</li>
+	
+		<li id="comment_3452991" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://dankoua.habrahabr.ru/" title="DankoUA">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/37789_24x24.gif" alt="DankoUA">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://dankoua.habrahabr.ru/" class="url">DankoUA</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-27T12:28:35+03:00">27 ноября 2010, 12:28</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3452991" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href=''>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3452991">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting positive no_auth expired">
+								<li class="mark"><span>+8</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3452991" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3452991" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    <blockquote>… основы псевдо-ОО части языка</blockquote><br>
+ООП это не классы в стиле java, а абстрактные концепции, о которых до сих пор идет полемика. Глупо и невежественно называть ОО на прототипах «псевдо-ОО».
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3452991" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3453789" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://azproduction.habrahabr.ru/" title="azproduction">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/7775_24x24.jpg" alt="azproduction">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://azproduction.habrahabr.ru/" class="url">azproduction</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-27T17:31:24+03:00">27 ноября 2010, 17:31</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3453789" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#comment_3452991">↑</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3452991'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3453789">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting negative no_auth expired">
+								<li class="mark"><span>–2</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3453789" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3453789" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only bad2">
+					    Согласен, зря, но никакое другое слово не подходило по контексту. Квази-ОО?
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3453789" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3453964" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://aux.habrahabr.ru/" title="Aux">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/5125_24x24.jpg" alt="Aux">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://aux.habrahabr.ru/" class="url">Aux</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-27T18:56:58+03:00">27 ноября 2010, 18:56</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3453964" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#comment_3453789">↑</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3453789'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3453964">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting positive no_auth expired">
+								<li class="mark"><span>+3</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3453964" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3453964" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Прототипное ОО. Именно так все и говорят. Кстати, классовое и прототипное — не единственные вариант ООП.
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3453964" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3454100" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://azproduction.habrahabr.ru/" title="azproduction">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/7775_24x24.jpg" alt="azproduction">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://azproduction.habrahabr.ru/" class="url">azproduction</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-27T19:49:50+03:00">27 ноября 2010, 19:49</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3454100" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#comment_3453964">↑</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3453964'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3454100">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting positive no_auth expired">
+								<li class="mark"><span>+1</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3454100" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3454100" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Что в javascript Прототипное ОО мне известно, но в контексте предложения оно вставало не красиво. Добавлю пояснения, дабы не смущать остальных читающих.
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3454100" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+
+		</li>
+	
+</ul>
+
+			
+
+		</li>
+	
+</ul>
+
+			
+
+		</li>
+	
+</ul>
+
+			
+
+		</li>
+	
+		<li id="comment_3453005" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://can3p.habrahabr.ru/" title="can3p">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/23921_24x24.jpg" alt="can3p">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://can3p.habrahabr.ru/" class="url">can3p</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-27T12:35:50+03:00">27 ноября 2010, 12:35</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3453005" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href=''>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3453005">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting positive no_auth expired">
+								<li class="mark"><span>+6</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3453005" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3453005" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Честно говоря, без поясняющего текста или без полного понимания происходящего понять работу прототипного наследования по вашим картинкам не представляется возможным.
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3453005" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3453771" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://azproduction.habrahabr.ru/" title="azproduction">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/7775_24x24.jpg" alt="azproduction">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://azproduction.habrahabr.ru/" class="url">azproduction</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-27T17:22:09+03:00">27 ноября 2010, 17:22</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3453771" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#comment_3453005">↑</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3453005'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3453771">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth expired">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3453771" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3453771" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Это есть в любой книге по javascript «повышенного уровня». Я вас уверяю, что в любом описании из книг сложнее разобраться, чем в моих схемах. Одно другому, конечно, не помешает, но зачем копипастить, раз все читали и даже имеют книги под рукой.
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3453771" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3454366" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://can3p.habrahabr.ru/" title="can3p">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/23921_24x24.jpg" alt="can3p">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://can3p.habrahabr.ru/" class="url">can3p</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-27T21:57:52+03:00">27 ноября 2010, 21:57</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3454366" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#comment_3453771">↑</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3453771'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3454366">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting positive no_auth expired">
+								<li class="mark"><span>+1</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3454366" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3454366" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Как человек, видевший книжки своими глазами, скажу, что в них все объяснено достаточно доходчиво. Можно даже посмотреть статьи на js.ru, и там тоже понятно. 
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3454366" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3456316" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://sarlv.habrahabr.ru/" title="sarlv">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/stub-user-small.gif" alt="sarlv">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://sarlv.habrahabr.ru/" class="url">sarlv</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-28T23:35:41+03:00">28 ноября 2010, 23:35</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3456316" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#comment_3454366">↑</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3454366'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3456316">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth expired">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3456316" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3456316" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    а адрес точно указан (js.ru)?
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3456316" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3456320" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://can3p.habrahabr.ru/" title="can3p">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/23921_24x24.jpg" alt="can3p">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://can3p.habrahabr.ru/" class="url">can3p</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-28T23:37:34+03:00">28 ноября 2010, 23:37</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3456320" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#comment_3456316">↑</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3456316'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3456320">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth expired">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3456320" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3456320" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Нет, я сократил. Имелся ввиду сайт javascript.ru
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3456320" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+
+		</li>
+	
+</ul>
+
+			
+
+		</li>
+	
+</ul>
+
+			
+
+		</li>
+	
+</ul>
+
+			
+
+		</li>
+	
+</ul>
+
+			
+
+		</li>
+	
+		<li id="comment_3453009" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://bolk.habrahabr.ru/" title="bolk">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/2815_24x24.jpg" alt="bolk">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://bolk.habrahabr.ru/" class="url">bolk</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-27T12:37:48+03:00">27 ноября 2010, 12:37</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3453009" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href=''>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3453009">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting positive no_auth expired">
+								<li class="mark"><span>+1</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3453009" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3453009" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Мне больше интересно что значит «псевдо-ОО»
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3453009" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+
+		</li>
+	
+		<li id="comment_3453030" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://chetzof.habrahabr.ru/" title="chetzof">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/37921_24x24.jpg" alt="chetzof">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://chetzof.habrahabr.ru/" class="url">chetzof</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-27T12:46:21+03:00">27 ноября 2010, 12:46</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3453030" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href=''>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3453030">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting positive no_auth expired">
+								<li class="mark"><span>+6</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3453030" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3453030" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Требую больше Comic Sans!
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3453030" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+
+		</li>
+	
+		<li id="comment_3453099" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://hardex.habrahabr.ru/" title="hardex">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/38126_24x24.png" alt="hardex">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://hardex.habrahabr.ru/" class="url">hardex</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-27T13:14:55+03:00">27 ноября 2010, 13:14</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3453099" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href=''>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3453099">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting positive no_auth expired">
+								<li class="mark"><span>+6</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3453099" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3453099" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    <img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/asdlabs-no-comic-sans.jpg" alt="image">
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3453099" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+
+		</li>
+	
+		<li id="comment_3453295" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://pilat.habrahabr.ru/" title="Pilat">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/stub-user-small.gif" alt="Pilat">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://pilat.habrahabr.ru/" class="url">Pilat</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-27T14:28:34+03:00">27 ноября 2010, 14:28</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3453295" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href=''>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3453295">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting positive no_auth expired">
+								<li class="mark"><span>+2</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3453295" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3453295" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Да… Если бы С++ был спроектирован так же как JavaScript… даже представить страшно.
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3453295" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3453439" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://olostan.habrahabr.ru/" title="Olostan">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/stub-user-small.gif" alt="Olostan">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://olostan.habrahabr.ru/" class="url">Olostan</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-27T15:19:46+03:00">27 ноября 2010, 15:19</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3453439" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#comment_3453295">↑</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3453295'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3453439">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting positive no_auth expired">
+								<li class="mark"><span>+1</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3453439" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3453439" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Ну Вы знаете… при разборе некоторых конструкций, в которых намешаны макросы/темплейты/области условных компиляций реально очень легко потерять голову :)<br>
+<br>
+Причем даже совершенно стандартные классы. Вот первый пример, который пришел ко мне в голову — Многие ли с++-шники знают на память во что «разворачивается» сигнатура операции "&lt;&lt;" у потока для string которую очень многие используются?<br>
+Т.е. то, что операция "&lt;&lt;" вот в этом всем привычном виде:<br>
+<pre><code class="cpp"><span class="built_in">cout</span> &lt;&lt; <span class="built_in">string</span>(<span class="string">"test"</span>);
+</code></pre><br>
+«разворачивается» в:<br>
+<pre><code class="cpp"><span class="built_in">std</span>::basic_ostream&lt;<span class="keyword">char</span>, <span class="built_in">std</span>::char_traits&lt;<span class="keyword">char</span>&gt; &gt;&amp; <span class="built_in">std</span>::<span class="keyword">operator</span>&lt;&lt; &lt;<span class="keyword">char</span>, <span class="built_in">std</span>::char_traits&lt;<span class="keyword">char</span>&gt;, 
+   <span class="built_in">std</span>::allocator&lt;<span class="keyword">char</span>&gt; &gt;(<span class="built_in">std</span>::basic_ostream&lt;<span class="keyword">char</span>, <span class="built_in">std</span>::char_traits&lt;<span class="keyword">char</span>&gt; &gt;&amp;,
+   <span class="built_in">std</span>::basic_string&lt;<span class="keyword">char</span>, <span class="built_in">std</span>::char_traits&lt;<span class="keyword">char</span>&gt;, <span class="built_in">std</span>::allocator&lt;<span class="keyword">char</span>&gt; &gt; <span class="keyword">const</span>&amp;)
+</code></pre><br>
+<br>
+Так что я бы не стал вот так сразу говорить, что в С++ намного проще конструкции бывают даже со стандартными типами.<br>
+<br>
+А про JS… не забывайте, что JS скорее похож на функциональный язык, чем на объектный. По этому и нужны грабли с прототипами для эмуляции ОО. В С++ наоборот — все просто с объектами-классами, зато довольно тяжело с лямбдами, каррированием и т.д. (да, можно и есть довольно красивые имплементации, но если заглянуть внутрь… страшно)<br>
+<br>
+
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3453439" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3453602" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://pilat.habrahabr.ru/" title="Pilat">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/stub-user-small.gif" alt="Pilat">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://pilat.habrahabr.ru/" class="url">Pilat</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-27T16:25:12+03:00">27 ноября 2010, 16:25</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3453602" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#comment_3453439">↑</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3453439'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3453602">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth expired">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3453602" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3453602" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Согласитесь, что ОО модель JS заставляет пользоваться чистым JS только при особых требованиях к задаче, типа производительности, в остальных случаях только фреймворки позволяют получить результат, даже в простейших случаях. И только гуру могут объяснить, почему работает так как работает, а не иначе. Вроде всё просто — десяток страниц в спецификации всё подробно описывают, а на практике всё равно непонятно.
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3453602" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3453725" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://olostan.habrahabr.ru/" title="Olostan">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/stub-user-small.gif" alt="Olostan">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://olostan.habrahabr.ru/" class="url">Olostan</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-27T17:08:43+03:00">27 ноября 2010, 17:08</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3453725" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#comment_3453602">↑</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3453602'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3453725">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth expired">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3453725" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3453725" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Ну почему-же? Привет использования «чистого js» — приложения, написанные для node.js. Да, там тоже используются дополнительные библиотеки, но они скорее утилитарные (доступ к бд, работа с сетью и т.д.), но не «расширающие» язык (как, например, jQuery). Сам же node.js не добавляет какие либо дополнительные «фичи» в язык js.<br>
+<br>
+А чтоб стало понятно, нужно просто немного пересмотреть на то, что является функция, а что объект. В JS эти понятия довольно сильно отличаются от тех, какие приняты в ООП-языках. <br>
+<br>
+И когда разберешься становится совсем весело использовать эти отличия! <br>
+<br>
+На самом деле кроме «цепочек» действительно очень важно понять отличие «функции» от «объекта».<br>
+<br>
+Вот кстати, интересные факты, о которых интересно подумать почему так:<br>
+(function(){}).__proto__ — это функция <br>
+(function(){}).__proto__.__proto__ — объект,<br>
+и объект или не объект (function(){}).__proto__.__proto__.__proto__ (на самом деле объект, но необычный :))<br>
+<br>
+
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3453725" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3453749" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://azproduction.habrahabr.ru/" title="azproduction">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/7775_24x24.jpg" alt="azproduction">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://azproduction.habrahabr.ru/" class="url">azproduction</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-27T17:16:22+03:00">27 ноября 2010, 17:16</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3453749" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#comment_3453725">↑</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3453725'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3453749">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth expired">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3453749" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3453749" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    (function(){}).__proto__ ссылкается на прототип конструктора (Function)<br>
+(function(){}).__proto__.__proto__ ссылается на прототип конструктора (Function), который ссылается на прототип конструктора (Object)<br>
+(function(){}).__proto__.__proto__.__proto__ ссылается на прототип конструктора (Function), который ссылается на прототип конструктора (Object), прототипа конструктора у Object нет поэтому последний прото ни на что не ссылается (null) это даже не undefined
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3453749" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3453779" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://olostan.habrahabr.ru/" title="Olostan">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/stub-user-small.gif" alt="Olostan">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://olostan.habrahabr.ru/" class="url">Olostan</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-27T17:25:32+03:00">27 ноября 2010, 17:25</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3453779" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#comment_3453749">↑</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3453749'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3453779">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth expired">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3453779" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3453779" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    почти… только в конце немного не так — прототип конструктора у Object-а есть, но он, как Вы верно заметили, равен null.<br>
+<br>
+Не забывайте, что в JS (в отличии от Java/.NET) null — это объект, который показывает, что значение есть, но пустое. А отсутствие показывает undefined (в контексте значения, а не как переменная undefined, которая может иметь другое значение — вот такой JS загадочный :))
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3453779" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3455395" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://dmitrybaranovskiy.habrahabr.ru/" title="DmitryBaranovskiy">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/22043_24x24.jpg" alt="DmitryBaranovskiy">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://dmitrybaranovskiy.habrahabr.ru/" class="url">DmitryBaranovskiy</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-28T14:06:42+03:00">28 ноября 2010, 14:06</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3455395" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#comment_3453779">↑</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3453779'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3455395">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth expired">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3455395" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3455395" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    На самом деле null — это никакой не объект. null это просто null. Так же как undefined это просто undefined. :)<br>
+<br>
+{}.blah // undefined<br>
+null.blah // Exception!
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3455395" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3455499" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://olostan.habrahabr.ru/" title="Olostan">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/stub-user-small.gif" alt="Olostan">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://olostan.habrahabr.ru/" class="url">Olostan</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-28T14:57:49+03:00">28 ноября 2010, 14:57</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3455499" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#comment_3455395">↑</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3455395'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3455499">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting negative no_auth expired">
+								<li class="mark"><span>–3</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3455499" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3455499" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only bad3">
+					    для раздумий:<br>
+<pre><code class="javascript"><span class="keyword">typeof</span>(<span class="literal">null</span>) --&gt; object
+undefined = <span class="literal">true</span>
+<span class="keyword">typeof</span>(undefined) --&gt; boolean
+</code></pre><br>
+:)<br>
+
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3455499" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3456473" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://dmitrybaranovskiy.habrahabr.ru/" title="DmitryBaranovskiy">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/22043_24x24.jpg" alt="DmitryBaranovskiy">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://dmitrybaranovskiy.habrahabr.ru/" class="url">DmitryBaranovskiy</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-29T00:49:45+03:00">29 ноября 2010, 00:49</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3456473" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#comment_3455499">↑</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3455499'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3456473">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting positive no_auth expired">
+								<li class="mark"><span>+1</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3456473" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3456473" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Ваш поучающий тон неуместен. :)<br>
+<br>
+typeof нагло врёт в двух случаях: про null и про function. В JS существует 6 типов:<br>
+1. undefined<br>
+2. null<br>
+3. number<br>
+4. string<br>
+5. boolean<br>
+6. object<br>
+<br>
+null — это такой тип, который как и undefined имеет только одно значение: null. object — это другой тип. Ну и function это просто специальный объект.<br>
+<br>
+То что глобальное свойство undefined можно переписать ничего не меняет (кстати в ES5 это исправили и последняя версия Safari не позволяет переписать undefined).
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3456473" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+
+		</li>
+	
+</ul>
+
+			
+
+		</li>
+	
+		<li id="comment_3455531" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://azproduction.habrahabr.ru/" title="azproduction">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/7775_24x24.jpg" alt="azproduction">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://azproduction.habrahabr.ru/" class="url">azproduction</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-28T15:20:53+03:00">28 ноября 2010, 15:20</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3455531" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#comment_3455395">↑</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3455395'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3455531">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting positive no_auth expired">
+								<li class="mark"><span>+1</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3455531" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3455531" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    <blockquote>The undefined value is a primitive value used when a variable has not been assigned a value</blockquote>undefined — пустое значение<br>
+<blockquote>The null value is a primitive value that represents the null, empty, or non-existent reference</blockquote>null — пустая ссылка, ссылка на спец объект, который бросается эксепшенами, когда обращаются к его свойствам/методам<br>
+<blockquote>typeof undefined</blockquote>undefined = !undefined; // счастливой отладки ;-)<br>
+именно поэтому с undefined нельзя сравнивать и undefined нельзя присваивать лучше использовать null ибо null нельзя переписать.<br>
+ps typeof это не функция
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3455531" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+
+		</li>
+	
+</ul>
+
+			
+
+		</li>
+	
+</ul>
+
+			
+
+		</li>
+	
+</ul>
+
+			
+
+		</li>
+	
+</ul>
+
+			
+
+		</li>
+	
+</ul>
+
+			
+
+		</li>
+	
+</ul>
+
+			
+
+		</li>
+	
+</ul>
+
+			
+
+		</li>
+	
+		<li id="comment_3453413" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://depp.habrahabr.ru/" title="depp">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/stub-user-small.gif" alt="depp">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://depp.habrahabr.ru/" class="url">depp</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-27T15:10:48+03:00">27 ноября 2010, 15:10</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3453413" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href=''>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3453413">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth expired">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3453413" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3453413" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Такие схемы наверное рисовали многие в процессе изучения JS. Я тоже рисовал :)<br>
+<br>
+Но это все примерно то же самое что для функции f=x/2 чертить табличку значений (x=2, y=1; x=3, y=1.5; ...) Проще говоря — перечислять частные случаи. Намного проще понять саму функцию, чем изучать табличку.<br>
+<br>
+Прототипное наследование JS описывается буквально 3-4 фразами (ну может 5-6), включая даже описание наследования от встроенных конструкторов (Object, Function, Array и т.д.). И не надо никаких стрелочек )<br>
+<br>
+
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3453413" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3454278" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://olegtar.habrahabr.ru/" title="OlegTar">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/stub-user-small.gif" alt="OlegTar">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://olegtar.habrahabr.ru/" class="url">OlegTar</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-27T21:17:21+03:00">27 ноября 2010, 21:17</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3454278" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#comment_3453413">↑</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3453413'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3454278">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting positive no_auth expired">
+								<li class="mark"><span>+1</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3454278" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3454278" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Можете здесь написать? (серьезно)
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3454278" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3455305" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://depp.habrahabr.ru/" title="depp">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/stub-user-small.gif" alt="depp">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://depp.habrahabr.ru/" class="url">depp</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-28T13:17:47+03:00">28 ноября 2010, 13:17</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3455305" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#comment_3454278">↑</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3454278'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3455305">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting positive no_auth expired">
+								<li class="mark"><span>+5</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3455305" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3455305" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Да пожалуйста :)<br>
+<br>
+1. Любой объект имеет ссылку на объект-прототип (в редких случаях эта ссылка может указывать на null).<br>
+2. При доступе к свойству объекта на чтение или на вызов (для методов), если оно не найдено в самом объекте, то ищется в объекте-прототипе, и далее по цепочке.<br>
+3. Функция — тоже объект. Числа и строки не являются объектами, но конвертируются в них автоматически в момент вызова методов ('test'.charAt(0) == new String('test').charAt(0))<br>
+4. Любой объект явно или неявно создается с помощью конструкции new и функции-конструктора ([1,2,3] == new Array(1,2,3))<br>
+5. Любая функция имеет свойство prototype, которое как раз и содержит ссылку на объект, используемый в качестве прототипа при создании новых объектов (см. пункт 4). Таким образом — любая функция является конструктором.<br>
+6. Object, Function, Array, RegExp, String, Number и т.д. — это функции.<br>
+7. У любого объекта в начале цепочки прототипов стоит Object.prototype (кроме случаев когда у объекта вообще нет прототипа). У самого Object.prototype ссылка на объект-прототип равна null.<br>
+<br>
+Это основные тезисы. Предполагается, что если это понятно, то все остальное вообще вопросов не вызывает, либо можно разобраться самостоятельно.<br>
+<br>
+Можно еще разжевать что любая функция как объект имеет в качестве прототипа Function.prototype, но это и так понятно исходя из пунктов 4 и 6.<br>
+<br>
+P.S. К сожалению, в спецификации JS нет названия для свойства объекта, которое ссылается на прототип (__proto__ в некоторых реализациях), и приходится так и писать — «ссылка на прототип», да еще и начинающим легко спутать со свойством prototype, которая есть у функции. Если бы не эта проблема с терминологией, можно было бы более кратко и емко формулировать мысль.
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3455305" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3455481" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://dmitrybaranovskiy.habrahabr.ru/" title="DmitryBaranovskiy">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/22043_24x24.jpg" alt="DmitryBaranovskiy">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://dmitrybaranovskiy.habrahabr.ru/" class="url">DmitryBaranovskiy</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-28T14:46:45+03:00">28 ноября 2010, 14:46</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3455481" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#comment_3455305">↑</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3455305'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3455481">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth expired">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3455481" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3455481" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Абсолютно согласен. По поводу P.S., вот тут-то схемы и помогут. Из моей небольшой практики проведения мастер-классов *простые* схемы очень помогают объяснить эту разницу между [[Prototype]] и prototype.
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3455481" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+
+		</li>
+	
+		<li id="comment_3461630" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://olegtar.habrahabr.ru/" title="OlegTar">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/stub-user-small.gif" alt="OlegTar">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://olegtar.habrahabr.ru/" class="url">OlegTar</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-12-01T00:15:26+03:00"> 1 декабря 2010, 00:15</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3461630" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#comment_3455305">↑</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3455305'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3461630">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth expired">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3461630" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3461630" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Спасибо
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3461630" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+
+		</li>
+	
+</ul>
+
+			
+
+		</li>
+	
+</ul>
+
+			
+
+		</li>
+	
+</ul>
+
+			
+
+		</li>
+	
+		<li id="comment_3453476" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://sowingsadness.habrahabr.ru/" title="SowingSadness">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/38379_24x24.jpg" alt="SowingSadness">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://sowingsadness.habrahabr.ru/" class="url">SowingSadness</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-27T15:31:55+03:00">27 ноября 2010, 15:31</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3453476" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href=''>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3453476">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting positive no_auth expired">
+								<li class="mark"><span>+3</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3453476" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3453476" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Написали бы ответы под катом, для самопроверки…<br>
+А то заходишь и облом — куча громоздких картинок а самого интересного нет.
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3453476" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3453492" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://sowingsadness.habrahabr.ru/" title="SowingSadness">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/38379_24x24.jpg" alt="SowingSadness">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://sowingsadness.habrahabr.ru/" class="url">SowingSadness</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-27T15:37:18+03:00">27 ноября 2010, 15:37</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3453492" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#comment_3453476">↑</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3453476'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3453492">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting positive no_auth expired">
+								<li class="mark"><span>+1</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3453492" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3453492" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Не проверял, но ихмо:<br>
+1. true<br>
+2. true<br>
+3. true<br>
+4. false
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3453492" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+
+		</li>
+	
+</ul>
+
+			
+
+		</li>
+	
+		<li id="comment_3454484" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://beholder.habrahabr.ru/" title="Beholder">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/2083_24x24.png" alt="Beholder">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://beholder.habrahabr.ru/" class="url">Beholder</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-27T22:54:34+03:00">27 ноября 2010, 22:54</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3454484" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href=''>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3454484">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting positive no_auth expired">
+								<li class="mark"><span>+1</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3454484" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3454484" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Если делаете презентацию — пользуйтесь PowerPoint, OpenOffice Impress или Google Docs. А не картинки.
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3454484" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3454727" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://sannis.habrahabr.ru/" title="Sannis">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/9117_24x24.jpg" alt="Sannis">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://sannis.habrahabr.ru/" class="url">Sannis</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-28T00:53:32+03:00">28 ноября 2010, 00:53</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3454727" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#comment_3454484">↑</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3454484'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3454727">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth expired">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3454727" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3454727" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Пользуйтесь TeX тчк
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3454727" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+				<ul class="hentry">
+	
+		<li id="comment_3455700" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://xpeh.habrahabr.ru/" title="Xpeh">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/stub-user-small.gif" alt="Xpeh">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://xpeh.habrahabr.ru/" class="url">Xpeh</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-28T17:35:56+03:00">28 ноября 2010, 17:35</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3455700" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						<li class="up-to-parent"><a title="Ответ на" onclick="return commentForm.goToParentComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#comment_3454727">↑</a></li>
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href='#comment_3454727'>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3455700">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting  no_auth expired">
+								<li class="mark"><span>0</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3455700" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3455700" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    Лучше iTex (http://habrahabr.ru/blogs/latex/104568/ )
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3455700" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+
+		</li>
+	
+</ul>
+
+			
+
+		</li>
+	
+</ul>
+
+			
+
+		</li>
+	
+		<li id="comment_3456389" class="comment_holder vote_holder">
+			
+				<div class="msg-meta">
+					<div class="folding-dot-holder"><div class="folding-dot"></div></div>
+					<ul class="menu info author hcard">
+						<li class="avatar">
+							<a href="http://bga.habrahabr.ru/" title="bga">
+								<img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/stub-user-small.gif" alt="bga">
+								<b></b>
+							</a>
+						</li>
+						<li class="fn nickname username">
+							<a href="http://bga.habrahabr.ru/" class="url">bga</a>,
+						</li>
+						<li class="date">
+							<abbr class="published" title="2010-11-29T00:15:52+03:00">29 ноября 2010, 00:15</abbr>
+						</li>
+						<li class="bookmark">
+							<a href="http://habrahabr.ru/blogs/javascript/108915/#comment_3456389" title="Ссылка на комментарий" rel="bookmark">#</a>
+						</li>
+						
+						
+						<li class="down-to-child hidden"><a title="Обратно" onclick="return commentForm.goToChildComment(this);" href="http://habrahabr.ru/blogs/javascript/108915/#">↓</a></li>
+						<!--<li class="single-tree">
+							<a class="js-serv js-single-tree" href=''>ветка</a>
+							<a class="js-serv js-multiplay-tree" href="#comment_3456389">восстановить</a>
+						</li>-->
+						
+						<li>
+							<ul class="vote voting positive no_auth expired">
+								<li class="mark"><span>+3</span></li>
+								<li class="buttons">
+									<a rev="voter-for-comment:3456389" class="vote_minus vote-for-comment" title="Плохой комментарий"></a>
+									<a rev="voter-for-comment:3456389" class="vote_plus vote-for-comment" title="Хороший комментарий"></a>
+								</li>
+							</ul>
+						</li>
+						
+					</ul>
+
+				</div>
+
+				<div class="entry-content">
+					<div class="entry-content-only">
+					    скоро на хабре будет перевод на русский <a href="http://dmitrysoshnikov.com/ecmascript/javascript-the-core/">dmitrysoshnikov.com/ecmascript/javascript-the-core/</a> который многое пояснит чего тут не понятно.
+					</div>
+					
+				</div>
+
+				<div id="reply_form_3456389" class="reply_form">
+
+					
+				</div>
+			
+
+			
+			
+			
+
+			
+
+		</li>
+	
+</ul>
+
+			
+			
+
+			
+
+			
+				<div class="info-text">Только авторизованные пользователи могут оставлять комментарии. <a href="http://habrahabr.ru/login/">Авторизуйтесь</a>, пожалуйста.</div>
+			
+		</div>
+	
+	
+
+
+
+	
+
+	
+
+	
+	
+	
+
+	</div>
+
+	<div id="sidebar">
+		
+			
+			
+			
+
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+
+			
+
+			
+				<div class="banner">
+					<script>
+					var mb_random = Math.round(Math.random() * 100000);
+					document.write("<script src='http://pink.habralab.ru/cgi-bin/iframe/habr_others_240x400?"+mb_random+"&options=FT'></scr"+"ipt>");
+					</script><script src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/habr_others_240x400"></script><a href="http://pink.habralab.ru/cgi-bin/href/661?64114&login=habr_others_240x400&options=FT&referer=http%3A//habrahabr.ru/blogs/javascript/108915/" target="_blank"><img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/661" width="240" height="400" title="http://www.rgmedia.by/habrahabr.html
+RGmedia: реклама на Habrahabre для белорусских посетителей" alt="RGmedia: реклама на Habrahabre для белорусских посетителей" border="0"></a>
+				</div>
+			
+
+			
+			
+			
+			
+								
+		
+
+		
+	
+		
+	
+	
+		<div class="live dailybest">
+
+			<div class="bg-bott-r"><!-- for bottom rounded corners -->
+			<div class="bg-bott-l">
+	
+			<h3>Лучшее <sup>за 24 часа</sup>&nbsp;↓</h3>
+
+			
+				<dl class="air-comment">
+					<dd>
+						<dl>
+							<dt><a class="where" href="http://habrahabr.ru/blogs/easyelectronics/">Электроника для начинающих</a>&nbsp;→</dt>
+							<dd><a class="topic" href="http://habrahabr.ru/blogs/easyelectronics/109395/">UART и с чем его едят</a>&nbsp;</dd>
+						</dl>
+					</dd>
+				</dl>
+			
+				<dl class="air-comment">
+					<dd>
+						<dl>
+							<dt><a class="where" href="http://habrahabr.ru/blogs/algorithm/">Алгоритмы</a>&nbsp;→</dt>
+							<dd><a class="topic" href="http://habrahabr.ru/blogs/algorithm/109406/">Алгоритм поведения привидений в игре Pac-Man</a>&nbsp;</dd>
+						</dl>
+					</dd>
+				</dl>
+			
+				<dl class="air-comment">
+					<dd>
+						<dl>
+							<dt><a class="where" href="http://habrahabr.ru/blogs/crypto/">Криптография</a>&nbsp;→</dt>
+							<dd><a class="topic" href="http://habrahabr.ru/blogs/crypto/109396/">Дмитрий Скляров взломал цифровую подпись в камерах Canon</a>&nbsp;</dd>
+						</dl>
+					</dd>
+				</dl>
+			
+				<dl class="air-comment">
+					<dd>
+						<dl>
+							<dt><a class="where" href="http://habrahabr.ru/blogs/android/">Android</a>&nbsp;→</dt>
+							<dd><a class="topic" href="http://habrahabr.ru/blogs/android/109424/">Notion Ink Adam или почему я жду Нового Года</a>&nbsp;</dd>
+						</dl>
+					</dd>
+				</dl>
+			
+				<dl class="air-comment">
+					<dd>
+						<dl>
+							<dt><a class="where" href="http://habrahabr.ru/blogs/infosecurity/">Информационная безопасность</a>&nbsp;→</dt>
+							<dd><a class="topic" href="http://habrahabr.ru/blogs/infosecurity/109401/">Мое отношение к топикам о Wikileaks</a>&nbsp;</dd>
+						</dl>
+					</dd>
+				</dl>
+			
+				<dl class="air-comment">
+					<dd>
+						<dl>
+							<dt><a class="where" href="http://habrahabr.ru/blogs/gps/">GPS</a>&nbsp;→</dt>
+							<dd><a class="topic" href="http://habrahabr.ru/blogs/gps/109410/">5 декабря 2010 года утонули три спутника ГЛОНАСС</a>&nbsp;</dd>
+						</dl>
+					</dd>
+				</dl>
+			
+				<dl class="air-comment">
+					<dd>
+						<dl>
+							<dt><a class="where" href="http://habrahabr.ru/blogs/p2p/">Peer-to-Peer</a>&nbsp;→</dt>
+							<dd><a class="topic" href="http://habrahabr.ru/blogs/p2p/109398/">The Men Who Stole the World (перевод статьи)</a>&nbsp;</dd>
+						</dl>
+					</dd>
+				</dl>
+			
+				<dl class="air-comment">
+					<dd>
+						<dl>
+							<dt><a class="where" href="http://habrahabr.ru/blogs/infosecurity/">Информационная безопасность</a>&nbsp;→</dt>
+							<dd><a class="topic" href="http://habrahabr.ru/blogs/infosecurity/109427/">Ленинградская АЭС изнутри</a>&nbsp;</dd>
+						</dl>
+					</dd>
+				</dl>
+			
+				<dl class="air-comment">
+					<dd>
+						<dl>
+							<dt><a class="where" href="http://habrahabr.ru/company/asus/blog/">Блог компании TrendClub</a>&nbsp;→</dt>
+							<dd><a class="topic" href="http://habrahabr.ru/company/asus/blog/109404/">Сохранил в .WWF — спас дерево!</a>&nbsp;</dd>
+						</dl>
+					</dd>
+				</dl>
+			
+				<dl class="air-comment">
+					<dd>
+						<dl>
+							<dt><a class="where" href="http://habrahabr.ru/blogs/ui_design_and_usability/">Эти пользовательские интерфейсы</a>&nbsp;→</dt>
+							<dd><a class="topic" href="http://habrahabr.ru/blogs/ui_design_and_usability/109327/">3 главные проблемы сайтов web-студий</a>&nbsp;</dd>
+						</dl>
+					</dd>
+				</dl>
+			
+			<div class="all">« <a href="http://habrahabr.ru/top/">все лучшие</a></div>
+
+			</div>
+			</div><!-- // for bottom rounded corners -->
+		</div>
+	
+
+
+			
+	
+
+	<div class="live new-feedbacks">
+
+		<div class="bg-bott-r">
+		<div class="bg-bott-l similar-posts">
+	
+		<h3>Похожие публикации&nbsp;↓</h3>
+				
+				<div>
+					
+					<dl>
+						<dd>
+							<dl>
+								<dt><span class="when">17.11.2010</span>&nbsp;→ <a class="where" href="http://habrahabr.ru/blogs/javascript/">JavaScript</a>&nbsp;→</dt>
+								<dd><a class="topic" href="http://habrahabr.ru/blogs/javascript/108298/">После всех асинхронных вызовов</a></dd>
+							</dl>
+						</dd>
+					</dl>	
+					
+					<dl>
+						<dd>
+							<dl>
+								<dt><span class="when">05.12.2010</span>&nbsp;→ <a class="where" href="http://habrahabr.ru/blogs/javascript/">JavaScript</a>&nbsp;→</dt>
+								<dd><a class="topic" href="http://habrahabr.ru/blogs/javascript/109407/">XUI: простой JavaScript фреймворк для разработки мобильных веб-приложений</a></dd>
+							</dl>
+						</dd>
+					</dl>	
+					
+					<dl>
+						<dd>
+							<dl>
+								<dt><span class="when">01.12.2010</span>&nbsp;→ <a class="where" href="http://habrahabr.ru/blogs/android/">Android</a>&nbsp;→</dt>
+								<dd><a class="topic" href="http://habrahabr.ru/blogs/android/109179/">Hello, NDK!</a></dd>
+							</dl>
+						</dd>
+					</dl>	
+					
+					<dl>
+						<dd>
+							<dl>
+								<dt><span class="when">28.11.2010</span>&nbsp;→ <a class="where" href="http://habrahabr.ru/blogs/javascript/">JavaScript</a>&nbsp;→</dt>
+								<dd><a class="topic" href="http://habrahabr.ru/blogs/javascript/108983/">Imran Nazar: Эмуляция GameBoy на JavaScript: Память</a></dd>
+							</dl>
+						</dd>
+					</dl>	
+					
+					<dl>
+						<dd>
+							<dl>
+								<dt><span class="when">24.11.2010</span>&nbsp;→ <a class="where" href="http://habrahabr.ru/blogs/javascript/">JavaScript</a>&nbsp;→</dt>
+								<dd><a class="topic" href="http://habrahabr.ru/blogs/javascript/108760/">Тест на скорость ServerSide</a></dd>
+							</dl>
+						</dd>
+					</dl>	
+					
+					<dl>
+						<dd>
+							<dl>
+								<dt><span class="when">24.11.2010</span>&nbsp;→ <a class="where" href="http://habrahabr.ru/blogs/browsers/">Браузеры</a>&nbsp;→</dt>
+								<dd><a class="topic" href="http://habrahabr.ru/blogs/browsers/108705/">Исследуем скорость выполнения JS и алгоритм отображения страниц</a></dd>
+							</dl>
+						</dd>
+					</dl>	
+					
+					<dl>
+						<dd>
+							<dl>
+								<dt><span class="when">22.11.2010</span>&nbsp;→ <a class="where" href="http://habrahabr.ru/blogs/javascript/">JavaScript</a>&nbsp;→</dt>
+								<dd><a class="topic" href="http://habrahabr.ru/blogs/javascript/108575/">Асинхронная синхронность. JSDeferred</a></dd>
+							</dl>
+						</dd>
+					</dl>	
+					
+					<dl>
+						<dd>
+							<dl>
+								<dt><span class="when">22.11.2010</span>&nbsp;→ <a class="where" href="http://habrahabr.ru/blogs/jquery/">jQuery</a>&nbsp;→</dt>
+								<dd><a class="topic" href="http://habrahabr.ru/blogs/jquery/108602/">jQuery для начинающих. Часть 9. Пишем плагины анимации</a></dd>
+							</dl>
+						</dd>
+					</dl>	
+					
+					<dl>
+						<dd>
+							<dl>
+								<dt><span class="when">22.11.2010</span>&nbsp;→ <a class="where" href="http://habrahabr.ru/blogs/vim/">VIM</a>&nbsp;→</dt>
+								<dd><a class="topic" href="http://habrahabr.ru/blogs/vim/108564/">Syntastic. Плагин для невнимательных и многоязычных</a></dd>
+							</dl>
+						</dd>
+					</dl>	
+					
+					<dl>
+						<dd>
+							<dl>
+								<dt><span class="when">21.11.2010</span>&nbsp;→ <a class="where" href="http://habrahabr.ru/blogs/javascript/">JavaScript</a>&nbsp;→</dt>
+								<dd><a class="topic" href="http://habrahabr.ru/blogs/javascript/108542/">Синхронизация асинхронных вызовов. WaitSync</a></dd>
+							</dl>
+						</dd>
+					</dl>	
+					
+					<dl>
+						<dd>
+							<dl>
+								<dt><span class="when">21.11.2010</span>&nbsp;→ <a class="where" href="http://habrahabr.ru/blogs/javascript/">JavaScript</a>&nbsp;→</dt>
+								<dd><a class="topic" href="http://habrahabr.ru/blogs/javascript/108526/">Imran Nazar: Эмуляция на Javascript: Процессор</a></dd>
+							</dl>
+						</dd>
+					</dl>	
+					
+					<dl>
+						<dd>
+							<dl>
+								<dt><span class="when">20.11.2010</span>&nbsp;→ <a class="where" href="http://habrahabr.ru/blogs/infosecurity/">Информационная безопасность</a>&nbsp;→</dt>
+								<dd><a class="topic" href="http://habrahabr.ru/blogs/infosecurity/108509/">Генератор надежных и запоминаемых паролей на Javascript</a></dd>
+							</dl>
+						</dd>
+					</dl>	
+					
+					<dl>
+						<dd>
+							<dl>
+								<dt><span class="when">19.11.2010</span>&nbsp;→ <a class="where" href="http://habrahabr.ru/blogs/webdev/">Web-разработка</a>&nbsp;→</dt>
+								<dd><a class="topic" href="http://habrahabr.ru/blogs/webdev/108425/">Онлайн-песочница с табами и файлами</a></dd>
+							</dl>
+						</dd>
+					</dl>	
+					
+					<dl>
+						<dd>
+							<dl>
+								<dt><span class="when">18.11.2010</span>&nbsp;→ <a class="where" href="http://habrahabr.ru/blogs/browsers/">Браузеры</a>&nbsp;→</dt>
+								<dd><a class="topic" href="http://habrahabr.ru/blogs/browsers/108355/">Избавление от «мертвого» кода в Javascript в IE9</a></dd>
+							</dl>
+						</dd>
+					</dl>	
+					
+					<dl>
+						<dd>
+							<dl>
+								<dt><span class="when">17.11.2010</span>&nbsp;→ <a class="where" href="http://habrahabr.ru/blogs/javascript/">JavaScript</a>&nbsp;→</dt>
+								<dd><a class="topic" href="http://habrahabr.ru/blogs/javascript/108346/">Переход Node.js под крыло Joyent, выпуск версий v0.2.5 и v0.3.1</a></dd>
+							</dl>
+						</dd>
+					</dl>	
+					
+				</div>
+		</div>
+		</div>			
+	</div>
+	
+	
+		
+		
+
+		
+
+<div class="live new-feedbacks">
+	
+		<div class="bg-bott-r"><!-- for bottom rounded corners -->
+		<div class="bg-bott-l">
+	
+		<h3>Прямой эфир&nbsp;↓</h3>
+		
+		<!-- Строчка в прямом эфире -->
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://floppyformator.habrahabr.ru/">FloppyFormator</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/blogs/gps/">GPS</a>&nbsp;→</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/blogs/gps/109410/#comment_3475475">5 декабря 2010 года утонули три спутника ГЛОНАСС</a>&nbsp;<span class="total">263</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://mihaild.habrahabr.ru/">mihaild</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/blogs/sport_programming/">Спортивное программирование</a>&nbsp;→</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/blogs/sport_programming/109384/#comment_3475474">Олимпиадное хобби. Размен монет</a>&nbsp;<span class="total">57</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://stalkers.habrahabr.ru/">stalkers</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/blogs/ie/">Internet Explorer</a>&nbsp;→</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/blogs/ie/109431/#comment_3475471">Интервью с Джоном Хрватином (John Hrvatin)</a>&nbsp;<span class="total">44</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://zigor.habrahabr.ru/">zigor</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/blogs/php/">PHP</a>&nbsp;→</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/blogs/php/76021/#comment_3475470">Перевод: Шаблонизаторы в PHP — подведение итогов</a>&nbsp;<span class="total">68</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://schursin.habrahabr.ru/">schursin</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/blogs/p2p/">Peer-to-Peer</a>&nbsp;→</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/blogs/p2p/109449/#comment_3475469">Свой p2p телеканал за 5 минут</a>&nbsp;<span class="total">1</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://zigor.habrahabr.ru/">zigor</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/blogs/php/">PHP</a>&nbsp;→</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/blogs/php/75901/#comment_3475466">Перевод: Шаблонизаторы в PHP</a>&nbsp;<span class="total">311</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://zerkms.habrahabr.ru/">zerkms</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/blogs/php/">PHP</a>&nbsp;→</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/blogs/php/109421/#comment_3475465">Входите! Вход без логина и пароля</a>&nbsp;<span class="total">50</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://imkremen.habrahabr.ru/">ImKremen</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/blogs/about_cms/">CMS</a>&nbsp;→</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/blogs/about_cms/109310/#comment_3475464">CMS своими руками. Теория велосипедостроения</a>&nbsp;<span class="total">56</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://natts.habrahabr.ru/">NaTTs</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/company/oversun/blog/">Блог компании Оверсан</a>&nbsp;→</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/company/oversun/blog/109445/#comment_3475463">Amazon Web Services запускает Route 53 —&nbsp;хостинг DNS-зон в облаке</a>&nbsp;<span class="total">4</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://ipswitch.habrahabr.ru/">ipswitch</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/blogs/pay_sistem/">Платежные системы</a>&nbsp;→</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/blogs/pay_sistem/109430/#comment_3475461">КИВИ закручивает гайки</a>&nbsp;<span class="total">142</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://lightcaster.habrahabr.ru/">lightcaster</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/blogs/artificial_intelligence/">Искусственный интеллект</a>&nbsp;→</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/blogs/artificial_intelligence/109382/#comment_3475460">NLP: проверка правописания — взгляд изнутри (часть 4)</a>&nbsp;<span class="total">4</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://professor_kuvalda.habrahabr.ru/">professor_kuvalda</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/blogs/facebook/">Facebook</a>&nbsp;→</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/blogs/facebook/109441/#comment_3475459">Новые профили на Facebook</a>&nbsp;<span class="total">15</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://v_k.habrahabr.ru/">v_k</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/blogs/eCommerce/">Электронная коммерция</a>&nbsp;→</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/blogs/eCommerce/108337/#comment_3475458">ВебМани тихо и незаметно усилили защиту. Возможно, у некоторых будут затыки с платежами</a>&nbsp;<span class="total">135</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://madmaxcorp.habrahabr.ru/">madmaxcorp</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/company/7days/blog/">Блог компании «Издательство Семь Дней»</a>&nbsp;→</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/company/7days/blog/109448/#comment_3475455">Говорите правильно. Часть 3</a>&nbsp;<span class="total">1</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://nikitad.habrahabr.ru/">nikitad</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/company/asus/blog/">Блог компании TrendClub</a>&nbsp;→</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/company/asus/blog/109404/#comment_3475450">Сохранил в .WWF — спас дерево!</a>&nbsp;<span class="total">78</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://goldan.habrahabr.ru/">Goldan</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/blogs/mass_media/">СМИ в интернете</a>&nbsp;→</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/blogs/mass_media/109422/#comment_3475448">Ваше отношение к Wikileaks?</a>&nbsp;<span class="total">21</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://roschen.habrahabr.ru/">Roschen</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/blogs/internet/">Интернет</a>&nbsp;→</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/blogs/internet/109435/#comment_3475447">Lufthansa предлагает своим клиентам услуги доступа к Сети на рейсах</a>&nbsp;<span class="total">7</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://shipachev.habrahabr.ru/">shipachev</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/blogs/startup/">Стартапы</a>&nbsp;→</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/blogs/startup/109447/#comment_3475446">FindPresent — сервис организаций конкурсов и рекламных акций на сайтах</a>&nbsp;<span class="total">1</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://brick812.habrahabr.ru/">brick812</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/company/pravo/blog/">Блог компании Pravo.ru</a>&nbsp;→</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/company/pravo/blog/109330/#comment_3475443">Ответственность за «комменты»</a>&nbsp;<span class="total">11</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://neonaft.habrahabr.ru/">NeoNaft</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dt><a class="where" href="http://habrahabr.ru/blogs/android/">Android</a>&nbsp;→</dt>
+					<dd><a class="topic" href="http://habrahabr.ru/blogs/android/109424/#comment_3475437">Notion Ink Adam или почему я жду Нового Года</a>&nbsp;<span class="total">92</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<!-- // Строчка в прямом эфире -->
+		<div class="all">« <a href="http://habrahabr.ru/live/">весь прямой эфир</a></div>
+		
+			
+		</div>
+		</div><!-- // for bottom rounded corners -->
+</div>
+
+<style type="text/css">
+
+	.side-intel p
+	{
+		margin-left: 0;
+		background: url(/i/adv/intel/mark.png) no-repeat;
+		padding-left: 26px;
+		padding-top: 3px;
+		color: #000;
+		padding-bottom: 10px;
+		font-size: 120%;
+	}
+	
+	.side-intel p a
+	{
+		color: #000 !important;
+	}
+	
+	.side-intel p a:hover
+	{
+		text-decoration: none;
+	}
+	
+	.side-intel .wave-title
+	{
+		display: block;
+		margin-top: 20px;
+		margin-bottom: 10px;
+	}
+	
+	.piu
+	{
+		width: 289px;
+		height: 74px;
+		display: block;
+		background: url(/i/adv/intel/piu.png) no-repeat;
+		text-indent: -10000px;
+		font-size: 0;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin-left: -140px;
+		margin-top: -37px;
+	}
+	
+	.intel-bottom-l
+	{
+		top: -10px;
+		position: relative;
+		height: 80px;
+		text-align: center;
+	}
+	
+	.intel-bottom-l span
+	{
+		top: 65px;
+		color: #000;
+		font-size: 80%;
+		position: relative;
+	}
+</style>
+<div class="live help">
+	<div class="bg-bott-r"><div class="bg-bott-l">
+		<div class="wave">
+			<div class="side-side side-intel">
+				<a class="wave-title" href="http://software.intel.com/ru-ru/articles/contest-useful-enabling-main/"><img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/ssd.png" alt=""></a>
+				<p>Стань участником Программы <a href="http://www.intel.ru/partner">Intel®&nbsp;Software&nbsp;Partner</a>  и получи все необходимые инструменты для оценки производительности ваших приложений;</p>
+				<p>Оцени свое приложение с помощью инструментов <a href="http://swpartner.intel.com/Partner/Initiatives/SATCenter.aspx?Lang=RUS">Software Assessment Tool</a>;</p>
+				<p>Загрузи отчеты на <a href="http://www.intel.ru/partner">официальный сайт</a> Партнерской Программы.</p>
+				<div style="text-align: center"><img alt="" src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/disk.png"></div>
+			</div>
+			<div class="intel-bottom-l"><a href="http://software.intel.com/ru-ru/articles/contest-useful-enabling-main/" class="piu">Поучаствовать!</a><span>Акция продлится до 14 декабря 2010 года</span></div>
+		</div>
+	</div></div><!-- // for bottom rounded corners -->
+
+</div>
+
+
+
+
+		
+<div class="live new-feedbacks">
+	
+		<div class="bg-bott-r"><!-- for bottom rounded corners -->
+		<div class="bg-bott-l">
+	
+		<h3>Q&amp;A&nbsp;↓</h3>
+		
+		<!-- Строчка в прямом эфире -->
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://svetlanagem.habrahabr.ru/">SvetlanaGEm</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dd><a class="topic" href="http://habrahabr.ru/qa/1602/#answer_11816">Подскажите открытый аналог Мегаплана (PM)</a>&nbsp;<span class="total">5</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://outfoxer.habrahabr.ru/">outfoxer</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dd><a class="topic" href="http://habrahabr.ru/qa/2702/#comment_13933">Где пиарить веб-проекты для мировой аудитории?</a>&nbsp;<span class="total">8</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://milfgard.habrahabr.ru/">Milfgard</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dd><a class="topic" href="http://habrahabr.ru/qa/2874/#answer_11815">Как можно больше способов открыть файл в word</a>&nbsp;<span class="total">1</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://digreen.habrahabr.ru/">digreen</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dd><a class="topic" href="http://habrahabr.ru/qa/2871/#answer_11814">Где в Москве искать ноутбук</a>&nbsp;<span class="total">2</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://vbart.habrahabr.ru/">VBart</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dd><a class="topic" href="http://habrahabr.ru/qa/2867/#comment_13932">Поиск данных с учетом большого числа критериев</a>&nbsp;<span class="total">3</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://atrax.habrahabr.ru/">Atrax</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dd><a class="topic" href="http://habrahabr.ru/qa/2872/#answer_11813">Как сделать раздельный Fronend и Backend?</a>&nbsp;<span class="total">3</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://bsboris.habrahabr.ru/">bsboris</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dd><a class="topic" href="http://habrahabr.ru/qa/2862/#answer_11812">Есть ли у вас ipad, или хотели бы его?</a>&nbsp;<span class="total">17</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://pietrovich.habrahabr.ru/">pietrovich</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dd><a class="topic" href="http://habrahabr.ru/qa/2769/#comment_13931">Зеркала linux UA-IX</a>&nbsp;<span class="total">3</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://rasa.habrahabr.ru/">rasa</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dd><a class="topic" href="http://habrahabr.ru/qa/2841/#answer_11807">Как в Nautilus сделать в меню по правому клику пункт отправить на  флэшку?</a>&nbsp;<span class="total">3</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://k_sashka.habrahabr.ru/">k_sashka</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dd><a class="topic" href="http://habrahabr.ru/qa/2870/#answer_11805">To-do приложение для Mac OS X</a>&nbsp;<span class="total">4</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://bagyr.habrahabr.ru/">bagyr</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dd><a class="topic" href="http://habrahabr.ru/qa/2856/#comment_13930">pacman (linux game)</a>&nbsp;<span class="total">5</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://pietrovich.habrahabr.ru/">pietrovich</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dd><a class="topic" href="http://habrahabr.ru/qa/2852/#comment_13927">Где искать верстальщиков XAML (Expression Blend)?</a>&nbsp;<span class="total">3</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://g0dlike.habrahabr.ru/">g0dlike</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dd><a class="topic" href="http://habrahabr.ru/qa/2830/#answer_11802">Какую книгу про Linux почитать?</a>&nbsp;<span class="total">11</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://xsen.habrahabr.ru/">xsen</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dd><a class="topic" href="http://habrahabr.ru/qa/2851/#comment_13924">Как получить правильную теорию по программированию?</a>&nbsp;<span class="total">5</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://nmouse.habrahabr.ru/">nmouse</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dd><a class="topic" href="http://habrahabr.ru/qa/2873/#comment_13923">Переезд Microsoft Project Server с одного сервера на другой</a></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://peanut.habrahabr.ru/">peanut</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dd><a class="topic" href="http://habrahabr.ru/qa/2839/#answer_11798">Ещё можно где-нибудь купить Vogue с плеером? (Кроме аукционов)</a>&nbsp;<span class="total">1</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://rasa.habrahabr.ru/">rasa</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dd><a class="topic" href="http://habrahabr.ru/qa/2858/#comment_13921">Хороший e-mail to sms сервис?</a>&nbsp;<span class="total">1</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://collapse.habrahabr.ru/">collapse</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dd><a class="topic" href="http://habrahabr.ru/qa/2806/#comment_13915">[SQL] Проверить, лежит ли один диапазон дат в другом</a>&nbsp;<span class="total">4</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://javax.habrahabr.ru/">javax</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dd><a class="topic" href="http://habrahabr.ru/qa/2827/#comment_13912">Посоветуйте базу данных (pure Java, Schema less, embedded, in memory)</a>&nbsp;<span class="total">2</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+		<dl class="air-comment">
+			<dt class="who"><a href="http://inittab.habrahabr.ru/">inittab</a>&nbsp;→</dt>
+			<dd>
+				<dl>
+					<dd><a class="topic" href="http://habrahabr.ru/qa/2869/#comment_13908">SQL запрос на выборку текущих атрибутов сущности из таблицы журнального типа</a>&nbsp;<span class="total">2</span></dd>
+				</dl>
+			</dd>
+		</dl>
+		
+
+		<div class="all">« <a href="http://habrahabr.ru/qa/">все вопросы</a></div>
+		</div>
+		</div><!-- // for bottom rounded corners -->
+</div>
+
+		
+
+
+			
+		
+
+	
+	
+
+	</div>
+
+</div>
+
+<div id="footer">
+	<div class="footer-conttent">
+		<div class="bottom_menu">
+			
+			
+			<dl>
+				<dd><a href="http://habrahabr.ru/login/">Войти</a></dd>
+				<dd><a href="http://habrahabr.ru/register/">Регистрация</a></dd>
+			</dl>
+			
+			<dl class="sections">
+				<dt>Разделы</dt>
+				<dd><a href="http://habrahabr.ru/bloglist/">Блоги</a></dd>
+				<dd><a href="http://habrahabr.ru/people/">Люди</a></dd>
+				<dd><a href="http://habrahabr.ru/companies/">Компании</a></dd>
+				<dd><a href="http://habrahabr.ru/job/">Работа</a></dd>
+				<dd><a href="http://habrahabr.ru/top/">↑↓↑↓</a></dd>
+			</dl>
+			<dl>
+				<dt>Блоги</dt>
+				<dd><a href="http://habrahabr.ru/">Все</a></dd>
+				<dd><a href="http://habrahabr.ru/blogs/">Тематические</a></dd>
+				<dd><a href="http://habrahabr.ru/corporative/">Корпоративные</a></dd>
+				<!--dd><a href="http://habrahabr.ru/personal/">Личные</a></dd-->
+				<dd><a href="http://habrahabr.ru/sandbox/">Песочница</a></dd>
+			</dl>
+			<dl>
+				<dt>Инфо</dt>
+				<dd><a href="http://habrahabr.ru/info/about/">О сайте</a></dd>
+				<dd><a href="http://habrahabr.ru/info/help/rules/">Правила</a></dd>
+				<dd><a href="http://habrahabr.ru/info/help/">Помощь</a></dd>
+				<dd><a href="http://habrahabr.ru/info/agreement/">Соглашение</a></dd>
+				<dd><a href="http://habrahabr.ru/info/stats/">Статистика</a></dd>
+			</dl>
+			<dl>
+				<dt>Услуги</dt>
+				<dd><a href="http://habrahabr.ru/info/advertising/">Реклама</a></dd>
+				<dd><a href="http://habrahabr.ru/info/advertising/corporate/">Корпоративные пакеты</a></dd>
+			</dl>
+		</div>
+
+		<a class="footer_logo" href="http://thematicmedia.ru/">Тематические Медиа</a>
+		<div id="about">
+			<span style="margin-left:4px;">© 2006–2010</span> <br>«<a href="http://www.thematicmedia.ru/">Тематические Медиа</a>»<br>
+			<div style="margin-top: 10px; margin-left:6px;">
+				Офис Чипа и Дэйла:<br>
+				<a href="mailto:support@habrahabr.ru" title="адрес службы поддержки пользователей">support@habrahabr.ru</a>
+			</div> 
+		</div>
+		
+	</div>
+	
+</div>
+
+
+
+	
+
+
+	
+
+<script type="text/javascript">
+/*<![CDATA[*/
+var _gaq = _gaq || [];
+_gaq.push(
+    ['_setAccount', 'UA-726094-1'],
+    ['_setDomainName', '.habrahabr.ru'],
+    ["_addOrganic", "mail.ru", "q"],
+    ["_addOrganic","rambler.ru", "words"],
+    ["_addOrganic","nigma.ru", "s"],
+    ["_addOrganic","blogs.yandex.ru", "text"],
+    ["_addOrganic","webalta.ru", "q"],
+    ["_addOrganic","aport.ru", "r"],
+    ["_addOrganic","akavita.by", "z"],
+    ["_addOrganic","meta.ua", "q"],
+    ["_addOrganic","bigmir.net", "q"],
+    ["_addOrganic","tut.by", "query"],
+    ["_addOrganic","all.by", "query"],
+    ["_addOrganic","i.ua", "q"],
+    ["_addOrganic","online.ua", "q"],
+    ["_addOrganic","a.ua", "s"],
+    ["_addOrganic","ukr.net", "search_query"],
+    ["_addOrganic","search.com.ua", "q"],
+    ["_addOrganic","search.ua", "query"],
+    ["_addOrganic","poisk.ru", "text"],
+    ["_addOrganic","km.ru", "sq"],
+    ["_addOrganic","liveinternet.ru", "ask"],
+    ["_addOrganic","gogo.ru", "q"],
+    ["_addOrganic","gde.ru", "keywords"],
+    ["_addOrganic","quintura.ru", "request"],
+    ['_trackPageview']
+);
+document.documentElement.firstChild.appendChild(ga);
+/* ]]>*/
+</script>
+
+
+
+
+
+
+<script>
+var mb_random = Math.round(Math.random() * 100000);
+document.write("<script src='http://pink.habralab.ru/cgi-bin/iframe/Gemius_other?"+mb_random+"&options=FT'></scr"+"ipt>");
+</script><script src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/Gemius_other"></script><a href="http://pink.habralab.ru/cgi-bin/href/0?10444&login=Gemius_other&options=FT&referer=http%3A//habrahabr.ru/blogs/javascript/108915/" target="_top"><img src="./Разбираемся с prototype, __proto__, constructor и их цепочками в картинках   JavaScript   Хабрахабр_files/0" width="1" height="1" title="http://" alt="" border="0"></a>
+
+
+
+
+
+
+</body></html>
