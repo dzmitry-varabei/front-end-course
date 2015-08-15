@@ -1,0 +1,6 @@
+http://slides.com/gionkunz/back-to-the-future-angularjs2#/6/1
+
+Es6 classes desugsred - compare es5 vs es6
+Classes
+ES6 CLASS INHERITANCE
+ES6 TEMPLATE STRINGS
