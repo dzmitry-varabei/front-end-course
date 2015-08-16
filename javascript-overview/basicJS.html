@@ -1,466 +1,520 @@
 <!doctype html>
-<html lang="en" xmlns="http://www.w3.org/1999/html">
+<html lang="en">
 
-	<head>
-		<meta charset="utf-8">
+<head>
+    <meta charset="utf-8">
 
-		<title>reveal.js - The HTML Presentation Framework</title>
+    <title>reveal.js - The HTML Presentation Framework</title>
 
-		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
-		<meta name="author" content="Hakim El Hattab">
+    <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+    <meta name="author" content="Hakim El Hattab">
 
-		<meta name="apple-mobile-web-app-capable" content="yes" />
-		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 
-		<link rel="stylesheet" href="css/reveal.min.css">
-		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
-		<!-- For syntax highlighting -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+    <link href='http://fonts.googleapis.com/css?family=Walter+Turncoat' rel='stylesheet' type='text/css'>
 
-		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
-		<script>
-			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
-		</script>
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/blackboard.css" id="theme">
 
-		<!--[if lt IE 9]>
-		<script src="lib/js/html5shiv.js"></script>
-		<![endif]-->
-        <style type="text/css">
-            /*.reveal {font-size: 44px;}*/
-            .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {text-transform:none; }
-            .reveal h2 {font-size: 1.9em;}
-            .reveal em { color: #adff2f; font-style: normal;}
-            /*.reveal pre { font-size: .9em;}*/
-            .reveal .rightalign { text-align: right;}
 
-            .reveal section.fixedHeight {min-height: 400px; }
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
 
-            .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
-                margin-bottom: 40px;
-                font-family: 'Open Sans Condensed', 'Trocchi', sans-serif;
-            }
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
 
-            .reveal .pastStep {color: gray;}
-        </style>
-	</head>
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
 
-	<body>
+<body>
 
-		<div class="reveal">
+<div class="reveal">
 
-			<!-- Any section element inside of this container is displayed as a slide -->
-			<div class="slides">
+    <!-- Any section element inside of this container is displayed as a slide -->
+    <div class="slides">
+        <section>
+            <h1>JavaScript Programming Language</h1>
+        </section>
 
-				<section>
-					<h2>JavaScript Programming Language</h2>
-				</section>
+        <section>
+            <h3>The Rolling Scopes Community</h3>
 
-                <section>
-                    <p>RS logo</p>
-                    <p>http://rollingscopes.com/</p>
-                    <p>http://conf.rollingscopes.com/</p>
-                    <p>http://school.rollingscopes.com/</p>
-                </section>
-                
-                <section>
-                    <img src="myImages/selfie.jpg" alt=""/>
-                </section>
+            <p><a target="_blank" href="http://rollingscopes.com/">http://rollingscopes.com/</a></p>
 
-                <section>
-                    <img src="myImages/rs_conf.jpg" alt=""/>
-                </section>
+            <p><a target="_blank" href="http://conf.rollingscopes.com/">http://conf.rollingscopes.com/</a></p>
 
-                <section>
-                    <h2>Lecture #1</h2>
-                </section>
+            <p><a target="_blank" href="http://school.rollingscopes.com/">http://school.rollingscopes.com/</a></p>
 
-                <section>
-                    <img style="float: left" src="myImages/past-present-future.jpg" alt=""/>
-                    <h2>of JavaScript</h2>
-                </section>
-                
-                <section>
-                    <h2>Back to 1995</h2>
-                    <h3 style="color:#adff2f"># !!!!! Add image related to 1995 !!!! #</h3>
-                </section>
+            <p><img class="rs-logo" src="http://rollingscopes.com/images/logo_rs2.svg"/></p>
+        </section>
 
-                <section>
-                    windows 95 + netscape navigator + screen of browser
-                </section>
+        <section>
+            <img src="images/selfie.jpg" alt=""/>
+        </section>
 
-                <section>
-                    <h2>Browser War I</h2>
-                    <ul>
-                        <li>Microsoft vs Netscape</li>
-                        <li>Internet Explorer vs Navigator</li>
-                        <li>Control of the Internet</li>
-                        <li>Proprietary Additions</li>
-                        <li>Netscape no longer exists</li>
-                    </ul>
-                </section>
+        <section>
+            <img src="images/rs_conf.jpg" alt=""/>
+        </section>
 
-                <section>
-                    <img src="myImages/browser_wars.jpg" width="100%" alt=""/>
-                </section>
+        <section>
+            <h1>Lecture #1</h1>
+        </section>
 
-                <section>
-                    <img width="400px" src="myImages/brendan.jpg" alt=""/>
-                    <p><em>Brendan Eich</em></p>
-                    <p>JavaScript creator, Mozilla founder</p>
-                </section>
+        <section>
+            <img src="images/past-present-future.jpg" alt=""/>
 
-                <section>
-                    <p> created in 10 days in May 1995</p>
-                    <p>May 6-15, 1995</p>
-                    <p>https://www.w3.org/community/webed/wiki/A_Short_History_of_JavaScript</p>
-                </section>
+            <h2>of JavaScript</h2>
+        </section>
 
-                <section>
-                    <img width="206px" height="312" src="myImages/netscape-navigator.jpg" alt=""/>
-                    <p><em>First introduction and deployment in September 1995</em></p>
-                </section>
+        <section>
+            <h2>Back to 1995</h2>
 
-                <section>
-                    <img width="400px" src="myImages/Spider_Monkey.jpg" alt=""/>
-                    <p><em>SpiderMonkey</em> is the code name for the first JavaScript engine</p>
-                </section>
+            <h3 style="color:#adff2f"># !!!!! Add image related to 1995 !!!! #</h3>
+        </section>
 
-                <section>
-                    <h2>2007</h2>
-                </section>
+        <section>
+            windows 95 + netscape navigator + screen of browser
+        </section>
 
-                <section>
-                    <img src="myImages/opensource_wins.jpg" alt=""/>
-                </section>
+        <section>
+            <h2>Browser War I</h2>
+            <ul>
+                <li>Microsoft vs Netscape</li>
+                <li>Internet Explorer vs Navigator</li>
+                <li>Control of the Internet</li>
+                <li>Proprietary Additions</li>
+                <li>Netscape no longer exists</li>
+            </ul>
+        </section>
 
-                <section>
-                    <img src="myImages/zombie.png" alt=""/>
-                </section>
+        <section>
+            <img src="images/browser_wars.jpg" width="100%" alt=""/>
+        </section>
 
-                <section>
-                    <h2>Open source wins!!!</h2>
-                    <img src="myImages/Sub-Zero_Fatality_MK2.png" alt=""/>
-                </section>
+        <section>
+            <img width="400px" src="images/brendan.jpg" alt=""/>
+            <h5>Brendan Eich</h5>
 
-                <section>
-                    <h2>Open Browsers</h2>
-                    <ul>
-                        <li>WebKit/Blink</li>
-                        <li>Chromium</li>
-                        <li>Firefox</li>
-                    </ul>
-                </section>
+            <p>JavaScript creator, Mozilla founder</p>
+        </section>
 
-                <section>
-                    <h2>Open Tools</h2>
-                    <ul>
-                        <li>Atom</li>
-                        <li>Angular</li>
-                        <li>Mocha</li>
-                        <li>Grunt</li>
-                        <li>Node.js</li>
-                    </ul>
-                </section>
+        <section>
+            <p> created in 10 days in May 1995</p>
 
-                <section>
-                    <h2>Members of TC39</h2>
-                    <ul>
-                        <li>Google</li>
-                        <li>Apple</li>
-                        <li>eBay</li>
-                        <li>Mozilla</li>
-                        <li>Intel</li>
-                        <li>Microsoft</li>
-                        <li>Facebook</li>
-                        <li>...</li>
-                    </ul>
-                </section>
+            <p>May 6-15, 1995</p>
 
-                <section>
-                    <h2>Nowadays!</h2>
-                    <h3 style="color:#adff2f"># !!!!! Add relevant image !!!! #</h3>
-                </section>
+            <p>https://www.w3.org/community/webed/wiki/A_Short_History_of_JavaScript</p>
+        </section>
 
-                <section>
-                    <img src="myImages/js_everywhere.jpg" alt=""/>
-                </section>
+        <section>
+            <img width="206px" height="312" src="images/netscape-navigator.jpg" alt=""/>
 
-                <section>
-                    <h2>JavaScript is everywhere</h2>
-                    <ol>
-                        <li><em>Desktop Browsers</em> (IE, Chrome, Safari, Firefox, Opera...)</li>
-                        <li class="fragment"><em>Mobile Browsers</em> (Mobile Safari, Android Browser, Fennec, Opera Mini...)</li>
-                        <li class="fragment"><em>Desktop native apps</em> (Windows, Native)</li>
-                        <li class="fragment"><em>Mobile native apps</em> (Phonegap, Sencha Touch, Tizen, React Native ...)</li>
-                        <li class="fragment"><em>Server</em> (Node.js…)</li>
-                        <li class="fragment"><em>NoSQL Databases</em> (MongoDB, CouchDB…)</li>
-                        <li class="fragment"><em>Operation Systems</em> (FirefoxOS, ChromeOS, Nintendo ES...)</li>
-                    </ol>
-                </section>
+            <p><em>First introduction and deployment in September 1995</em></p>
+        </section>
 
-                <section>
-                    <img src="myImages/img/nodejs-logo.png" alt=""/>
-                </section>
+        <section>
+            <img width="400px" src="images/Spider_Monkey.jpg" alt=""/>
 
-                <section>
-                    <h2>Node.js at PayPal</h2>
-                    <img class="nodecorations" src="myImages/img/node-paypal.jpg">
-                </section>
+            <p><em>SpiderMonkey</em> is the code name for the first JavaScript engine</p>
+        </section>
 
-                <section>
-                    <h2>Web interfaces</h2>
-                    <p class="blue"><small>js really everywhere</small></p>
-                    <img class="nodecorations" src="myImages/img/network.png">
-                </section>
-                <section>
-                    <h2>Web interfaces</h2>
-                    <p class="blue"><small>js really everywhere</small></p>
-                    <img class="nodecorations" src="myImages/img/web-interfaces.png">
-                </section>
-                <section>
-                    <h2>Tessel</h2>
-                    <p class="blue"><small>js programmable hardware</small></p>
-                    <img class="nodecorations" src="myImages/img/tessel.png">
-                </section>
-                <section>
-                    <h2>Tessel</h2>
-                    <p class="blue"><small>js programmable hardware</small></p>
-                    <img class="nodecorations" src="myImages/img/tessel-code.png">
-                </section>
-                <section>                    <h2>node-copter</h2>
-                    <p class="blue"><small>Flying JavaScript</small></p>
-                    <iframe width="560" height="315" src="http://www.youtube.com/embed/5fwjHO6VjWw?rel=0&autohide=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
-                </section>
-                <section>
-                    <h2>EPAM CEO showcase award 2015</h2>
-                    <img src="myImages/epam_showcase_award.jpg" alt=""/>
-                </section>
+        <section>
+            <h1>2007</h1>
+        </section>
 
-                <section><img src="myImages/dawn/televizor.jpg" alt=""/></section>
-                <section><img src="myImages/dawn/televizor_liberty.jpg" alt=""/></section>
-                <section>
-                    <h2>DAWN</h2>
-                    <img class="nodecorations" src="myImages/dawn/dawn-ui.png">
-                </section>
+        <section>
+            <img src="images/opensource_wins.jpg" alt=""/>
+        </section>
 
-                <section>
-                    <h2>Project description</h2>
-                    <ul>
-                        <li>Дешевая</li>
-                        <li class="fragment visible" data-fragment-index="0">Мало оперативной памяти (512 MB)</li>
-                        <li class="fragment visible" data-fragment-index="1">Слабый проц (1,5 Ghz)</li>
-                        <li class="fragment visible" data-fragment-index="2">Хорошо, что нет аккумулятора</li>
-                        <li class="fragment visible" data-fragment-index="3">Программная часть написана на JavaScript, HTML, CSS</li>
-                        <li class="fragment visible" data-fragment-index="4">47 миллионов пользователей</li>
-                        <li class="fragment visible" data-fragment-index="5">Необходимо понимание и анализ алгоритмов</li>
-                    </ul>
-                </section>
+        <section>
+            <img src="images/zombie.png" alt=""/>
+        </section>
 
-                <section>
-                    <h2>
-                        reveal.js - The HTML Presentation Framework
-                    </h2>
-                    <p>Presentation inside browser</p>
-                </section>
+        <section>
+            <h2>Open source wins!!!</h2>
+            <img src="images/Sub-Zero_Fatality_MK2.png" alt=""/>
+        </section>
 
-                <section>
-                    <h2>Unreal Engine</h2>
-                    <p class="blue"><small>running in a browser</small></p>
-                    <iframe width="560" height="315" src="http://www.youtube.com/embed/c2uNDlP4RiE?rel=0&autohide=1&showinfo=0"  frameborder="0" allowfullscreen></iframe>
-                </section>
+        <section>
+            <h2>Open Browsers</h2>
+            <ul>
+                <li>WebKit/Blink</li>
+                <li>Chromium</li>
+                <li>Firefox</li>
+            </ul>
+        </section>
 
-                <section>
-                    <p>
-                        250 KLOC of C
-                        compiled to asm.js (port take 5 days)
-                        running in a browser
-                        at half speed (in 2014)
-                    </p>
-                </section>
+        <section>
+            <h2>Open Tools</h2>
+            <ul>
+                <li>Atom</li>
+                <li>Angular</li>
+                <li>Mocha</li>
+                <li>Grunt</li>
+                <li>Node.js</li>
+            </ul>
+        </section>
 
-                <section>
-                    <h2>Asm.js</h2>
-                    <img class="nodecorations" src="myImages/img/asmjs.png">
-                </section>
+        <section>
+            <h2>Members of TC39</h2>
+            <ul>
+                <li>Google</li>
+                <li>Apple</li>
+                <li>eBay</li>
+                <li>Mozilla</li>
+                <li>Intel</li>
+                <li>Microsoft</li>
+                <li>Facebook</li>
+                <li>...</li>
+            </ul>
+        </section>
 
-                <section>
-                    <h2>Emscripten</h2>
-                    <ul>
-                        <li>Qt</li>
-                        <li>Graphviz</li>
-                        <li>Emulators</li>
-                        <li>Webkit</li>
-                    </ul>
-                </section>
+        <section>
+            <h2>Nowadays!</h2>
 
-                <section>
-                    <img style="float: left; height: 500px;" src="myImages/douglas-big-1.jpg" alt=""/>
-                    <h2>Douglas Crockford</h2>
-                    <p>Lisp in C's Clothing</p>
-                    <p>http://www.crockford.com/javascript/javascript.html</p>
-                </section>
-                
-                <section>
-                    <img src="myImages/goodparts_definitiveguide.jpg" alt=""/>
-                </section>
+            <h3 style="color:#adff2f"># !!!!! Add relevant image !!!! #</h3>
+        </section>
 
-                <section><img height="500px" src="myImages/if_js_wrote_hemingway.jpg" alt=""/></section>
-                <section><img src="myImages/iceberg.jpg" alt=""/></section>
-                <section><img src="myImages/iceberg_2.jpg" alt=""/></section>
-                <section><img src="myImages/iceberg_3.jpg" alt=""/></section>
-                <section><img src="myImages/iceberg_4.jpg" alt=""/></section>
+        <section>
+            <img src="images/js_everywhere.jpg" alt=""/>
+        </section>
 
-                <section>
-                    <h2></h2>
-                    <p><a target="_blank" href="https://developer.mozilla.org/en-US/demos/detail/bananabread">https://developer.mozilla.org/en-US/demos/detail/bananabread</a></p>
-                </section>
+        <section>
+            <h3>JavaScript is everywhere</h3>
+            <ol>
+                <li><em>Desktop Browsers</em> (IE, Chrome, Safari, Firefox, Opera...)</li>
+                <li class="fragment"><em>Mobile Browsers</em> (Mobile Safari, Android Browser, Fennec, Opera Mini...)
+                </li>
+                <li class="fragment"><em>Desktop native apps</em> (Windows, Native)</li>
+                <li class="fragment"><em>Mobile native apps</em> (Phonegap, Sencha Touch, Tizen, React Native ...)</li>
+                <li class="fragment"><em>Server</em> (Node.js…)</li>
+                <li class="fragment"><em>NoSQL Databases</em> (MongoDB, CouchDB…)</li>
+                <li class="fragment"><em>Operation Systems</em> (FirefoxOS, ChromeOS, Nintendo ES...)</li>
+            </ol>
+        </section>
 
-                <section class="fixedHeight">
-                    <h2>Evolution of name</h2>
-                    <div>
+        <section>
+            <img src="images/nodejs-logo.png" alt=""/>
+        </section>
+
+        <section>
+            <h2>Node.js at PayPal</h2>
+            <!--<img class="nodecorations" src="images/node-paypal.jpg">-->
+            <ul>
+                <li>Teams between 1/3 to 1/10 of Java teams</li>
+                <li class="fragment">Doubled requests per second</li>
+                <li class="fragment">35% decrease in average response time</li>
+                <li class="fragment">Lines of code shrunk by factor 3 to 5</li>
+                <li class="fragment">Development twice as fast</li>
+                <li class="fragment">JS both on frontend and backend</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Web interfaces</h2>
+
+            <p class="blue">
+                <small>js really everywhere</small>
+            </p>
+            <img class="nodecorations" src="images/network.png">
+        </section>
+        <section>
+            <h2>Web interfaces</h2>
+
+            <p class="blue">
+                <small>js really everywhere</small>
+            </p>
+            <img class="nodecorations" src="images/web-interfaces.png">
+        </section>
+        <section>
+            <h2>Tessel</h2>
+
+            <p class="blue">
+                <small>js programmable hardware</small>
+            </p>
+            <img class="nodecorations" src="images/tessel.png">
+        </section>
+        <section>
+            <h2>Tessel</h2>
+
+            <p class="blue">
+                <small>js programmable hardware</small>
+            </p>
+            <img class="nodecorations" src="images/tessel-code.png">
+        </section>
+        <section><h2>node-copter</h2>
+
+            <p class="blue">
+                <small>Flying JavaScript</small>
+            </p>
+            <iframe width="560" height="315" src="http://www.youtube.com/embed/5fwjHO6VjWw?rel=0&autohide=1&showinfo=0"
+                    frameborder="0" allowfullscreen></iframe>
+        </section>
+        <section>
+            <h3>EPAM CEO showcase award 2015</h3>
+            <img src="images/epam_showcase_award.jpg" alt=""/>
+        </section>
+
+        <section><img src="images/dawn/televizor.jpg" alt=""/></section>
+        <section><img src="images/dawn/televizor_liberty.jpg" alt=""/></section>
+        <section>
+            <h2>DAWN</h2>
+            <img class="nodecorations" src="images/dawn/dawn-ui.png">
+        </section>
+
+        <section>
+            <h2>Project description</h2>
+            <ul>
+                <li>Дешевая</li>
+                <li class="fragment visible" data-fragment-index="0">Мало оперативной памяти (512 MB)</li>
+                <li class="fragment visible" data-fragment-index="1">Слабый проц (1,5 Ghz)</li>
+                <li class="fragment visible" data-fragment-index="2">Хорошо, что нет аккумулятора</li>
+                <li class="fragment visible" data-fragment-index="3">Программная часть написана на JavaScript, HTML,
+                    CSS
+                </li>
+                <li class="fragment visible" data-fragment-index="4">47 миллионов пользователей</li>
+                <li class="fragment visible" data-fragment-index="5">Необходимо понимание и анализ алгоритмов</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>
+                reveal.js - The HTML Presentation Framework
+            </h2>
+
+            <p>Presentation inside browser</p>
+        </section>
+
+        <section>
+            <h2>Unreal Engine</h2>
+
+            <p class="blue">
+                <small>running in a browser</small>
+            </p>
+            <iframe width="560" height="315" src="http://www.youtube.com/embed/c2uNDlP4RiE?rel=0&autohide=1&showinfo=0"
+                    frameborder="0" allowfullscreen></iframe>
+        </section>
+
+        <section>
+            <p>
+                250 KLOC of C
+                compiled to asm.js (port take 5 days)
+                running in a browser
+                at half speed (in 2014)
+            </p>
+        </section>
+
+        <section>
+            <h2>Asm.js</h2>
+            <img class="nodecorations" src="images/asmjs.png">
+        </section>
+
+        <section>
+            <h2>Emscripten</h2>
+            <ul>
+                <li>Qt</li>
+                <li>Graphviz</li>
+                <li>Emulators</li>
+                <li>Webkit</li>
+            </ul>
+        </section>
+
+        <section>
+            <img style="height:400px; float: left;" src="images/douglas-big-1.jpg" alt=""/>
+
+
+            <h3 style="text-align: right;">Douglas Crockford</h3>
+
+                <blockquote>"Lisp in C's Clothing"</blockquote>
+
+
+
+            <p style="clear: both; text-align: left;"><small><a target="_blank" href="http://www.crockford.com/javascript/javascript.html">http://www.crockford.com/javascript/javascript.html</a></small>
+            </p>
+        </section>
+
+        <section>
+            <img src="images/goodparts_definitiveguide.jpg" alt=""/>
+        </section>
+
+        <section><img height="500px" src="images/if_js_wrote_hemingway.jpg" alt=""/></section>
+        <section><img src="images/iceberg.jpg" alt=""/></section>
+        <section><img src="images/iceberg_2.jpg" alt=""/></section>
+        <section><img src="images/iceberg_3.jpg" alt=""/></section>
+        <section><img src="images/iceberg_4.jpg" alt=""/></section>
+
+        <section>
+            <h2></h2>
+
+            <p><a target="_blank" href="https://developer.mozilla.org/en-US/demos/detail/bananabread">https://developer.mozilla.org/en-US/demos/detail/bananabread</a>
+            </p>
+        </section>
+
+        <section class="fixedHeight">
+            <h2>Evolution of name</h2>
+
+            <div>
+                <ul>
+                    <li>Ten days in May 1995: <em>“Mocha”</em></li>
+                    <li class="fragment">September 1995: <em>“LiveScript”</em></li>
+                    <li class="fragment">December 1995: <em>“JavaScript”</em></li>
+                    <li class="fragment">1996-1997: <em>ECMA-262</em> Ed. 1, aka <em>ES1</em></li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="fixedHeight">
+            <h2>ECMAScript dialects</h2>
+
+            <div>
+                <ul>
+                    <li>Javascript
                         <ul>
-                            <li>Ten days in May 1995: <em>“Mocha”</em></li>
-                            <li class="fragment">September 1995: <em>“LiveScript”</em></li>
-                            <li class="fragment">December 1995: <em>“JavaScript”</em></li>
-                            <li class="fragment">1996-1997: <em>ECMA-262</em> Ed. 1, aka <em>ES1</em></li>
-                        </ul>
-                    </div>
-                </section>
-
-                 <section class="fixedHeight">
-                    <h2>ECMAScript dialects</h2>
-                    <div>
-                        <ul>
-                            <li>Javascript
-                                <ul>
-                                    <li>CoffeeScript</li>
-                                    <li>TypeScript</li>
-                                    <li>...</li>
-                                </ul>
-                            </li>
-                            <li>JScript</li>
-                            <li>Action Script</li>
+                            <li>CoffeeScript</li>
+                            <li>TypeScript</li>
                             <li>...</li>
                         </ul>
-                    </div>
-                </section>
+                    </li>
+                    <li>JScript</li>
+                    <li>Action Script</li>
+                    <li>...</li>
+                </ul>
+            </div>
+        </section>
 
-                <section>
-                    <h2>JavaScript everywhere</h2>
-                    <p class="blue">The assembly of the Web</p>
-                </section>
+        <section>
+            <h2>JavaScript everywhere</h2>
 
-                <section class="fixedHeight">
-                    <h2>Major milestones</h2>
-                    <div>
-                        <ul>
-                            <li>1999: ES3</li>
-                            <li>2005: the Ajax revolution</li>
-                            <li>2008: ES4 RIP</li>
-                            <li>2009: ES5</li>
-                            <li>2011+: HTML5</li>
-                            <li>future: ES6 aka "Harmony" aka JavaScript 2.0</li>
-                        </ul>
-                    </div>
-                </section>
+            <p class="blue">The assembly of the Web</p>
+        </section>
 
-                <section>
-                    <h2>ECMAScript</h2>
-                    <img class="nodecorations" src="myImages/img/evolution.fw.png">
-                </section>
+        <section class="fixedHeight">
+            <h2>Major milestones</h2>
 
-                <section>
-                    <h2>JS: Wat aka "Foot Guns"</h2>
+            <div>
+                <ul>
+                    <li>1999: ES3</li>
+                    <li>2005: the Ajax revolution</li>
+                    <li>2008: ES4 RIP</li>
+                    <li>2009: ES5</li>
+                    <li>2011+: HTML5</li>
+                    <li>future: ES6 aka "Harmony" aka JavaScript 2.0</li>
+                </ul>
+            </div>
+        </section>
 
-                    <div>
-                        <img src="myImages/wat.png">
-                        <p>
-                            <a href="https://www.destroyallsoftware.com/talks/wat" class="roll"><span data-title="https://www.destroyallsoftware.com/talks/wat">https://www.destroyallsoftware.com/talks/wat</span></a>
-                        </p>
-                    </div>
-                </section>
+        <section>
+            <h2>ECMAScript</h2>
+            <img class="nodecorations" src="images/evolution.fw.png">
+        </section>
 
-                <section>
-                    <h2>Wat</h2>
+        <section>
+            <h2>JS: Wat aka "Foot Guns"</h2>
+
+            <div>
+                <img src="images/wat.png">
+
+                <p>
+                    <a href="https://www.destroyallsoftware.com/talks/wat" class="roll"><span
+                            data-title="https://www.destroyallsoftware.com/talks/wat">https://www.destroyallsoftware.com/talks/wat</span></a>
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Wat</h2>
                     <pre><code contenteditable>
-    var x = "50" - 0; // x == 50
-    var x = "50" + 0; // x == “500”
+                        var x = "50" - 0; // x == 50
+                        var x = "50" + 0; // x == “500”
                     </code></pre>
-                </section>
+        </section>
 
-                <section>
-                    <h2>Wat</h2>
+        <section>
+            <h2>Wat</h2>
                     <pre><code contenteditable>
-    A == B
-    A == C
-    B != C
+                        A == B
+                        A == C
+                        B != C
                     </code></pre>
 
         <pre class="fragment"><code contenteditable>
-    0 == ''; // true
-    0 =='0'; // true
-    '' == '0'; //false
-    </code></pre>
-                </section>
+            0 == ''; // true
+            0 =='0'; // true
+            '' == '0'; //false
+        </code></pre>
+        </section>
 
-                <section>
-                    <h2>Wat</h2>
+        <section>
+            <h2>Wat</h2>
                     <pre><code contenteditable>
-    null == 0; // false
-    null > 0; // false
-    null >= 0; //true
+                        null == 0; // false
+                        null > 0; // false
+                        null >= 0; //true
                     </code></pre>
-                </section>
+        </section>
 
-                <section>
-                    <h2>questions</h2>
-                    <img class="nodecorations" src="myImages/img/question-mark.png">
-                </section>
+        <section>
+            <h2>questions</h2>
+            <img class="nodecorations" src="images/question-mark.png">
+        </section>
 
-                <section>
-                    <p><em>JavaScript</em> = <em>Java</em> + <em>Scheme</em>(Lisp) + <em>Self</em>(Smalltalk)</p>
-                </section>
+        <section>
+            <p><em>JavaScript</em> = <em>Java</em> + <em>Scheme</em>(Lisp) + <em>Self</em>(Smalltalk)</p>
+        </section>
 
-                <section>
-                    <blockquote>
-                        JavaScript is a prototype-based scripting language that is dynamic, weakly typed and has first-class functions.
-                    </blockquote>
-                    <p class="rightalign"><em>&copy; Wikipedia</em></p>
-                </section>
+        <section>
+            <blockquote>
+                "JavaScript is a prototype-based scripting language that is dynamic, weakly typed and has first-class
+                functions."
+            </blockquote>
+            <p class="rightalign"><em>&copy; Wikipedia</em></p>
+        </section>
 
-                <section>
-                    <blockquote>
-                        JavaScript is a multi-paradigm language, supporting object-oriented, imperative, and functional programming styles.
-                    </blockquote>
-                    <p class="rightalign"><em>&copy; Wikipedia</em></p>
-                </section>
+        <section>
+            <blockquote>
+                "JavaScript is a multi-paradigm language, supporting object-oriented, imperative, and functional
+                programming styles."
+            </blockquote>
+            <p class="rightalign"><em>&copy; Wikipedia</em></p>
+        </section>
 
-                <section>
+        <section>
 
 
-                    <section>
-                        <h2>Data types</h2>
-                        <ul>
-                            <li>Number</li>
-                            <li class="fragment">String</li>
-                            <li class="fragment">Boolean</li>
-                            <li class="fragment">null</li>
-                            <li class="fragment">undefined</li>
-                            <li class="fragment">
-                                Object
-                                <ul class="fragment">
-                                    <li>Object</li>
-                                    <li>Array</li>
-                                    <li>Date</li>
-                                    <li>...</li>
-                                </ul>
-                            </li>
+            <section>
+                <h2>Data types</h2>
+                <ul>
+                    <li>Number</li>
+                    <li class="fragment">String</li>
+                    <li class="fragment">Boolean</li>
+                    <li class="fragment">null</li>
+                    <li class="fragment">undefined</li>
+                    <li class="fragment">
+                        Object
+                        <ul class="fragment">
+                            <li>Object</li>
+                            <li>Array</li>
+                            <li>Date</li>
+                            <li>...</li>
                         </ul>
-                    </section>
+                    </li>
+                </ul>
+            </section>
 
-                    <section>
-                        <h2>Primitive data types</h2>
+            <section>
+                <h2>Primitive data types</h2>
 					 <pre><code contenteditable>
                          var myNumber = 5;
                          var myString = "Hello world!";
@@ -468,10 +522,10 @@
                          var myNull = null;
                          var myUndefined = undefined;
                      </code></pre>
-                    </section>
+            </section>
 
-                    <section>
-                        <h2>Objects</h2>
+            <section>
+                <h2>Objects</h2>
 					 <pre><code contenteditable>
                          var myObject = {};
                          var myArray = [];
@@ -480,10 +534,10 @@
                          var myError = new Error();
                          //....
                      </code></pre>
-                    </section>
+            </section>
 
-                    <section>
-                        <h2>Java syntax</h2>
+            <section>
+                <h2>Java syntax</h2>
 					 <pre><code contenteditable>
                          var myNumber = new Number(5);
                          var myString = new String("Hello world!");
@@ -491,11 +545,11 @@
                          var myArray = new Array();
                          var myObject = new Object();
                      </code></pre>
-                        <p class="fragment"><em>Should be avoided!</em></p>
-                    </section>
+                <p class="fragment"><em>Should be avoided!</em></p>
+            </section>
 
-                    <section>
-                        <h2>Wat</h2>
+            <section>
+                <h2>Wat</h2>
                     <pre><code contenteditable>
                         var bool = new Boolean(false);
                         if (bool){
@@ -508,10 +562,10 @@
                         alert("wat"); //This will never be alerted.
                         }
                     </code></pre>
-                    </section>
+            </section>
 
-                    <section>
-                        <h2>Wat</h2>
+            <section>
+                <h2>Wat</h2>
 					 <pre><code contenteditable>
                          var a = new String("foo");
                          var b = "foo";
@@ -521,19 +575,23 @@
                          b == c; // true
                          a == c; // false
                      </code></pre>
-                    </section>
+            </section>
 
-                    <section>
-                        <h2>Object</h2>
-                        <p>Object is an unordered dynamic collection of properties. </p>
-                        <p>
-                        <p><em>key</em> - unique string</p>
-                        <p><em>value</em> - primitive value, object, or function</p>
-                        </p>
-                    </section>
+            <section>
+                <h2>Object</h2>
 
-                    <section>
-                        <h2>Object</h2>
+                <p>Object is an unordered dynamic collection of properties. </p>
+
+                <p>
+
+                <p><em>key</em> - unique string</p>
+
+                <p><em>value</em> - primitive value, object, or function</p>
+                </p>
+            </section>
+
+            <section>
+                <h2>Object</h2>
 					 <pre><code contenteditable>
                          var x = {
                          a: 10, // primitive value
@@ -547,10 +605,10 @@
                          alert(x.b.z); // 100
                          x.c(); // 'method x.c'
                      </code></pre>
-                    </section>
+            </section>
 
-                    <section>
-                        <h2>Dynamic nature</h2>
+            <section>
+                <h2>Dynamic nature</h2>
 					 <pre><code contenteditable>
                          var foo = { x: 10 };
 
@@ -564,13 +622,13 @@
 
                          foo.x(); // 'foo.x'
 
-                         delete foo.x;  // delete property
+                         delete foo.x; // delete property
                          console.log(foo); // {y: 20}
                      </code></pre>
-                    </section>
+            </section>
 
-                    <section>
-                        <h2>Dot and Array notation</h2>
+            <section>
+                <h2>Dot and Array notation</h2>
 					 <pre><code contenteditable>
                          var obj = {name:"Dima"};
 
@@ -583,10 +641,10 @@
                          obj.42= "forty-two"; // SyntaxError
                          obj["42"] = "forty-two";
                      </code></pre>
-                    </section>
+            </section>
 
-                    <section>
-                        <h2>Objects is everywhere</h2>
+            <section>
+                <h2>Objects is everywhere</h2>
 					 <pre><code contenteditable>
                          var a = { x: 10 };
                          a['y'] = 20;
@@ -602,10 +660,10 @@
                          c.y = 20;
                          c['z'] = 30;
                      </code></pre>
-                    </section>
+            </section>
 
-                    <section>
-                        <h2>[[prototype]] or __proto__</h2>
+            <section>
+                <h2>[[prototype]] or __proto__</h2>
                          <pre><code contenteditable>
                              var foo = {
                              x: 10,
@@ -619,10 +677,10 @@
         [[prototype]] : Object.prototype
         };
     </code></pre>
-                    </section>
+            </section>
 
-                    <section>
-                        <h2>[[prototype]] or __proto__</h2>
+            <section>
+                <h2>[[prototype]] or __proto__</h2>
     <pre><code contenteditable>
         var foo = {
         x: 10,
@@ -637,10 +695,10 @@
         /***/
         }
     </code></pre>
-                    </section>
+            </section>
 
-                    <section>
-                        <h2>[[prototype]] or __proto__</h2>
+            <section>
+                <h2>[[prototype]] or __proto__</h2>
     <pre><code contenteditable>
         Object.prototype.x = 10; // monkey patching
 
@@ -650,19 +708,20 @@
         alert(a.toString); // function
         alert(a.constructor); //function
     </code></pre>
-                    </section>
+            </section>
 
-                    <section>
-                        <h2>JavaScript ES5</h2>
+            <section>
+                <h2>JavaScript ES5</h2>
     <pre><code contenteditable>
         var emptyHash = Object.create(null);
         console.log(emptyHash.toString); // undefined
     </code></pre>
-                    </section>
+            </section>
 
-                    <section>
-                        <h2>For..In statement</h2>
-                        <p>Iterate through all of the members of an object:</p>
+            <section>
+                <h2>For..In statement</h2>
+
+                <p>Iterate through all of the members of an object:</p>
     <pre><code contenteditable>
         for (name in object) {
         if (object.hasOwnProperty(name)) {
@@ -674,10 +733,10 @@
         }
         }
     </code></pre>
-                    </section>
+            </section>
 
-                    <section>
-                        <h2>For..In statement</h2>
+            <section>
+                <h2>For..In statement</h2>
     <pre><code contenteditable>
         // monkey patching
         Object.prototype.bar = 1;
@@ -693,10 +752,10 @@
         }
         }
     </code></pre>
-                    </section>
+            </section>
 
-                    <section>
-                        <h2>Object methods <em>(ES3)</em></h2>
+            <section>
+                <h2>Object methods <em>(ES3)</em></h2>
     <pre><code contenteditable>
         var foo = { x: 10, y: 20 };
         console.log( foo.constructor == Object );
@@ -707,21 +766,23 @@
         console.log( foo.propertyIsEnumerable("x") == true );
         console.log( Object.prototype.isPrototypeOf(foo) == true );
     </code></pre>
-                    </section>
+            </section>
 
-                    <section>
-                        <h2>Native and host objects</h2>
-                        <p><em>Native</em> - defined by the ECMAScript specification.
-                            (Array, Date or user-defined (var o = {};))
-                        </p>
-                        <p><em>Host</em> - defined by the host environment (window and all the DOM objects)</p>
-                    </section>
+            <section>
+                <h2>Native and host objects</h2>
 
-                    <section>
-                        <h2>How to make a car?</h2>
-                    </section>
+                <p><em>Native</em> - defined by the ECMAScript specification.
+                    (Array, Date or user-defined (var o = {};))
+                </p>
 
-                    <section>
+                <p><em>Host</em> - defined by the host environment (window and all the DOM objects)</p>
+            </section>
+
+            <section>
+                <h2>How to make a car?</h2>
+            </section>
+
+            <section>
 					 <pre><code contenteditable>
                          function Car(model, color) {
                          this.model = model;
@@ -739,9 +800,9 @@
 
                          var lada = new Car("Kalina", "Gray");
                      </code></pre>
-                    </section>
+            </section>
 
-                    <section>
+            <section>
 					 <pre><code contenteditable>
                          // monkey patching
                          Function.prototype.method = function(name, fn) {
@@ -758,9 +819,9 @@
 
                          var lada = new Car("Kalina", "Gray");
                      </code></pre>
-                    </section>
+            </section>
 
-                    <section>
+            <section>
 					 <pre><code contenteditable>
                          function car(model, color) {
                          return {
@@ -777,9 +838,9 @@
 
                          var lada = car("Kalina", "Gray");
                      </code></pre>
-                    </section>
+            </section>
 
-                    <section>
+            <section>
 					 <pre><code contenteditable>
                          var lada = {
                          'model': "Kalina",
@@ -792,9 +853,9 @@
                          }
                          };
                      </code></pre>
-                    </section>
+            </section>
 
-                    <section>
+            <section>
 					 <pre><code contenteditable>
                          var lada = {
                          'model': "Kalina",
@@ -810,21 +871,21 @@
                          var superlada = Object.create(lada);
                          superlada.model = 'super';
                      </code></pre>
-                    </section>
+            </section>
 
-                    <section>
-                        <h2>Numbers</h2>
-                        <ul>
-                            <li>Only one number type (No integers)</li>
-                            <li>64-bit floating point</li>
-                            <li>Precision problem
-                                <p>0.1 + 0.2 = 0.30000000000000004</p>
-                            </li>
-                        </ul>
-                    </section>
+            <section>
+                <h2>Numbers</h2>
+                <ul>
+                    <li>Only one number type (No integers)</li>
+                    <li>64-bit floating point</li>
+                    <li>Precision problem
+                        <p>0.1 + 0.2 = 0.30000000000000004</p>
+                    </li>
+                </ul>
+            </section>
 
-                    <section>
-                        <h2>Numbers</h2>
+            <section>
+                <h2>Numbers</h2>
                      <pre><code contenteditable>
                          var integer = 1;
                          var floatingNumber = 1.5;
@@ -838,75 +899,96 @@
                          Number.POSITIVE_INFINITY
                          Number.NEGATIVE_INFINITY
                      </code></pre>
-                    </section>
+            </section>
 
-                    <section>
-                        <h2>Powerpoint</h2>
-                    </section>
+            <section>
+                <h2>Powerpoint</h2>
+            </section>
 
-                </section>
+        </section>
 
-                <section>
-                    map - parse int example
-                </section>
+        <section>
+            map - parse int example
+        </section>
 
-                <section>
-                    <p>if you dont like for example java you can use C#, ruby, python and so on</p>
-                    <p>buy if you dont like js..</p>
-                </section>
+        <section>
+            <p>if you dont like for example java you can use C#, ruby, python and so on</p>
 
-                <section>
-                    language designed to be simple
-                </section>
+            <p>buy if you dont like js..</p>
+        </section>
 
-                <section>
-                    https://www.destroyallsoftware.com/talks/the-birth-and-death-of-javascript
-                </section>
+        <section>
+            language designed to be simple
+        </section>
 
-                <section>
-                    <p>
-                        image credits:
-                        Dougls Crockford
-                        http://blog.thejsj.com/writing-my-own-json-parse/
+        <section>
+            https://www.destroyallsoftware.com/talks/the-birth-and-death-of-javascript
+        </section>
 
-                        Brendan Eich
-                        http://scholarsandrogues.com/2014/04/03/brendan-eich-out-at-mozilla-is-this-really-a-free-speech-crisis/
+        <section>
+            <p>
+                image credits:
+                Dougls Crockford
+                http://blog.thejsj.com/writing-my-own-json-parse/
 
-                        Angus Croll
-                        https://speakerdeck.com/anguscroll/the-book-nerds-guide-to-javascript
-                    </p>
-                </section>
-			</div>
+                Brendan Eich
+                http://scholarsandrogues.com/2014/04/03/brendan-eich-out-at-mozilla-is-this-really-a-free-speech-crisis/
 
-		</div>
+                Angus Croll
+                https://speakerdeck.com/anguscroll/the-book-nerds-guide-to-javascript
+            </p>
+        </section>
 
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.min.js"></script>
 
-		<script>
+    </div>
 
-			// Full list of configuration options available here:
-			// https://github.com/hakimel/reveal.js#configuration
-			Reveal.initialize({
-				controls: true,
-				progress: true,
-				history: true,
-				center: true,
+</div>
 
-				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
 
-				// Optional libraries used to extend on reveal.js
-				dependencies: [
-					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
-					// { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
-				]
-			});
+<script>
 
-		</script>
+    // Full list of configuration options available at:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
 
-	</body>
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+            {
+                src: 'lib/js/classList.js', condition: function () {
+                return !document.body.classList;
+            }
+            },
+            {
+                src: 'plugin/markdown/marked.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            }
+            },
+            {
+                src: 'plugin/markdown/markdown.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            }
+            },
+            {
+                src: 'plugin/highlight/highlight.js', async: true, condition: function () {
+                return !!document.querySelector('pre code');
+            }, callback: function () {
+                hljs.initHighlightingOnLoad();
+            }
+            },
+            {src: 'plugin/zoom-js/zoom.js', async: true},
+            {src: 'plugin/notes/notes.js', async: true}
+        ]
+    });
+
+</script>
+
+</body>
 </html>
