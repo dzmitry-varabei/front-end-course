@@ -6,6 +6,17 @@
 section.has-light-background, section.has-light-background h1, section.has-light-background h2, section.has-light-background h3, section.has-light-background h4, section.has-light-background h5, section.has-light-background h6 {
   color: #222; }
 
+.reveal section pre {
+  font-size: .8em; }
+
+.reveal section h2 {
+  color: #AAE3DA; }
+
+.reveal section h5 {
+  font-size: 2em;
+  color: #fff;
+  text-transform: none; }
+
 .reveal section .rs-logo {
   max-width: none;
   max-height: none;
@@ -43,7 +54,7 @@ body {
   background-size: cover; }
 
 .reveal {
-  font-family: "Walter Turncoat", Helvetica, sans-serif;
+  font-family: "Neucha", cursive;
   font-size: 38px;
   font-weight: normal;
   color: #fff; }
@@ -69,11 +80,11 @@ body {
 .reveal h6 {
   margin: 0 0 20px 0;
   color: #f5f9ad;
-  font-family: "Walter Turncoat", Helvetica, sans-serif;
+  font-family: "Neucha", cursive;
   font-weight: 600;
   line-height: 1.2;
   letter-spacing: normal;
-  text-transform: uppercase;
+  text-transform: none;
   text-shadow: none;
   word-wrap: break-word; }
 

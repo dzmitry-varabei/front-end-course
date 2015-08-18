@@ -19,11 +19,15 @@ $mainColor: #fff;
 $headingColor: #f5f9ad;
 
 $mainFontSize: 38px;
-$mainFont: 'Walter Turncoat', Helvetica, sans-serif;
-$headingFont: 'Walter Turncoat', Helvetica, sans-serif;
+//$mainFont: 'Walter Turncoat', Helvetica, sans-serif;
+//$headingFont: 'Walter Turncoat', Helvetica, sans-serif;
+
+$mainFont: 'Neucha', cursive;
+$headingFont: 'Neucha', cursive;
+
 $headingTextShadow: none;
 $headingLetterSpacing: normal;
-$headingTextTransform: uppercase;
+$headingTextTransform: none;
 $headingFontWeight: 600;
 $linkColor: #ed7777;
 $linkColorHover: lighten($linkColor, 15%);
@@ -34,12 +38,26 @@ $heading2Size: 2em;
 $heading3Size: 1.3em;
 $heading4Size: 1.0em;
 
+
 section.has-light-background {
   &, h1, h2, h3, h4, h5, h6 {
     color: #222;
   }
 }
 
+
+.reveal section pre {
+  font-size: .8em;
+}
+
+.reveal section h2 {
+  color: #AAE3DA;
+}
+.reveal section h5 {
+  font-size: $heading2Size;
+  color: #fff;
+  text-transform: none;
+}
 
 .reveal section .rs-logo {
   max-width: none;
