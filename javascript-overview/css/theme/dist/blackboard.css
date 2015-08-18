@@ -12,7 +12,8 @@ section.has-light-background, section.has-light-background h1, section.has-light
   opacity: 0.08;
   width: 500px;
   position: absolute;
-  top: 0; }
+  top: 0;
+  border: none; }
 
 .polaroid {
   position: relative;
