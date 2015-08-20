@@ -26,6 +26,9 @@ section.has-light-background, section.has-light-background h1, section.has-light
   top: 0;
   border: none; }
 
+.reveal section.min-pre pre {
+  margin: 10px 0; }
+
 .polaroid {
   position: relative;
   width: 220px; }
@@ -177,7 +180,7 @@ body {
 .reveal q {
   font-style: italic; }
 
-.reveal pre {
+.reveal pre, .reveal .pre {
   display: block;
   position: relative;
   width: 90%;
