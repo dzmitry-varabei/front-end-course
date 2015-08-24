@@ -57,7 +57,7 @@ body {
   background-size: cover; }
 
 .reveal {
-  font-family: "Neucha", cursive;
+  font-family: "Walter Turncoat", Helvetica, sans-serif;
   font-size: 38px;
   font-weight: normal;
   color: #fff; }
@@ -83,7 +83,7 @@ body {
 .reveal h6 {
   margin: 0 0 20px 0;
   color: #f5f9ad;
-  font-family: "Neucha", cursive;
+  font-family: "Walter Turncoat", Helvetica, sans-serif;
   font-weight: 600;
   line-height: 1.2;
   letter-spacing: normal;
