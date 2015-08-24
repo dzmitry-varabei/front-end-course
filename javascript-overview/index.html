@@ -19,8 +19,7 @@
 
     <link rel="stylesheet" href="css/reveal.css">
     <link rel="stylesheet" href="css/theme/dist/blackboard.css" id="theme">
-
-
+    
     <!-- Code syntax highlighting -->
     <link rel="stylesheet" href="lib/css/zenburn.css">
 
@@ -125,13 +124,13 @@
             <p>May 6-15, 1995</p>
         </section>
 
-        <section>
+        <section data-state="startsnow">
             <img width="206px" height="312" src="images/netscape-navigator.jpg" alt=""/>
 
             <p><em>First introduction and deployment in September 1995</em></p>
         </section>
 
-        <section class="fixedHeight">
+        <section data-state="stopsnow" class="fixedHeight">
             <h2>Evolution of name</h2>
 
             <div>
@@ -327,6 +326,10 @@
                 <li>....</li>
             </ul>
         </section>
+        
+        <section>
+            <img src="images/framework.png" alt=""/>
+        </section>
 
         <section>
             <h2>Nowadays!</h2>
@@ -352,6 +355,10 @@
             </h2>
 
             <p>Presentation inside browser</p>
+        </section>
+        
+        <section>
+            <img src="images/full_stack.jpg" alt=""/>
         </section>
 
         <section>
@@ -408,12 +415,7 @@
 
         <section>
             <h2>Emscripten</h2>
-            <ul>
-                <li>Qt</li>
-                <li>Graphviz</li>
-                <li>Emulators</li>
-                <li>Webkit</li>
-            </ul>
+            <img src="images/EmscriptenToolchain.png" alt=""/>
         </section>
 
         <section>
@@ -428,7 +430,7 @@
 
         <section>
             <h2>Asm.js</h2>
-            <img class="nodecorations" src="images/asmjs.png">
+            <img height="550px" class="nodecorations" src="images/asmjs.png">
         </section>
 
         <section>
@@ -502,6 +504,14 @@
             {src: 'plugin/notes/notes.js', async: true}
         ]
     });
+
+    Reveal.addEventListener( 'startsnow', function() {
+        // TODO: Sprinkle magic
+    }, false );
+
+    Reveal.addEventListener( 'stopsnow', function() {
+        // TODO: Sprinkle magic
+    }, false );
 
 </script>
 
