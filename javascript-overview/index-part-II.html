@@ -44,80 +44,7 @@
 
     <!-- Any section element inside of this container is displayed as a slide -->
     <div class="slides">
-
-        <section>
-            <h2>Wat</h2>
-                    <pre><code contenteditable>
-                        null == 0; // false
-                        null > 0; // false
-                        null >= 0; //true
-                    </code></pre>
-        </section>
-
-        <section>
-            <h2>Wat</h2>
-                    <pre><code contenteditable>
-                        var x = "50" - 0; // x == 50
-                        var x = "50" + 0; // x == “500”
-                    </code></pre>
-        </section>
-
-        <section>
-            <h2>Data types</h2>
-            <ul>
-                <li>Number</li>
-                <li class="fragment">String</li>
-                <li class="fragment">Boolean</li>
-                <li class="fragment">null</li>
-                <li class="fragment">undefined</li>
-                <li class="fragment">
-                    Object
-                    <ul class="fragment">
-                        <li>Object</li>
-                        <li>Array</li>
-                        <li>Date</li>
-                        <li>...</li>
-                    </ul>
-                </li>
-            </ul>
-        </section>
-
-        <section>
-            <h2>Primitive data types</h2>
-					 <pre><code contenteditable>
-                         var myNumber = 5;
-                         var myString = "Hello world!";
-                         var myBool = false;
-                         var myNull = null;
-                         var myUndefined = undefined;
-                     </code></pre>
-        </section>
-
-        <section>
-            <h2>Objects</h2>
-					 <pre><code contenteditable>
-                         var myObject = {};
-                         var myArray = [];
-                         var myFunction = function(){};
-                         var myDate = new Date();
-                         var myError = new Error();
-                         //....
-                     </code></pre>
-        </section>
-
-        <section>
-            <h2>Java syntax</h2>
-					 <pre><code contenteditable>
-                         var myNumber = new Number(5);
-                         var myString = new String("Hello world!");
-                         var myBool = new Boolean(false);
-                         var myArray = new Array();
-                         var myObject = new Object();
-                     </code></pre>
-            <p class="fragment"><em>Should be avoided!</em></p>
-        </section>
-
-        <section>
+          <section>
             <h2>Wat</h2>
                     <pre><code contenteditable>
                         var bool = new Boolean(false);
@@ -173,42 +100,6 @@
                          alert(x.a); // 10
                          alert(x.b.z); // 100
                          x.c(); // 'method x.c'
-                     </code></pre>
-        </section>
-
-        <section>
-            <h2>Dynamic nature</h2>
-					 <pre><code contenteditable>
-                         var foo = { x: 10 };
-
-                         foo.y = 20; // add new property
-                         console.log(foo); // {x: 10, y: 20}
-
-                         // change property value to function
-                         foo.x = function () {
-                         console.log('foo.x');
-                         };
-
-                         foo.x(); // 'foo.x'
-
-                         delete foo.x; // delete property
-                         console.log(foo); // {y: 20}
-                     </code></pre>
-        </section>
-
-        <section>
-            <h2>Dot and Array notation</h2>
-					 <pre><code contenteditable>
-                         var obj = {name:"Dima"};
-
-                         var key = "email";
-                         obj[key] = "dzmitry_varabei@epam.com";
-
-                         obj.getName = function() {return this.name;}
-                         obj.getName();
-
-                         obj.42= "forty-two"; // SyntaxError
-                         obj["42"] = "forty-two";
                      </code></pre>
         </section>
 
@@ -442,16 +333,6 @@
                      </code></pre>
         </section>
 
-        <section>
-            <h2>Numbers</h2>
-            <ul>
-                <li>Only one number type (No integers)</li>
-                <li>64-bit floating point</li>
-                <li>Precision problem
-                    <p>0.1 + 0.2 = 0.30000000000000004</p>
-                </li>
-            </ul>
-        </section>
 
         <section>
             <h2>Numbers</h2>
