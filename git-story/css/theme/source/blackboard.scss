@@ -13,17 +13,17 @@
 //@import url(../../lib/font/source-sans-pro/source-sans-pro.css);
 
 // Override theme settings (see ../template/settings.scss)
-$backgroundColor: #222 url("../../../images/blackboard-bg.jpg") no-repeat center;
+$backgroundColor: #222 url("../../../images-git/blackboard-bg.jpg") no-repeat center;
 
 $mainColor: #fff;
 $headingColor: #f5f9ad;
 
 $mainFontSize: 38px;
-$mainFont: 'Walter Turncoat', Helvetica, sans-serif;
-$headingFont: 'Walter Turncoat', Helvetica, sans-serif;
+//$mainFont: 'Walter Turncoat', Helvetica, sans-serif;
+//$headingFont: 'Walter Turncoat', Helvetica, sans-serif;
 
-//$mainFont: 'Neucha', cursive;
-//$headingFont: 'Neucha', cursive;
+$mainFont: 'Neucha', cursive;
+$headingFont: 'Neucha', cursive;
 
 $headingTextShadow: none;
 $headingLetterSpacing: normal;
@@ -38,13 +38,11 @@ $heading2Size: 2em;
 $heading3Size: 1.3em;
 $heading4Size: 1.0em;
 
-
 section.has-light-background {
   &, h1, h2, h3, h4, h5, h6 {
     color: #222;
   }
 }
-
 
 .reveal section pre {
   font-size: .8em;
@@ -53,6 +51,7 @@ section.has-light-background {
 .reveal section h2 {
   color: #AAE3DA;
 }
+
 .reveal section h5 {
   font-size: $heading2Size;
   color: #fff;
@@ -69,31 +68,39 @@ section.has-light-background {
   border: none;
 }
 
-
 .reveal section.min-pre pre {
   margin: 10px 0;
 }
 
-.polaroid {
-  position: relative;
-  width: 220px;
-}
-
-.polaroid img {
-  border: 10px solid #fff;
-  border-bottom: 45px solid #fff;
-  -webkit-box-shadow: 3px 3px 3px #777;
-  -moz-box-shadow: 3px 3px 3px #777;
-  box-shadow: 3px 3px 3px #777;
-}
-
-.polaroid p {
-  position: absolute;
-  text-align: center;
+.reveal table.snapshot-table {
   width: 100%;
-  bottom: 0px;
-  font: 400 18px/1 'Kaushan Script', cursive;
-  color: #888;
+  border-collapse: separate;
+  border-spacing: 10px;
+  tr {
+
+    th {
+      border: 0;
+      background: #555;
+      text-align: left;
+    }
+    td {
+      border: 0;
+      color: #fff;
+
+      strong {
+        color: #f5f9ad;
+      }
+    }
+
+    &.accent td {
+      color: #f2a3bd;
+    }
+
+  }
+}
+
+.top-section {
+  top: 0 !important;
 }
 
 // Theme template ------------------------------

@@ -29,35 +29,35 @@ section.has-light-background, section.has-light-background h1, section.has-light
 .reveal section.min-pre pre {
   margin: 10px 0; }
 
-.polaroid {
-  position: relative;
-  width: 220px; }
-
-.polaroid img {
-  border: 10px solid #fff;
-  border-bottom: 45px solid #fff;
-  -webkit-box-shadow: 3px 3px 3px #777;
-  -moz-box-shadow: 3px 3px 3px #777;
-  box-shadow: 3px 3px 3px #777; }
-
-.polaroid p {
-  position: absolute;
-  text-align: center;
+.reveal table.snapshot-table {
   width: 100%;
-  bottom: 0px;
-  font: 400 18px/1 "Kaushan Script", cursive;
-  color: #888; }
+  border-collapse: separate;
+  border-spacing: 10px; }
+  .reveal table.snapshot-table tr th {
+    border: 0;
+    background: #555;
+    text-align: left; }
+  .reveal table.snapshot-table tr td {
+    border: 0;
+    color: #fff; }
+    .reveal table.snapshot-table tr td strong {
+      color: #f5f9ad; }
+  .reveal table.snapshot-table tr.accent td {
+    color: #f2a3bd; }
+
+.top-section {
+  top: 0 !important; }
 
 /*********************************************
  * GLOBAL STYLES
  *********************************************/
 body {
-  background: #222 url("../../../images/blackboard-bg.jpg") no-repeat center;
-  background-color: #222 url("../../../images/blackboard-bg.jpg") no-repeat center;
+  background: #222 url("../../../images-git/blackboard-bg.jpg") no-repeat center;
+  background-color: #222 url("../../../images-git/blackboard-bg.jpg") no-repeat center;
   background-size: cover; }
 
 .reveal {
-  font-family: "Walter Turncoat", Helvetica, sans-serif;
+  font-family: "Neucha", cursive;
   font-size: 38px;
   font-weight: normal;
   color: #fff; }
@@ -83,7 +83,7 @@ body {
 .reveal h6 {
   margin: 0 0 20px 0;
   color: #f5f9ad;
-  font-family: "Walter Turncoat", Helvetica, sans-serif;
+  font-family: "Neucha", cursive;
   font-weight: 600;
   line-height: 1.2;
   letter-spacing: normal;
