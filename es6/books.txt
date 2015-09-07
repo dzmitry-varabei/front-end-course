@@ -1,0 +1,6 @@
+SpeakingJS
+
+Done:
+Speaking JavaScript
+
+15. Functions
