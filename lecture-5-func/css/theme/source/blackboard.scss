@@ -1,0 +1,101 @@
+/**
+ * Black theme for reveal.js. This is the opposite of the 'white' theme.
+ *
+ * Copyright (C) 2015 Hakim El Hattab, http://hakim.se
+ */
+// Default mixins and settings -----------------
+@import "../template/mixins";
+@import "../template/settings";
+
+// ---------------------------------------------
+
+// Include theme-specific fonts
+//@import url(../../lib/font/source-sans-pro/source-sans-pro.css);
+
+// Override theme settings (see ../template/settings.scss)
+$backgroundColor: #222 url("../../../images/blackboard-bg.jpg") no-repeat center;
+
+$mainColor: #fff;
+$headingColor: #f5f9ad;
+
+$mainFontSize: 38px;
+$mainFont: 'Walter Turncoat', Helvetica, sans-serif;
+$headingFont: 'Walter Turncoat', Helvetica, sans-serif;
+
+//$mainFont: 'Neucha', cursive;
+//$headingFont: 'Neucha', cursive;
+
+$headingTextShadow: none;
+$headingLetterSpacing: normal;
+$headingTextTransform: none;
+$headingFontWeight: 600;
+$linkColor: #ed7777;
+$linkColorHover: lighten($linkColor, 15%);
+$selectionBackgroundColor: lighten($linkColor, 25%);
+
+$heading1Size: 2.8em;
+$heading2Size: 2em;
+$heading3Size: 1.3em;
+$heading4Size: 1.0em;
+
+
+section.has-light-background {
+  &, h1, h2, h3, h4, h5, h6 {
+    color: #222;
+  }
+}
+
+
+.reveal section pre {
+  font-size: .8em;
+}
+
+.reveal section h2 {
+  color: #AAE3DA;
+}
+.reveal section h5 {
+  font-size: $heading2Size;
+  color: #fff;
+  text-transform: none;
+}
+
+.reveal section .rs-logo {
+  max-width: none;
+  max-height: none;
+  opacity: 0.08;
+  width: 500px;
+  position: absolute;
+  top: 0;
+  border: none;
+}
+
+
+.reveal section.min-pre pre {
+  margin: 10px 0;
+}
+
+.polaroid {
+  position: relative;
+  width: 220px;
+}
+
+.polaroid img {
+  border: 10px solid #fff;
+  border-bottom: 45px solid #fff;
+  -webkit-box-shadow: 3px 3px 3px #777;
+  -moz-box-shadow: 3px 3px 3px #777;
+  box-shadow: 3px 3px 3px #777;
+}
+
+.polaroid p {
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  bottom: 0px;
+  font: 400 18px/1 'Kaushan Script', cursive;
+  color: #888;
+}
+
+// Theme template ------------------------------
+@import "../template/theme";
+// ---------------------------------------------

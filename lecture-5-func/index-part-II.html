@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>reveal.js - The HTML Presentation Framework</title>
+
+    <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+    <meta name="author" content="Hakim El Hattab">
+
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link href='http://fonts.googleapis.com/css?family=Walter+Turncoat' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/dist/blackboard.css" id="theme">
+
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<div class="reveal">
+
+    <!-- Any section element inside of this container is displayed as a slide -->
+    <div class="slides">
+          <section>
+            <h2>Wat</h2>
+                    <pre><code contenteditable>
+                        var bool = new Boolean(false);
+                        if (bool){
+                        alert("wat"); // shows 'wat'
+                        }
+                    </code></pre>
+                    <pre class="fragment"><code contenteditable>
+                        var bool = false;
+                        if (bool){
+                        alert("wat"); //This will never be alerted.
+                        }
+                    </code></pre>
+        </section>
+
+        <section>
+            <h2>Wat</h2>
+					 <pre><code contenteditable>
+                         var a = new String("foo");
+                         var b = "foo";
+                         var c = new String("foo");
+
+                         a == b; // true
+                         b == c; // true
+                         a == c; // false
+                     </code></pre>
+        </section>
+
+        <section>
+            <h2>Object</h2>
+
+            <p>Object is an unordered dynamic collection of properties. </p>
+
+            <p>
+
+            <p><em>key</em> - unique string</p>
+
+            <p><em>value</em> - primitive value, object, or function</p>
+            </p>
+        </section>
+
+        <section>
+            <h2>Object</h2>
+					 <pre><code contenteditable>
+                         var x = {
+                         a: 10, // primitive value
+                         b: { z: 100 }, // object "b" with property z
+                         c: function () { // function (method)
+                         alert('method x.c');
+                         }
+                         };
+
+                         alert(x.a); // 10
+                         alert(x.b.z); // 100
+                         x.c(); // 'method x.c'
+                     </code></pre>
+        </section>
+
+        <section>
+            <h2>Objects is everywhere</h2>
+					 <pre><code contenteditable>
+                         var a = { x: 10 };
+                         a['y'] = 20;
+                         a.z = 30;
+
+                         var b = [1, 2, 3];
+                         b.x = 10;
+                         b.y = 20;
+                         b['z'] = 30;
+
+                         var c = function (x, y) { return x + y};
+                         c.x = 10;
+                         c.y = 20;
+                         c['z'] = 30;
+                     </code></pre>
+        </section>
+
+        <section>
+            <h2>[[prototype]] or __proto__</h2>
+                         <pre><code contenteditable>
+                             var foo = {
+                             x: 10,
+                             y: 20
+                             };
+                         </code></pre>
+    <pre class="fragment"><code contenteditable>
+        var foo = {
+        x: 10,
+        y: 20,
+        [[prototype]] : Object.prototype
+        };
+    </code></pre>
+        </section>
+
+        <section>
+            <h2>[[prototype]] or __proto__</h2>
+    <pre><code contenteditable>
+        var foo = {
+        x: 10,
+        y: 20,
+        [[prototype]] : Object.prototype
+        };
+
+        Object.prototype = {
+        constructor: Object,
+        toString: /***/,
+        hasOwnProperty: /***/
+        /***/
+        }
+    </code></pre>
+        </section>
+
+        <section>
+            <h2>[[prototype]] or __proto__</h2>
+    <pre><code contenteditable>
+        Object.prototype.x = 10; // monkey patching
+
+        var a = {}; // create "empty" "hash"
+
+        alert(a["x"]); // 10, but it's not empty
+        alert(a.toString); // function
+        alert(a.constructor); //function
+    </code></pre>
+        </section>
+
+        <section>
+            <h2>JavaScript ES5</h2>
+    <pre><code contenteditable>
+        var emptyHash = Object.create(null);
+        console.log(emptyHash.toString); // undefined
+    </code></pre>
+        </section>
+
+        <section>
+            <h2>For..In statement</h2>
+
+            <p>Iterate through all of the members of an object:</p>
+    <pre><code contenteditable>
+        for (name in object) {
+        if (object.hasOwnProperty(name)) {
+        // within the loop,
+        // name is the key of current member
+        // object[name] is the current value
+        console.log("name: " + name);
+        console.log("value: " + object[name]);
+        }
+        }
+    </code></pre>
+        </section>
+
+        <section>
+            <h2>For..In statement</h2>
+    <pre><code contenteditable>
+        // monkey patching
+        Object.prototype.bar = 1;
+
+        var foo = {moo: 2};
+        for(var i in foo) {
+        console.log(i); // bar, moo
+        }
+
+        for(var i in foo) {
+        if (foo.hasOwnProperty(i)) {
+        console.log(i); // moo
+        }
+        }
+    </code></pre>
+        </section>
+
+        <section>
+            <h2>Object methods <em>(ES3)</em></h2>
+    <pre><code contenteditable>
+        var foo = { x: 10, y: 20 };
+        console.log( foo.constructor == Object );
+        console.log( foo.toString() == "[object Object]" );
+        console.log( foo.valueOf() == foo );
+        console.log( foo.hasOwnProperty("x") == true );
+        console.log( foo.hasOwnProperty("toString") == false );
+        console.log( foo.propertyIsEnumerable("x") == true );
+        console.log( Object.prototype.isPrototypeOf(foo) == true );
+    </code></pre>
+        </section>
+
+        <section>
+            <h2>Native and host objects</h2>
+
+            <p><em>Native</em> - defined by the ECMAScript specification.
+                (Array, Date or user-defined (var o = {};))
+            </p>
+
+            <p><em>Host</em> - defined by the host environment (window and all the DOM objects)</p>
+        </section>
+
+        <section>
+            <h2>How to make a car?</h2>
+        </section>
+
+        <section>
+					 <pre><code contenteditable>
+                         function Car(model, color) {
+                         this.model = model;
+                         this.color = color;
+                         };
+
+                         Car.prototype.accelerate = function (effort) {
+                         //…
+                         };
+
+
+                         Car.prototype.brake = function (effort) {
+                         //…
+                         };
+
+                         var lada = new Car("Kalina", "Gray");
+                     </code></pre>
+        </section>
+
+        <section>
+					 <pre><code contenteditable>
+                         // monkey patching
+                         Function.prototype.method = function(name, fn) {
+                         this.prototype[name] = fn;
+                         };
+
+                         function Car(model, color) {
+                         this.model = model;
+                         this.color = color;
+                         };
+
+                         Car.method("accelerate", function (effort) { /* ... */ });
+                         Car.method("brake", function (effort) { /* ... */ });
+
+                         var lada = new Car("Kalina", "Gray");
+                     </code></pre>
+        </section>
+
+        <section>
+					 <pre><code contenteditable>
+                         function car(model, color) {
+                         return {
+                         'model': model,
+                         'color': color,
+                         'accelerate': function (effort) {
+                         //...
+                         },
+                         'brake': function (effort) {
+                         //...
+                         }
+                         };
+                         }
+
+                         var lada = car("Kalina", "Gray");
+                     </code></pre>
+        </section>
+
+        <section>
+					 <pre><code contenteditable>
+                         var lada = {
+                         'model': "Kalina",
+                         'color': "Gray",
+                         'accelerate': function (effort) {
+                         //...
+                         },
+                         'brake': function (effort) {
+                         //...
+                         }
+                         };
+                     </code></pre>
+        </section>
+
+        <section>
+					 <pre><code contenteditable>
+                         var lada = {
+                         'model': "Kalina",
+                         'color': "Gray",
+                         'accelerate': function (effort) {
+                         //...
+                         },
+                         'brake': function (effort) {
+                         //...
+                         }
+                         };
+
+                         var superlada = Object.create(lada);
+                         superlada.model = 'super';
+                     </code></pre>
+        </section>
+
+
+        <section>
+            <h2>Numbers</h2>
+                     <pre><code contenteditable>
+                         var integer = 1;
+                         var floatingNumber = 1.5;
+
+                         /* Special numeric values */
+                         Infinity
+                         NaN // Not a Number
+                         Number.NaN
+                         Number.MAX_VALUE
+                         Number.MIN_VALUE
+                         Number.POSITIVE_INFINITY
+                         Number.NEGATIVE_INFINITY
+                     </code></pre>
+        </section>
+    </div>
+
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+
+    // Full list of configuration options available at:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+            {
+                src: 'lib/js/classList.js', condition: function () {
+                return !document.body.classList;
+            }
+            },
+            {
+                src: 'plugin/markdown/marked.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            }
+            },
+            {
+                src: 'plugin/markdown/markdown.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            }
+            },
+            {
+                src: 'plugin/highlight/highlight.js', async: true, condition: function () {
+                return !!document.querySelector('pre code');
+            }, callback: function () {
+                hljs.initHighlightingOnLoad();
+            }
+            },
+            {src: 'plugin/zoom-js/zoom.js', async: true},
+            {src: 'plugin/notes/notes.js', async: true}
+        ]
+    });
+
+</script>
+
+</body>
+</html>

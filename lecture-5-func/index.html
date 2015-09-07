@@ -1,0 +1,867 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>reveal.js - The HTML Presentation Framework</title>
+
+    <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+    <meta name="author" content="Hakim El Hattab">
+
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link href='http://fonts.googleapis.com/css?family=Walter+Turncoat' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/dist/blackboard.css" id="theme">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<div class="reveal">
+
+    <!-- Any section element inside of this container is displayed as a slide -->
+    <div class="slides">
+        <section>
+            <h1>Functions</h1>
+
+            <p>Lecture #5 </p>
+        </section>
+
+        <section>
+            <h3>What is common between<br>
+                Johnny Depp and JS Function? </h3>
+
+        </section>
+
+        <section>
+            <img src="images/johnny-depp.jpg"/>
+        </section>
+
+        <section>
+            <h3>They play a lot of different roles </h3>
+        </section>
+
+        <section>
+            <h3>function as normal function </h3>
+
+            <pre><code class="hljs javascript">
+function add(a, b) {
+    return a + b;
+}
+            </code></pre>
+        </section>
+
+        <section>
+            <h3>function as method </h3>
+
+            <pre><code class="hljs javascript">
+var Rectangle = {
+    x: 2,
+    y: 4,
+    perimeter : function() {
+        return (this.x+this.y)*2;
+    }
+}
+
+Rectangle.perimeter(); // 12
+            </code></pre>
+        </section>
+
+        <section>
+            <h3>function as constructor </h3>
+
+            <pre><code class="hljs javascript">
+function Rectangle(x, y) {
+    this.x = x;
+    this.y = y;
+}
+
+var rect = new Rectangle();
+            </code></pre>
+        </section>
+
+
+        <section>
+            <h6> function <span style="color: #CC9393;">declaration</span></h6>
+
+            <p>VS</p>
+            <h6>function <span style="color: #CC9393;">expression</span></h6>
+        </section>
+
+
+        <section>
+            <h3>function declaration </h3>
+
+            <pre><code class="hljs javascript">
+function functionName([parameters]){
+    //functionBody
+};
+            </code></pre>
+
+
+             <pre><code class="hljs javascript">
+add(2, 4); // works
+
+function add(x, y) {
+    return x + y;
+}
+             </code></pre>
+        </section>
+
+
+        <section>
+            <h3>function declaration </h3>
+
+            <pre><code class="hljs javascript">
+alert(x); // prints function body
+
+var x = 10;
+alert(x); // 10
+
+x = 20;
+function x() {};
+alert(x); // 20
+            </code></pre>
+        </section>
+
+
+        <section>
+            <h3><span style="color:#ccc">anonymous</span> function expression </h3>
+
+            <pre><code class="hljs javascript">
+variableName = function([parameters]){
+    //functionBody
+};
+            </code></pre>
+
+
+             <pre><code class="hljs javascript">
+add; //undefined
+add(2, 4); // this raises a TypeError
+
+var add = function(x, y) {
+   return x + y;
+}
+             </code></pre>
+        </section>
+
+
+        <section>
+            <h3>named function expression </h3>
+
+            <pre><code class="hljs javascript">
+variableName = function functionName([parameters]){
+    //functionBody
+};
+            </code></pre>
+
+
+             <pre><code class="hljs javascript">
+var foo = function bar() {
+    bar(); // works
+}
+
+bar(); // ReferenceError
+             </code></pre>
+        </section>
+
+        <section>
+            <h3>function</h3>
+
+            <pre><code class="hljs javascript">
+variableName = new Function( 
+    /*
+        parameters 
+    */, 
+    functionBody
+);
+            </code></pre>
+               <pre><code class="hljs javascript">
+var add = new Function(“x”, “y”, “return x + y”);
+               </code></pre>
+        </section>
+
+        <section>
+            <h4>Strategy of passing arguments to function </h>
+
+            <p><u>Primitive</u> types are manipulated <u>by value</u>.</p>
+
+            <p><u>Object</u> types are manipulated <u>by sharing</u>.</p>
+                <pre><code class="hljs javascript">
+function func(obj){
+    obj.prop1 = 5;
+    obj = {};
+}
+
+var data = {};
+
+func(data);
+console.log(data); // {prop1: 5}
+                </code></pre>
+        </section>
+
+        <section>
+            <h3>function as data </h3>
+
+            <pre><code class="hljs javascript">
+function square(x) { return x * x; }
+
+var pointerToSquare = square;
+Assert(pointerToSquare(3) == 9);
+
+var newArray = ["a", "b", "c", pointerToSquare];
+Assert(newArray[3](4) == 16);
+
+var obj = { "square": square };
+Assert(obj.square(5) == 25);
+            </code></pre>
+        </section>
+
+        <section>
+            <h3>static members </h3>
+
+
+             <pre><code class="hljs javascript">
+function MyMath() {
+    //math here...
+}
+
+MyMath.Pi = 3.14;
+             </code></pre>
+
+             <pre><code class="hljs javascript">
+function getNewId() {
+    if (!getNewId.lastId) getNewId.lastId = 0;
+    return ++getNewId.lastId;
+}
+             </code></pre>
+
+        </section>
+
+        <section>
+            <h3>return statement </h3>
+             <pre><code class="hljs javascript">
+                 return expression;
+             </code></pre>
+            <p>or</p>
+              <pre><code class="hljs javascript">
+                  return; // return undefined
+              </code></pre>
+            <p>If there is no <i>expression</i>, then the return value is <u>undefined</u>.<br/>
+                Except for constructors, whose default return value is <u>this</u>.</p>
+
+        </section>
+
+        <section>
+            <h3>function arguments</h3>
+
+            <ol>
+                <li>If a function is called with too many arguments, the extra arguments are ignored.</li>
+                <br/>
+                <li>If a function is called with too few arguments, the missing values will be undefined.</li>
+            </ol>
+
+        </section>
+
+        <section>
+            <h6>optional arguments and argument types </h6>
+
+            <pre style="font-size: .6em;"><code class="hljs javascript">
+function NodeText(/*domNode|String*/ node, /*String?*/ text) {
+
+    if (typeof node == “string”){
+        node = document.getElementById(node);
+        if (!node) return;
+    }
+    
+    if(text != null) {
+        node.innerHTML = text;
+    } else {
+        return node.innerHTML ;
+    }
+}
+            </code></pre>
+        </section>
+        <section>
+            <h3>configuration objects</h3>
+
+            <pre style="font-size: .5em;"><code class="hljs javascript">
+var printEmployeeInformation = function (info) {
+    var firstName = info.firstName || "";
+    var lastName = info.lastName || "";
+    var position = info.position || "";
+    var office = info.office || "K1";
+    var phone = info.phone || "911";
+    var internalPhone = info.internalPhone || "";
+    var manager = info.manager || "";
+    ///…
+}
+
+var info = { firstName: “Bruce", lastName: "Wayne", internalPhone: “111" };
+info.office = "R40";
+printEmployeeInformation(info);
+info.office = "K1";
+printEmployeeInformation(info);
+            </code></pre>
+
+        </section>
+
+        <section>
+            <h3>pseudo parameters</h3>
+
+            <ul>
+                <li>arguments</li>
+                <li>this</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>the "arguments" object</h3>
+
+            <p><u>arguments</u> contains the following properties:
+            </p>
+
+            <ul>
+                <li><span style="color: #CC9393;">callee</span> – reference to the current function</li>
+                <li><span style="color: #CC9393;">length</span> – quantity of real passed arguments</li>
+                <li><span style="color: #CC9393;">properties-indexes</span> – parameters from the invocation</li>
+            </ul>
+
+            <p>It is an array-like object. </p>
+        </section>
+
+        <section>
+
+            <pre style="font-size: .6em; "><code style="max-height: 550px;" class="hljs javascript">
+foo(10, 20);
+
+function foo(x, y, z) {
+    // quantity of defined function arguments (x, y, z)
+    alert(foo.length); // 3
+    
+    // quantity of really passed arguments (only x, y)
+    alert(arguments.length); // 2
+    
+    // reference of a function to itself
+    alert(arguments.callee === foo);
+    
+    // parameters sharing
+    alert(x === arguments[0]); // true
+    alert(x); // 10
+    
+    alert(arguments[2]); // undefined
+}
+            </code></pre>
+
+        </section>
+
+        <section>
+            <h3>the "arguments" object</h3>
+
+            <pre style="font-size: .7em; "><code class="hljs javascript">
+function sum() {
+    var n = arguments.length;
+    var total = 0;
+
+    for (var i = 0; i < n; i++) {
+        total += arguments[i];
+    }
+
+    return total;
+}
+var ten = sum(1, 2, 3, 4);
+            </code></pre>
+
+
+        </section>
+
+        <section>
+            <h1>THIS</h1>
+        </section>
+
+        <section>
+            <h3>this</h3>
+                 <pre style="font-size: .7em; "><code class="hljs javascript">
+function Car(model, color) {
+    this.model = model;
+    this.color = color;
+    this.changeGear = function (value) {
+         this.currentGear = value;
+         //....
+    }
+}
+                 </code></pre>
+        </section>
+
+        <section>
+            <h3>this</h3>
+
+            <p><u>determined on runtime</u> and <u>immutable</u></p>
+        </section>
+
+        <section>
+            <h3><span style="color: #CC9393;">this</span> in the global context </h3>
+                 <pre style="font-size: .7em; "><code class="hljs javascript">
+var x = 20;
+
+console.log(x == window.x);
+console.log(this.x == x);
+console.log(this.x == window.x);
+                 </code></pre>
+        </section>
+
+        <section>
+            <h3><span style="color: #CC9393;">this</span> in the function context </h3>
+
+            <p>Value of <u>this</u> in function is determined by the form on invocation but not context of
+                definition.</p>
+                 <pre style="font-size: .5em; "><code style="" class="hljs javascript">
+function foo() {
+    console.log(this.bar);
+}
+
+var x = { bar: 1 };
+var y = { bar: 2 };
+
+x.foo = foo;
+y.foo = foo;
+
+x.foo(); // 1
+y.foo(); // 2
+
+var bar = 3;
+foo(); //3
+
+new foo(); // undefined</code></pre>
+        </section>
+
+        <section>
+            <h3>function form</h3>
+
+             <pre style="font-size: .7em; "><code class="hljs javascript">
+foo();
+
+function foo(){
+    this === window; // Fixed in ES5/Strict
+}
+             </code></pre>
+        </section>
+
+        <section>
+            <h3>method form</h3>
+
+             <pre style="font-size: .55em; "><code class="hljs javascript">
+var test = {
+    “name”: “Max”,
+    “foo”: function(){
+        alert(this.name);
+    }
+};
+
+test.foo(); //this === test
+test[“foo”](); // this === test
+
+var foo = test.foo;
+foo(); // this === window
+             </code></pre>
+        </section>
+
+        <section>
+            <h3>constructor form </h3>
+
+             <pre style="font-size: .7em; "><code class="hljs javascript">
+function Car(model, color) {
+    this.model = model;
+    this.color = color;
+    this.changeGear = function () {
+        //…
+    }
+}
+
+var bmw1 = new Car(“z1", “black")
+bmw1.changeGear();
+             </code></pre>
+        </section>
+
+
+        <section>
+            <h3>constructor form </h3>
+
+             <pre style="font-size: .7em; "><code class="hljs javascript">
+function Car(model, color) {
+    this.model = model; // this === window
+    this.color = color;
+    this.changeGear = function () {
+        //…
+    }
+}
+
+var bmw1 = Car(“z1", “black"); // without new
+bmw1.changeGear();
+             </code></pre>
+        </section>
+
+        <section>
+            <h3>constructor form </h3>
+
+             <pre style="font-size: .7em; "><code class="hljs javascript">
+function Car(model, color) {
+   var that = {};
+   that.model = model;
+   that.color = color;
+   that.changeGear = function () {
+       //…
+   }
+   return that;
+}
+
+var bmw1 = Car(“z1", “black"); // without new
+bmw1.changeGear();
+             </code></pre>
+        </section>
+
+        <section>
+            <h3>enforcing new</h3>
+
+             <pre style="font-size: .7em; "><code class="hljs javascript">
+function Car(model, color) {
+    if (!(this instanceof Car)) {
+        return new Car(model, color);
+    }
+
+    this.model = "model";
+    //...........
+}
+
+var lada = Car("kalina", "gray");
+             </code></pre>
+        </section>
+
+        <section>
+            <h3>inner form</h3>
+
+             <pre style="font-size: .7em; "><code style="max-height: 550px;" class="hljs javascript">
+function Car(model, color) {
+    this.model = model;
+    this.color = color;
+    this.changeGear = function () {
+        var that = this;
+        var inner = function() {
+            //this === window
+            // Use that instead of this here
+        }
+
+        inner();
+    }
+}
+             </code></pre>
+        </section>
+
+        <section>
+            <h3>explicit setting of <u>this</u></h3>
+
+             <pre><code class="hljs javascript">
+foo.apply(thisObject,[arguments])
+foo.call(thisObject, / *arguments */);
+             </code></pre>
+
+            <p>A function’s <b style="color: #CC9393;">apply</b> or <b style="color: #CC9393;">call</b> method allows
+                for calling the function, explicitly specifying <b style="color: #CC9393;">this</b>.</p>
+        </section>
+
+        <section>
+            <h3>arguments / apply</h3>
+
+             <pre><code class="hljs javascript">
+var array = [1,2,368,10,45];
+
+Math.max.apply(Math,array); //368
+             </code></pre>
+        </section>
+
+        <section>
+            <h3>solid type-checking function</h3>
+
+             <pre style="font-size: .7em; "><code class="hljs javascript">
+function type(v) {
+    if (v === null) { return 'null'; }
+    if (typeof v === undefined) { return 'undefined'; }
+    return Object.prototype.toString.call(v). slice(8, -1).toLowerCase();
+}
+
+type({}); // 'object'
+type([]); // 'array'
+type(333); // 'number'
+type(new String(“str”)); //’string’
+             </code></pre>
+        </section>
+
+        <section>
+            <h3>borrowing methods </h3>
+
+             <pre style="font-size: .7em; "><code class="hljs javascript">
+notmyobj.doStuff.call(myobj, param1, p2, p3);
+notmyobj.doStuff.apply(myobj, [param1, p2, p3]);
+             </code></pre>
+
+             <pre style="font-size: .7em; "><code class="hljs javascript">
+function f() {
+    var args = [].slice.call(arguments, 1, 3);
+    
+    return args;
+}
+
+f(1,2,3,4,5,6); // [2, 3]
+             </code></pre>
+        </section>
+
+        <section>
+            <h2>Lexical (Static) Scope</h2>
+        </section>
+
+         <section>
+            <h3>Lexical (Static) Scope</h3>
+
+            <p>Static structure of a program determines the scope of a variable. </p>
+      <pre style="font-size: .65em; "><code class="hljs javascript">
+function f() {
+    var x = 2;
+    function g() {
+        alert(x);
+    }
+}
+      </code></pre>
+        </section>
+
+
+        <section>
+            <h3>Lexical (Static) Scope</h3>
+
+      <pre style="font-size: .65em; "><code class="hljs javascript">
+var z = 10;
+function foo() {
+    alert(z);
+}
+
+foo();
+
+(function () {
+    var z = 20;
+    foo();
+})();
+      </code></pre>
+
+            <p>The word <u>"static"</u> relates to ability to determine the scope of an identifier during the parsing stage of a program.</p>
+        </section>
+
+        <section>
+            <h3>Immediately-Invoked Function Expression (IIFE)</h3>
+        </section>
+
+
+        <section>
+            <h3>Immediately-Invoked Function Expression</h3>
+
+             <pre style="font-size: .7em; "><code class="hljs javascript">
+(function () { // open IIFE
+    // inside IIFE
+}()); // close IIFE
+             </code></pre>
+
+            <p>or</p>
+
+           <pre style="font-size: .7em; "><code class="hljs javascript">
+(function (x, y) {
+    console.log(x + y);
+}(2,4));
+           </code></pre>
+
+        </section>
+
+        <section>
+            <h3>why IIFE ?
+            </h3>
+        </section>
+
+        <section>
+            <p>Avoiding global variable or hiding variables from global scope.</p>
+      <pre style="font-size: .7em; "><code class="hljs javascript">
+(function () {
+    var x = 2;
+    var y = 4;
+}());
+
+typeof window.x === “undefined”;
+typeof window.y === “undefined”;
+
+      </code></pre>
+        </section>
+
+        <section>
+            <p>Avoiding variable sharing. </p>
+      <pre style="font-size: .7em; "><code class="hljs javascript">
+function f() {
+    var result = [];
+    
+    for (var i=0; i<3; i++) {
+        var func = function () { return i; };
+        result.push(func);
+    }
+
+    return result;
+}
+console.log(f()[0]()); // 3
+console.log(f()[1]()); // 3
+console.log(f()[2]()); // 3
+
+      </code></pre>
+        </section>
+
+
+        <section>
+            <p>Avoiding variable sharing. </p>
+      <pre style="font-size: .7em; "><code class="hljs javascript">
+function f() {
+    var result = [];
+    for (var i=0; i<3; i++) {
+        (function () { // step 1: IIFE
+            var pos = i; // step 2: copy
+            var func = function () { return pos; };
+            result.push(func);
+        }()); 
+    }
+
+    return result;
+}
+console.log(f()[0]()); // 0
+console.log(f()[1]()); // 1
+console.log(f()[2]()); // 2
+      </code></pre>
+        </section>
+
+        <section>
+            <p>Keeping data private to all of a constructor </p>
+      <pre style="font-size: .5em; "><code style="max-height: 550px;" class="hljs javascript">
+var StringBuilder = function () { // open IIFE
+    var KEY_BUFFER = '_StringBuilder_buffer_' + uuid.v4();
+
+    function StringBuilder() {
+        this[KEY_BUFFER] = [];
+    }
+
+    StringBuilder.prototype = { // Omitted: methods accessing this[KEY_BUFFER]
+        //….
+    };
+
+    return StringBuilder;
+}(); // close IIFE
+
+      </code></pre>
+        </section>
+
+        <section>
+            <p>Attaching data to a method</p>
+      <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
+var obj = {
+    method: function () { // open IIFE
+        // method-private data
+        var invocCount = 0;
+        return function () {
+            invocCount++;
+            console.log('Invocation #'+invocCount);
+            return 'result'; 
+        };
+    }() // close IIFE
+};
+
+      </code></pre>
+        </section>
+
+        <section>
+            <h3>Bjarne Stroustrup:</h3>
+            <blockquote>There are only two kinds of languages: the ones people complain about and the ones nobody uses</blockquote>
+
+        </section>
+
+    </div>
+
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+
+    // Full list of configuration options available at:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+            {
+                src: 'lib/js/classList.js', condition: function () {
+                return !document.body.classList;
+            }
+            },
+            {
+                src: 'plugin/markdown/marked.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            }
+            },
+            {
+                src: 'plugin/markdown/markdown.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            }
+            },
+            {
+                src: 'plugin/highlight/highlight.js', async: true, condition: function () {
+                return !!document.querySelector('pre code');
+            }, callback: function () {
+                hljs.initHighlightingOnLoad();
+            }
+            },
+            {src: 'plugin/zoom-js/zoom.js', async: true},
+            {src: 'plugin/notes/notes.js', async: true}
+        ]
+    });
+
+    Reveal.addEventListener('startsnow', function () {
+        // TODO: Sprinkle magic
+    }, false);
+
+    Reveal.addEventListener('stopsnow', function () {
+        // TODO: Sprinkle magic
+    }, false);
+
+</script>
+
+</body>
+</html>
