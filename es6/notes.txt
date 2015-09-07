@@ -1,0 +1,14 @@
+1 + NaN
+1 + undefined
+-------
+eval is evil - example
+--------
+
+embeded script and javascript evaluation in query string
+---------
+
+First lecture:
+webRTC, Firefox OS /// Sim access via JS
+about es2015 and es2016
+es4 -> es6
+es3.1 -> es5
