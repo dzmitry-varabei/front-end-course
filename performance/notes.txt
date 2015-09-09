@@ -1,0 +1,6 @@
+High Resolution Time API
+
+http://www.sitepoint.com/discovering-the-high-resolution-time-api/
+performance.now() vs date.now()
+============
+
