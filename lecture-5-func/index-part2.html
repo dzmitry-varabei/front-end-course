@@ -41,8 +41,15 @@
 
 <div class="reveal">
 
+
     <!-- Any section element inside of this container is displayed as a slide -->
     <div class="slides">
+
+
+        <section>
+            <h1>Functions. Part II</h1>
+        </section>
+
         <section>
             <h2>Lexical (Static) Scope</h2>
         </section>
@@ -238,41 +245,44 @@ var obj = {
 
         <section><h3>Duck typing</h3>
                   <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
-                      var t = {
-                      "0": "a",
-                      "1": "ab",
-                      "2": "abc",
-                      length: 3
-                      };
+var t = {
+    "0": "a",
+    "1": "ab",
+    "2": "abc",
+    length: 3
+};
 
-                      [ ].push.call(t, "abcd");
-                      [ ].join.call(t, " -- ");
+[ ].push.call(t, "abcd");
+[ ].join.call(t, " -- ");
                   </code></pre>
         </section>
 
         <section><h3>Closures</h3>
                   <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
-                      var inner;
-                      function outer(){
-                      var local = 1;
-                      inner = function(){
-                      return local;
-                      };
-                      }
-                      inner();
-                      outer();
-                      inner();
+var inner;
+function outer(){
+    var local = 1;
+    
+    inner = function(){
+        return local;
+    };
+}
+
+inner();
+outer();
+inner();
                   </code></pre>
         </section>
 
         <section><h3>Closures</h3>
                   <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
-                      function sayHello() {
-                      var text = "Hello #1";
-                      var sayAlert = function() { alert(text); }
-                      text = "Hello #2";
-                      sayAlert();
-                      }
+function sayHello() {
+    var text = "Hello #1";
+    var sayAlert = function() { alert(text); }
+    
+    text = "Hello #2";
+    sayAlert();
+}
                   </code></pre>
         </section>
 
@@ -293,21 +303,22 @@ var obj = {
 
         <section><h3>Private Members</h3>
                   <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
-                      function makeProperty(obj, name, predicate) {
-                      var value;
-                      obj["get" + name] = function() { return value; };
-                      obj["set" + name] = function(v) {
-                      if (predicate && !predicate(v)) return;
-                      value = v;
-                      };
-                      }
+function makeProperty(obj, name, predicate) {
+    var value;
+    obj["get" + name] = function() { return value; };
+    obj["set" + name] = function(v) {
+        if (predicate && !predicate(v)) return;
+        value = v;
+    };
+}
                   </code></pre>
 
              <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
-                 var obj = {};
-                 makeProperty(obj, "Name", function(x) { return typeof x == "string"; });
-                 obj.setName("Dima");
-                 Assert(obj.getName() == "Dima");
+var obj = {};
+makeProperty(obj, "Name", function(x) { return typeof x == "string"; });
+
+obj.setName("Dima");
+Assert(obj.getName() == "Dima");
              </code></pre>
         </section>
 
@@ -317,118 +328,115 @@ var obj = {
 
         <section><h3>Returning functions</h3>
              <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
-                 function setup() {
-                 var count = 0;
-                 return function() {
-                 return ++count;
-                 }
-                 }
-                 var next = setup();
-                 next(); // 1
-                 next(); // 2
-             </code></pre>
-        </section>
+function setup() {
+    var count = 0;
+    return function() {
+        return ++count;
+    }
+}
 
-        <section><h3>Self-executable function</h3>
-             <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
-                 (function (a, b){
-                 var c = a + b;
-                 alert(c);
-                 })(1, 2);
+var next = setup();
+next(); // 1
+next(); // 2
              </code></pre>
         </section>
 
         <section><h3>Self-overwriting functions</h3>
              <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
-                 function next() {
-                 var count = 1;
-                 next = function() {
-                 return ++count;
-                 };
-                 return count;
-                 }
-                 next(); // 1
-                 next(); // 2
+function next() {
+    var count = 1;
+    next = function() {
+        return ++count;
+    };
+
+    return count;
+}
+next(); // 1
+next(); // 2
              </code></pre>
         </section>
 
         <section><h3>Lazy function definition</h3>
              <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
-                 function lazy(){
-                 var result = 2 + 2;
-                 lazy = function() {
-                 return result;
-                 }
-                 return lazy();
-                 }
-                 lazy(); // 4
-                 lazy(); // 4
+function lazy(){
+    var result = 2 + 2;
+    lazy = function() {
+        return result;
+    }
+    return lazy();
+}
+
+lazy(); // 4
+lazy(); // 4
              </code></pre>
         </section>
 
 
         <section><h3>Chaining</h3>
              <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
-                 var o = {
-                 v:1,
-                 increment: function() {
-                 this.v++;
-                 return this;
-                 },
-                 add: function (v){
-                 this.v += v;
-                 return this;
-                 },
-                 shout: function() {
-                 alert(this.v);
-                 }
-                 };
-                 o.increment().add(3).shout() // 5
+var o = {
+    v:1,
+    increment: function() {
+        this.v++;
+        return this;
+    },
+    add: function (v){
+        this.v += v;
+        return this;
+    },
+    shout: function() {
+        alert(this.v);
+    }
+};
+o.increment().add(3).shout() // 5
              </code></pre>
         </section>
 
         <section><h3>Chaining</h3>
              <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
-                 //DOM api
-                 var headers = document.getElementsByTagName("h1");
-                 for (var i = 0, l = headers.length; i < l; i++) {
-                 headers[i].className = "title";
-                 headers[i].innerHTML = "Hello World";
-                 }
-                 //jQuery
-                 $("h1").addClass("title").html("Hello World");
+//DOM api
+var headers = document.getElementsByTagName("h1");
+
+for (var i = 0, l = headers.length; i < l; i++) {
+    headers[i].className = "title";
+    headers[i].innerHTML = "Hello World";
+}
+
+//jQuery
+$("h1").addClass("title").html("Hello World");
              </code></pre>
         </section>
 
         <section><h3>Singleton</h3>
              <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
-                 function Single () {
-                 var instance = this;
-                 //add more to this...
-                 Single = function () {
-                 return instance;
-                 };
-                 }
+function Single () {
+    var instance = this;
+    //add more to this...
+    Single = function () {
+        return instance;
+    };
+}
              </code></pre>
         </section>
 
 
         <section><h3>Decorator</h3>
              <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
-                 function logArgs(f){
-                 return function(){
-                 console.dir(arguments);
-                 return f.apply(this, arguments);
-                 }
-                 }
+function logArgs(f){
+    return function(){
+        console.dir(arguments);
+        return f.apply(this, arguments);
+    }
+}
              </code></pre>
 
             <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
-                function sum(x, y){
-                return x + y;
-                }
-                sum = logArgs(sum);
-                sum(2, 7);
+function sum(x, y){
+    return x + y;
+}
+
+sum = logArgs(sum);
+sum(2, 7);
             </code></pre>
         </section>
 
@@ -436,35 +444,37 @@ var obj = {
 
         <section><h3>Private members</h3>
              <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
-                 var obj = new function () {
-                 var privateVariable;
-                 function privateFunction(x) {
-                 // privateVariable
-                 }
-                 return {
-                 firstMethod: function (a, b) {
-                 },
-                 secondMethod: function (c) {
-                 }
-                 // privateVariable
-                 // privateFunction()
-                 };
-                 };
+var obj = new function () {
+    var privateVariable;
+    function privateFunction(x) {
+        // privateVariable
+    }
+    return {
+        firstMethod: function (a, b) {
+            // access to privateVariable
+        },
+        secondMethod: function (c) {
+            // access to privateVariable
+            // access to privateFunction()
+        } 
+    };
+};
              </code></pre>
 
         </section>
 
         <section>
              <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
-                 function add(x, y) { return x + y; }
-                 function mul(x, y) { return x * y; }
-                 function make(/*???*/) { /* ??? */ }
-                 var s = make(1)(2)(3)(4)(5);
-                 Assert(s(add) == 15);
-                 Assert(s(mul) == 120);
-                 var x = make(5)(10)(15);
-                 Assert(x(add) == 30);
-                 Assert(x(mul) == 750);
+function add(x, y) { return x + y; }
+function mul(x, y) { return x * y; }
+function make(/*???*/) { /* ??? */ }
+
+var s = make(1)(2)(3)(4)(5);
+Assert(s(add) == 15);
+Assert(s(mul) == 120);
+var x = make(5)(10)(15);
+Assert(x(add) == 30);
+Assert(x(mul) == 750);
              </code></pre>
 
         </section>
