@@ -50,6 +50,42 @@
             <h1>Functions. Part II</h1>
         </section>
 
+        <section><h3>Duck typing</h3>
+            <img src="images/duck_wat.jpg" alt=""/></section>
+
+        <section><h3>@ James Whitcomb Riley</h3>
+            <blockquote>"When I see a bird that walks like a duck and swims like a duck and
+                quacks like a duck, I call that bird a duck."
+            </blockquote>
+        </section>
+
+        <section><p>
+            Duck typing is a style of <span style="color: #f5f9ad;">dynamic typing</span> in which an <u>object's
+            current set
+            of methods and properties determines the valid semantic</u>,
+
+            rather than its inheritance from a particular class or implementation of
+            a specific interface.
+        </p></section>
+
+        <section><h3>Duck typing</h3>
+                  <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
+                      var t = {
+                        "0": "a",
+                        "1": "ab",
+                        "2": "abc",
+                        length: 3
+                      };
+
+                      [ ].push.call(t, "abcd");
+                      [ ].join.call(t, " -- ");
+                  </code></pre>
+        </section>
+
+
+        <section>
+            <img style="max-height: 650px;" src="images/duck_typing.jpg" alt=""/></section>
+
         <section>
             <h2>Lexical (Static) Scope</h2>
         </section>
@@ -210,42 +246,6 @@ var obj = {
 };
 
       </code></pre>
-        </section>
-
-        <section><h3>Duck typing</h3>
-            <img src="images/duck_wat.jpg" alt=""/></section>
-
-        <section><h3>@ James Whitcomb Riley</h3>
-            <blockquote>"When I see a bird that walks like a duck and swims like a duck and
-                quacks like a duck, I call that bird a duck."
-            </blockquote>
-        </section>
-
-        <section><p>
-            Duck typing is a style of <span style="color: #f5f9ad;">dynamic typing</span> in which an <u>object's
-            current set
-            of methods and properties determines the valid semantic</u>,
-
-            rather than its inheritance from a particular class or implementation of
-            a specific interface.
-        </p></section>
-
-
-        <section>
-            <img style="max-height: 650px;" src="images/duck_typing.jpg" alt=""/></section>
-
-        <section><h3>Duck typing</h3>
-                  <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
-var t = {
-    "0": "a",
-    "1": "ab",
-    "2": "abc",
-    length: 3
-};
-
-[ ].push.call(t, "abcd");
-[ ].join.call(t, " -- ");
-                  </code></pre>
         </section>
 
         <section><h3>Closures</h3>
