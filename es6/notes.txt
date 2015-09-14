@@ -16,3 +16,9 @@ es3.1 -> es5
 
 
 Pitfall: Unexpected Optional Parameters ([].map(parseInt))
+
+------------
+mixin/extend/bind/and so on
+
+-------
+function add(x, y) { return x + y; } var plus1 = add.bind(null, 1); console.log(plus1(5)); // 6 
