@@ -125,6 +125,81 @@ foo();
             <p>The word <u>"static"</u> relates to ability to determine the scope of an identifier during the parsing stage of a program.</p>
         </section>
 
+
+        <section><h3>Closures</h3>
+                  <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
+var inner;
+function outer(){
+    var local = 1;
+    
+    inner = function(){
+        return local;
+    };
+}
+
+inner();
+outer();
+inner();
+                  </code></pre>
+        </section>
+
+        <section><h3>Closures</h3>
+                  <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
+function sayHello() {
+    var text = "Hello #1";
+    var sayAlert = function() { alert(text); }
+    
+    text = "Hello #2";
+    sayAlert();
+}
+                  </code></pre>
+        </section>
+
+ <section><h3>Private members</h3>
+             <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
+var obj = new function () {
+    var privateVariable;
+    function privateFunction(x) {
+        // privateVariable
+    }
+    return {
+        firstMethod: function (a, b) {
+            // access to privateVariable
+        },
+        secondMethod: function (c) {
+            // access to privateVariable
+            // access to privateFunction()
+        } 
+    };
+};
+             </code></pre>
+
+        </section>
+
+
+        <section><h3>Private Members</h3>
+                  <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
+function makeProperty(obj, name, predicate) {
+    var value;
+    obj["get" + name] = function() { return value; };
+    obj["set" + name] = function(v) {
+        if (predicate && !predicate(v)) return;
+        value = v;
+    };
+}
+                  </code></pre>
+
+             <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
+var obj = {};
+makeProperty(obj, "Name", function(x) { return typeof x == "string"; });
+
+obj.setName("Dima");
+Assert(obj.getName() == "Dima");
+             </code></pre>
+        </section>
+
+        <section><h2>Example</h2></section>
+
         <section>
             <h3>Immediately-Invoked Function Expression (IIFE)</h3>
         </section>
@@ -248,35 +323,6 @@ var obj = {
       </code></pre>
         </section>
 
-        <section><h3>Closures</h3>
-                  <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
-var inner;
-function outer(){
-    var local = 1;
-    
-    inner = function(){
-        return local;
-    };
-}
-
-inner();
-outer();
-inner();
-                  </code></pre>
-        </section>
-
-        <section><h3>Closures</h3>
-                  <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
-function sayHello() {
-    var text = "Hello #1";
-    var sayAlert = function() { alert(text); }
-    
-    text = "Hello #2";
-    sayAlert();
-}
-                  </code></pre>
-        </section>
-
         <section><h2>Example</h2></section>
 
         <section>
@@ -291,29 +337,9 @@ function sayHello() {
              </code></pre>
         </section>
 
-
-        <section><h3>Private Members</h3>
-                  <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
-function makeProperty(obj, name, predicate) {
-    var value;
-    obj["get" + name] = function() { return value; };
-    obj["set" + name] = function(v) {
-        if (predicate && !predicate(v)) return;
-        value = v;
-    };
-}
-                  </code></pre>
-
-             <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
-var obj = {};
-makeProperty(obj, "Name", function(x) { return typeof x == "string"; });
-
-obj.setName("Dima");
-Assert(obj.getName() == "Dima");
-             </code></pre>
+        <section>
+            <h3>What else i can do with functions?</h3>
         </section>
-
-        <section><h2>Example</h2></section>
 
         <section><h3>Returning functions</h3>
              <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
@@ -431,28 +457,8 @@ sum(2, 7);
 
         <section><h2>Memoization</h2></section>
 
-        <section><h3>Private members</h3>
-             <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
-var obj = new function () {
-    var privateVariable;
-    function privateFunction(x) {
-        // privateVariable
-    }
-    return {
-        firstMethod: function (a, b) {
-            // access to privateVariable
-        },
-        secondMethod: function (c) {
-            // access to privateVariable
-            // access to privateFunction()
-        } 
-    };
-};
-             </code></pre>
-
-        </section>
-
         <section>
+        <h3>Home task #1</h3>
              <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
 function add(x, y) { return x + y; }
 function mul(x, y) { return x * y; }
