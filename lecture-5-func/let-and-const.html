@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>reveal.js - The HTML Presentation Framework</title>
+
+    <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+    <meta name="author" content="Hakim El Hattab">
+
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link href='http://fonts.googleapis.com/css?family=Walter+Turncoat' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/dist/blackboard.css" id="theme">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<div class="reveal">
+
+
+    <!-- Any section element inside of this container is displayed as a slide -->
+    <div class="slides">
+
+
+        <section>
+            <h1>ES6: let and const</h1>
+        </section>
+
+        <section>
+            <h1>Babel</h1>
+
+            <h3><a target="_blank" href="https://babeljs.io">https://babeljs.io</a></h3>
+        </section>
+
+        <section>
+            <h3>ES5 Fun</h3>
+             <pre><code style="max-height: 550px;" class="hljs javascript">
+                 var x = 'outer scope';
+                 (function() {
+                 console.log(x);
+                 var x = 'inner scope';
+                 }());
+             </code></pre>
+        </section>
+        <section>
+            <h3>Short story</h3>
+             <pre style="font-size: .65em;"><code style="max-height: 550px;" class="hljs javascript">
+                 function runTowerExperiment(tower, startTime) {
+                 var t = startTime;
+                 tower.on("tick", function () {
+                 //... code that uses t ...
+                 });
+                 //... more code ...
+                 //... more event handlers
+                 }
+
+             </code></pre>
+        </section>
+        <section>
+            <h1>One month later…</h1>
+        </section>
+        <section>
+            <h3>Happy end :) </h3>
+             <pre style="font-size: .65em;"><code style="max-height: 550px;" class="hljs javascript">
+                 function runTowerExperiment(tower, startTime) {
+                 var t = startTime;
+
+                 tower.on("tick", function () {
+                 //... code that uses t ...
+                 if (bowlingBall.altitude() <= 0) {
+                 var t = readTachymeter();
+                 //...
+                 }
+                 });
+                 // ... more code ...
+                 // … more event handlers …
+                 }
+             </code></pre>
+        </section>
+
+        <section>
+            <h3>Famous story</h3>
+
+            <p>Variable oversharing in loops </p>
+        </section>
+
+        <section>
+            <h1>Let is the new var!!!</h1>
+        </section>
+
+        <section>
+            <h2>Let</h2>
+            <ul>
+                <li>let variables are block-scoped</li>
+                <li>global let variables are not properties on the global object</li>
+                <li>loops of the form for (let x...) create a fresh binding for x in each iteration. (true for - simple
+                    for, for-in, for-of loops)
+                </li>
+                <li>it’s an error to try to use a let variable before its declaration is reached</li>
+                <li>redeclaring a variable with let is a SyntaxError</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>block-level scope </h3>
+             <pre style="font-size: .65em;"><code style="max-height: 550px;" class="hljs javascript">
+                 function func() {
+                 if (true) {
+                 let tmp = 123;
+                 }
+                 console.log(tmp); // ReferenceError: tmp is not defined
+                 }
+             </code></pre>
+        </section>
+
+        <section>
+            <h3>shadow variable within a function </h3>
+             <pre style="font-size: .65em;"><code style="max-height: 550px;" class="hljs javascript">
+                 function func() {
+                 let foo = 5;
+                 if (true) {
+                 let foo = 10; // shadows outer `foo`
+                 console.log(foo); // 10
+                 }
+                 console.log(foo); // 5
+                 }
+             </code></pre>
+        </section>
+
+        <section>
+            <h3>Famous story </h3>
+
+            <p>Variable oversharing in loops – <u style="color: #8CD0D3">fixed!</u>
+            </p>
+        </section>
+
+        <section>
+            <h3>Const </h3>
+
+           <pre style="font-size: .65em;"><code style="max-height: 550px;" class="hljs javascript">
+               const MAX_CAT_SIZE_KG = 3000;
+
+               MAX_CAT_SIZE_KG = 5000; // SyntaxError
+
+               MAX_CAT_SIZE_KG++; // nice try, but still a SyntaxError
+
+               const theFairest; // SyntaxError, you troublemaker
+           </code></pre>
+        </section>
+
+        <section>
+            <h3><u style="color: #8CD0D3">const</u> variables don’t make the assigned value immutable</h3>
+
+           <pre style="font-size: .65em;"><code style="max-height: 550px;" class="hljs javascript">
+               const obj = {};
+               obj.prop = 123;
+               console.log(obj.prop); // 123
+               const obj = Object.freeze({});
+               obj.prop = 123; // TypeError
+           </code></pre>
+        </section>
+        <section>
+            <h3>Temporal Dead Zone</h3>
+
+           <pre style="font-size: .65em;"><code style="max-height: 550px;" class="hljs javascript">
+               console.log(x); // throws a ReferenceError
+               let x = 'hey';
+           </code></pre>
+        </section>
+
+        <section>
+            <h3>Let/const declarations hoist!</h3>
+
+            <p>but may not be accessed in any way until the variable’s declaration is evaluated </p>
+
+            <p><u>This is the Temporal Dead Zone</u></p>
+        </section>
+
+        <section>
+            <h3>Not so simple </h3>
+
+           <pre style="font-size: .7em;"><code style="max-height: 550px;" class="hljs javascript">
+               let x = 'outer scope';
+               (function() {
+               console.log(x); // hoist but throw error
+               let x = 'inner scope';
+               }());
+           </code></pre>
+        </section>
+
+        <section>
+            <h3>ReferenceError </h3>
+
+           <pre><code style="max-height: 550px;" class="hljs javascript">
+               let a = f();
+               const b = 2;
+               function f() { return b; }
+           </code></pre>
+        </section>
+
+        <section>
+            <h3>Example </h3>
+
+           <pre><code style="max-height: 550px;" class="hljs javascript">
+               let b = 1;
+               (function(a = b, b) {
+               console.log(a, b);
+               }(undefined, 2));
+           </code></pre>
+        </section>
+
+        <section>
+
+
+            <style>
+
+                .var-declaring tr th,
+                .var-declaring tr td:first-child {color: #8CD0D3; border-color: #fff; width: 10%;}
+                .var-declaring tr th:last-child, .var-declaring tr td:last-child {
+                    text-align: center;
+                }
+
+
+            </style>
+            <h3>Ways of declaring variables </h3>
+            <table class="var-declaring" style="font-size: 0.65em; line-height: 1.9em; width: 100%;">
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>Hoisting</th>
+                    <th>Scope</th>
+                    <th>Creates global properties</th>
+                </tr>
+                <tr>
+                    <td> var</td>
+                    <td>Declaration</td>
+                    <td>Function</td>
+                    <td>Yes</td>
+                </tr>
+                <tr>
+                    <td> let</td>
+                    <td>Temporal dead zone</td>
+                    <td>Block</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td> const</td>
+                    <td>Temporal dead zone</td>
+                    <td>Block</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td> function</td>
+                    <td>Complete</td>
+                    <td>Block</td>
+                    <td>Yes</td>
+                </tr>
+                <tr>
+                    <td> class</td>
+                    <td>No</td>
+                    <td>Block</td>
+                    <td>No</td>
+                </tr>
+                <tr>
+                    <td> import</td>
+                    <td>Complete</td>
+                    <td>Module-global</td>
+                    <td>No</td>
+                </tr>
+            </table>
+        </section>
+
+
+        <section>
+            <h3>always use let and const !!! </h3>
+        </section>
+
+        <section>
+            <h3>Can I use let and const now?</h3>
+
+            <p>Yes. To use them on the web, you’ll have to use an ES6 compiler such as <a target="_blank"
+                                                                                          href="http://babeljs.io/">Babel</a>,
+                <a target="_blank" href="https://github.com/google/traceur-compiler#what-is-traceur">Traceur</a>, or <a
+                        target="_blank"
+                        href="http://www.typescriptlang.org/">TypeScript</a>. (Babel and Traceur do not support the
+                temporal dead zone yet.)</p>
+        </section>
+
+        <section>
+            <h3>References</h3>
+
+            <p><a target="_blank" href="https://hacks.mozilla.org/category/es6-in-depth/">https://hacks.mozilla.org/category/es6-in-depth/</a>
+            </p>
+        </section>
+
+
+    </div>
+
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+
+    // Full list of configuration options available at:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+            {
+                src: 'lib/js/classList.js', condition: function () {
+                return !document.body.classList;
+            }
+            },
+            {
+                src: 'plugin/markdown/marked.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            }
+            },
+            {
+                src: 'plugin/markdown/markdown.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            }
+            },
+            {
+                src: 'plugin/highlight/highlight.js', async: true, condition: function () {
+                return !!document.querySelector('pre code');
+            }, callback: function () {
+                hljs.initHighlightingOnLoad();
+            }
+            },
+            {src: 'plugin/zoom-js/zoom.js', async: true},
+            {src: 'plugin/notes/notes.js', async: true}
+        ]
+    });
+
+    Reveal.addEventListener('startsnow', function () {
+        // TODO: Sprinkle magic
+    }, false);
+
+    Reveal.addEventListener('stopsnow', function () {
+        // TODO: Sprinkle magic
+    }, false);
+
+</script>
+
+</body>
+</html>
