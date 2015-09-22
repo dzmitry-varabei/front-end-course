@@ -143,6 +143,20 @@ inner();
                   </code></pre>
         </section>
 
+                <section><h3>Closures</h3>
+                  <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
+function doNTimes(n, action) {
+    function doNTimesRec(x) {
+        if (x >= 1) {
+            action();  // (1)
+            doNTimesRec(x-1);
+        }
+    }
+    doNTimesRec(n);
+}
+                  </code></pre>
+        </section>
+
         <section><h3>Closures</h3>
                   <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
 function sayHello() {
