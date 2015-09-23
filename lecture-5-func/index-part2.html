@@ -250,11 +250,26 @@ globalEnvironment = {
 // environment of the "foo" function
 fooEnvironment = {
   environmentRecord: {
+    arguments: {length: 0, callee: foo},
     y: 20
   },
   outer: globalEnvironment
 };
                   </code></pre>
+        </section>
+
+        <section>
+            <h3>Structure of execution context</h3>
+                        <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
+ExecutionContext = {
+  ThisBinding: <this value>,
+  LexicalEnvironment: { ... },
+}
+                  </code></pre>
+        </section>
+
+        <section>
+            <h3>[[Scope]]</h3>
         </section>
 
         <section><h3>Closures</h3>
