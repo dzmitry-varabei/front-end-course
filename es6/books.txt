@@ -3,4 +3,5 @@ SpeakingJS
 Done:
 Speaking JavaScript
 
-15. Functions
+Chapter 15. Functions
+Chapter 16. Variables: Scopes, Environments, and Closures
