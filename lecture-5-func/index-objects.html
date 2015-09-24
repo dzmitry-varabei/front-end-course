@@ -44,33 +44,8 @@
 
     <!-- Any section element inside of this container is displayed as a slide -->
     <div class="slides">
-          <section>
-            <h2>Wat</h2>
-                    <pre><code contenteditable>
-                        var bool = new Boolean(false);
-                        if (bool){
-                        alert("wat"); // shows 'wat'
-                        }
-                    </code></pre>
-                    <pre class="fragment"><code contenteditable>
-                        var bool = false;
-                        if (bool){
-                        alert("wat"); //This will never be alerted.
-                        }
-                    </code></pre>
-        </section>
-
         <section>
-            <h2>Wat</h2>
-					 <pre><code contenteditable>
-                         var a = new String("foo");
-                         var b = "foo";
-                         var c = new String("foo");
-
-                         a == b; // true
-                         b == c; // true
-                         a == c; // false
-                     </code></pre>
+            <h1>Objects and Inheritance</h1>
         </section>
 
         <section>
@@ -87,94 +62,77 @@
         </section>
 
         <section>
-            <h2>Object</h2>
+            <h2>Everything is an object</h2>
 					 <pre><code contenteditable>
-                         var x = {
-                         a: 10, // primitive value
-                         b: { z: 100 }, // object "b" with property z
-                         c: function () { // function (method)
-                         alert('method x.c');
-                         }
-                         };
+var a = { x: 10 };
+a['y'] = 20;
+a.z = 30;
 
-                         alert(x.a); // 10
-                         alert(x.b.z); // 100
-                         x.c(); // 'method x.c'
-                     </code></pre>
-        </section>
+var b = [1, 2, 3];
+b.x = 10;
+b.y = 20;
+b['z'] = 30;
 
-        <section>
-            <h2>Objects is everywhere</h2>
-					 <pre><code contenteditable>
-                         var a = { x: 10 };
-                         a['y'] = 20;
-                         a.z = 30;
-
-                         var b = [1, 2, 3];
-                         b.x = 10;
-                         b.y = 20;
-                         b['z'] = 30;
-
-                         var c = function (x, y) { return x + y};
-                         c.x = 10;
-                         c.y = 20;
-                         c['z'] = 30;
+var c = function (x, y) { return x + y};
+c.x = 10;
+c.y = 20;
+c['z'] = 30;
                      </code></pre>
         </section>
 
         <section>
             <h2>[[prototype]] or __proto__</h2>
                          <pre><code contenteditable>
-                             var foo = {
-                             x: 10,
-                             y: 20
-                             };
+var foo = {
+    x: 10,
+    y: 20
+};
                          </code></pre>
     <pre class="fragment"><code contenteditable>
-        var foo = {
-        x: 10,
-        y: 20,
-        [[prototype]] : Object.prototype
-        };
+var foo = {
+    x: 10,
+    y: 20,
+    [[prototype]] : Object.prototype
+};
     </code></pre>
         </section>
 
         <section>
             <h2>[[prototype]] or __proto__</h2>
     <pre><code contenteditable>
-        var foo = {
-        x: 10,
-        y: 20,
-        [[prototype]] : Object.prototype
-        };
+var foo = {
+    x: 10,
+    y: 20,
+    [[prototype]] : Object.prototype
+};
 
-        Object.prototype = {
-        constructor: Object,
-        toString: /***/,
-        hasOwnProperty: /***/
-        /***/
-        }
+Object.prototype = {
+    constructor: Object,
+    toString: /***/,
+    hasOwnProperty: /***/
+    /***/
+}
     </code></pre>
         </section>
 
         <section>
             <h2>[[prototype]] or __proto__</h2>
     <pre><code contenteditable>
-        Object.prototype.x = 10; // monkey patching
+Object.prototype.x = 10; // monkey patching
 
-        var a = {}; // create "empty" "hash"
+var a = {}; // create "empty" "hash"
 
-        alert(a["x"]); // 10, but it's not empty
-        alert(a.toString); // function
-        alert(a.constructor); //function
+alert(a["x"]); // 10, but it's not empty
+alert(a.toString); // function
+alert(a.constructor); //function
     </code></pre>
         </section>
 
         <section>
             <h2>JavaScript ES5</h2>
     <pre><code contenteditable>
-        var emptyHash = Object.create(null);
-        console.log(emptyHash.toString); // undefined
+var emptyHash = Object.create(null);
+console.log(emptyHash.toString); // undefined
     </code></pre>
         </section>
 
@@ -183,34 +141,34 @@
 
             <p>Iterate through all of the members of an object:</p>
     <pre><code contenteditable>
-        for (name in object) {
-        if (object.hasOwnProperty(name)) {
+for (name in object) {
+    if (object.hasOwnProperty(name)) {
         // within the loop,
         // name is the key of current member
         // object[name] is the current value
         console.log("name: " + name);
         console.log("value: " + object[name]);
-        }
-        }
+    }
+}
     </code></pre>
         </section>
 
         <section>
             <h2>For..In statement</h2>
     <pre><code contenteditable>
-        // monkey patching
-        Object.prototype.bar = 1;
+// monkey patching
+Object.prototype.bar = 1;
 
-        var foo = {moo: 2};
-        for(var i in foo) {
-        console.log(i); // bar, moo
-        }
+var foo = {moo: 2};
+for(var i in foo) {
+    console.log(i); // bar, moo
+}
 
-        for(var i in foo) {
-        if (foo.hasOwnProperty(i)) {
+for(var i in foo) {
+    if (foo.hasOwnProperty(i)) {
         console.log(i); // moo
-        }
-        }
+    }
+}
     </code></pre>
         </section>
 
@@ -226,6 +184,19 @@
         console.log( foo.propertyIsEnumerable("x") == true );
         console.log( Object.prototype.isPrototypeOf(foo) == true );
     </code></pre>
+        </section>
+
+        <section>
+            <h3>Object.defineProperty()</h3>
+            var obj = {};
+            Object.defineProperty(obj, 'canBeDeleted', {
+            value: 123,
+            configurable: true
+            });
+            Object.defineProperty(obj, 'cannotBeDeleted', {
+            value: 456,
+            configurable: false
+            });
         </section>
 
         <section>
