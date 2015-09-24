@@ -649,6 +649,39 @@ f(1,2,3,4,5,6); // [2, 3]
              </code></pre>
         </section>
 
+        <section>
+            <h3>Bind</h3>
+                 <pre style="font-size: .5em; "><code class="hljs javascript">
+var x = 9; // global variable
+
+var module = {
+  x: 81,
+  getX: function() { return this.x; }
+};
+
+module.getX(); // 81
+
+var retrieveX = module.getX;
+retrieveX(); // 9, because in this case, "this" refers to the global object
+
+// Create a new function with 'this' bound to module
+var boundGetX = retrieveX.bind(module);
+boundGetX(); // 81
+             </code></pre>
+        </section>
+
+<section>
+            <h3>Partial function application</h3>
+                 <pre style="font-size: .5em; "><code class="hljs javascript">
+var sum = function(x, y){
+    return x + y;
+}
+
+var fivePlus = sum.bind(null, 5);
+fivePlus(2); //7
+             </code></pre>
+        </section>
+
     </div>
 
 </div>
