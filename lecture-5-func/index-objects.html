@@ -24,6 +24,24 @@
     <!-- Code syntax highlighting -->
     <link rel="stylesheet" href="lib/css/zenburn.css">
 
+    <style>
+        .text-green {
+            color: green;
+        }
+
+        .text-red {
+            color:red;
+        }
+
+        .reveal .helvetica {
+            margin: 0 0 20px 0;
+            color: #eeeeee;
+            line-height: 0.9em;
+            text-transform: none;
+            text-shadow: none;
+        }
+    </style>
+
     <!-- Printing and PDF exports -->
     <script>
         var link = document.createElement('link');
@@ -184,151 +202,127 @@ for(var i in foo) {
         <section>
             <h2>Object methods <em>(ES3)</em></h2>
     <pre><code contenteditable>
-        var foo = { x: 10, y: 20 };
-        console.log( foo.constructor == Object );
-        console.log( foo.toString() == "[object Object]" );
-        console.log( foo.valueOf() == foo );
-        console.log( foo.hasOwnProperty("x") == true );
-        console.log( foo.hasOwnProperty("toString") == false );
-        console.log( foo.propertyIsEnumerable("x") == true );
-        console.log( Object.prototype.isPrototypeOf(foo) == true );
+var foo = { x: 10, y: 20 };
+
+console.log( foo.constructor == Object );
+console.log( foo.toString() == "[object Object]" );
+console.log( foo.valueOf() == foo );
+console.log( foo.hasOwnProperty("x") == true );
+console.log( foo.hasOwnProperty("toString") == false );
+console.log( foo.propertyIsEnumerable("x") == true );
     </code></pre>
         </section>
 
-        <section>
-            <h3>Object.defineProperty()</h3>
-            var obj = {};
-            Object.defineProperty(obj, 'canBeDeleted', {
-            value: 123,
-            configurable: true
-            });
-            Object.defineProperty(obj, 'cannotBeDeleted', {
-            value: 456,
-            configurable: false
-            });
-        </section>
+
+<section>
+    <h2>How to make a car?</h2>
+</section>
 
         <section>
-            <h2>Native and host objects</h2>
+					 <pre style="font-size: .6em; "><code style="max-height: 550px;" class="hljs javascript">
+function Car(model, color) {
+    this.model = model;
+    this.color = color;
+};
 
-            <p><em>Native</em> - defined by the ECMAScript specification.
-                (Array, Date or user-defined (var o = {};))
-            </p>
+Car.prototype.accel3erate = function (effort) {
+    //…
+};
 
-            <p><em>Host</em> - defined by the host environment (window and all the DOM objects)</p>
-        </section>
+Car.prototype.brake = function (effort) {
+    //…
+};
 
-        <section>
-            <h2>How to make a car?</h2>
-        </section>
-
-        <section>
-					 <pre><code contenteditable>
-                         function Car(model, color) {
-                         this.model = model;
-                         this.color = color;
-                         };
-
-                         Car.prototype.accelerate = function (effort) {
-                         //…
-                         };
-
-
-                         Car.prototype.brake = function (effort) {
-                         //…
-                         };
-
-                         var lada = new Car("Kalina", "Gray");
+var lada = new Car("Kalina", "Gray");
                      </code></pre>
         </section>
 
         <section>
-					 <pre><code contenteditable>
-                         // monkey patching
-                         Function.prototype.method = function(name, fn) {
-                         this.prototype[name] = fn;
-                         };
+					 <pre style="font-size: .6em; "><code style="max-height: 550px;" class="hljs javascript">
+// monkey patching
+Function.prototype.method = function(name, fn) {
+    this.prototype[name] = fn;
+};
 
-                         function Car(model, color) {
-                         this.model = model;
-                         this.color = color;
-                         };
+function Car(model, color) {
+    this.model = model;
+    this.color = color;
+};
 
-                         Car.method("accelerate", function (effort) { /* ... */ });
-                         Car.method("brake", function (effort) { /* ... */ });
+Car.method("accelerate", function (effort) { /* ... */ });
+Car.method("brake", function (effort) { /* ... */ });
 
-                         var lada = new Car("Kalina", "Gray");
+var lada = new Car("Kalina", "Gray");
                      </code></pre>
         </section>
 
         <section>
-					 <pre><code contenteditable>
-                         function car(model, color) {
-                         return {
-                         'model': model,
-                         'color': color,
-                         'accelerate': function (effort) {
-                         //...
-                         },
-                         'brake': function (effort) {
-                         //...
-                         }
-                         };
-                         }
+					 <pre style="font-size: .6em; "><code style="max-height: 550px;" class="hljs javascript">
+function car(model, color) {
+    return {
+        'model': model,
+        'color': color,
+        'accelerate': function (effort) {
+            //...
+        },
+        'brake': function (effort) {
+            //...
+        }
+    };
+}
 
-                         var lada = car("Kalina", "Gray");
+var lada = car("Kalina", "Gray");
                      </code></pre>
         </section>
 
         <section>
-					 <pre><code contenteditable>
-                         var lada = {
-                         'model': "Kalina",
-                         'color': "Gray",
-                         'accelerate': function (effort) {
-                         //...
-                         },
-                         'brake': function (effort) {
-                         //...
-                         }
-                         };
+<pre style="font-size: .6em; "><code style="max-height: 550px;" class="hljs javascript">
+var lada = {
+       'model': "Kalina",
+       'color': "Gray",
+       'accelerate': function (effort) {
+           //...
+       },
+       'brake': function (effort) {
+           //...
+       }
+};
+               </code></pre>
+        </section>
+
+        <section>
+					 <pre style="font-size: .6em; "><code style="max-height: 550px;" class="hljs javascript">
+var lada = {
+    'model': "Kalina",
+    'color': "Gray",
+    'accelerate': function (effort) {
+        //...
+    },
+    'brake': function (effort) {
+        //...
+    }
+};
+
+var superlada = Object.create(lada);
+superlada.model = 'super';
                      </code></pre>
         </section>
 
         <section>
-					 <pre><code contenteditable>
-                         var lada = {
-                         'model': "Kalina",
-                         'color': "Gray",
-                         'accelerate': function (effort) {
-                         //...
-                         },
-                         'brake': function (effort) {
-                         //...
-                         }
-                         };
-
-                         var superlada = Object.create(lada);
-                         superlada.model = 'super';
-                     </code></pre>
+            <h3 class="helvetica">JavaScript is <span class="text-green">great</span> because there
+                are so many different environments
+                and so many different solutions</h3>
         </section>
 
+        <section>
+            <h3 class="helvetica">JavaScript is <span class="text-red">hard</span> because there
+                are so many different environments
+                and so many different solutions</h3>
+        </section>
 
         <section>
-            <h2>Numbers</h2>
-                     <pre><code contenteditable>
-                         var integer = 1;
-                         var floatingNumber = 1.5;
-
-                         /* Special numeric values */
-                         Infinity
-                         NaN // Not a Number
-                         Number.NaN
-                         Number.MAX_VALUE
-                         Number.MIN_VALUE
-                         Number.POSITIVE_INFINITY
-                         Number.NEGATIVE_INFINITY
-                     </code></pre>
+            <img class="" src="images/brain.jpg">
+            <h3>Use this</h3>
         </section>
     </div>
 
