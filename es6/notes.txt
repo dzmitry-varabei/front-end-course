@@ -22,3 +22,12 @@ mixin/extend/bind/and so on
 
 -------
 function add(x, y) { return x + y; } var plus1 = add.bind(null, 1); console.log(plus1(5)); // 6 
+
+==========
+Object.preventExtensions(obj)
+Object.keys
+Object.defineProperty
+Object.seal
+Object.freeze
+
+enumerable property and json stringify, for in and Object.keys() 
