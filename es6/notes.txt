@@ -31,3 +31,14 @@ Object.seal
 Object.freeze
 
 enumerable property and json stringify, for in and Object.keys() 
+
+http://speakingjs.com/es5/ch17.html
+
+Listing Own Property Keys
+Listing All Property Keys
+Checking Whether a Property Exists
+The effects of enumerability
+Accessors (Getters and Setters)
+Property Attributes and Property Descriptors
+Enumerability: Best Practices
+Protecting Objects (Sealing, Freezing, Pitfall: Protection Is Shallow)

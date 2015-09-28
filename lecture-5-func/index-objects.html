@@ -60,6 +60,12 @@
 
 <div class="reveal">
 
+    <style>
+        em {
+            color: orange;
+        }
+    </style>
+
     <!-- Any section element inside of this container is displayed as a slide -->
     <div class="slides">
         <section>
@@ -81,7 +87,7 @@
 
         <section>
             <h2>Everything is an object</h2>
-					 <pre><code contenteditable>
+					 <pre style="font-size: .6em; "><code style="max-height: 550px;" class="hljs javascript">
 var a = { x: 10 };
 a['y'] = 20;
 a.z = 30;
@@ -127,7 +133,7 @@ var foo = {
         </section>
 
         <section>
-    <pre><code contenteditable>
+    <pre style="font-size: .6em; "><code style="max-height: 550px;" class="hljs javascript">
 var foo = {
     x: 10,
     y: 20,
@@ -144,7 +150,7 @@ Object.prototype = {
         </section>
 
         <section>
-    <pre><code contenteditable>
+    <pre style="font-size: .6em; "><code style="max-height: 550px;" class="hljs javascript">
 Object.prototype.x = 10; // monkey patching
 
 var a = {}; // create "empty" "hash"
@@ -167,7 +173,7 @@ console.log(emptyHash.toString); // undefined
             <h2>For..In statement</h2>
 
             <p>Iterate through all of the members of an object:</p>
-    <pre><code contenteditable>
+   <pre style="font-size: .6em; "><code style="max-height: 550px;" class="hljs javascript">
 for (name in object) {
     if (object.hasOwnProperty(name)) {
         // within the loop,
@@ -182,7 +188,7 @@ for (name in object) {
 
         <section>
             <h2>For..In statement</h2>
-    <pre><code contenteditable>
+    <pre style="font-size: .6em; "><code style="max-height: 550px;" class="hljs javascript">
 // monkey patching
 Object.prototype.bar = 1;
 
@@ -201,7 +207,7 @@ for(var i in foo) {
 
         <section>
             <h2>Object methods <em>(ES3)</em></h2>
-    <pre><code contenteditable>
+    <pre style="font-size: .6em; "><code style="max-height: 550px;" class="hljs javascript">
 var foo = { x: 10, y: 20 };
 
 console.log( foo.constructor == Object );
@@ -307,6 +313,27 @@ var superlada = Object.create(lada);
 superlada.model = 'super';
                      </code></pre>
         </section>
+
+        <section>
+					 <pre style="font-size: .6em; "><code style="max-height: 550px;" class="hljs javascript">
+class Car {
+    сonstructor(color, model) {
+        this.model = model;
+        this.color = color;
+    }
+    accelerate(effort) {
+        return console.log("accelerate");
+    }
+    brake(effort){
+        return console.log("brake");
+    }
+}
+
+let lada = new Car("Kalina", "Gray");
+                     </code></pre>
+        </section>
+
+
 
         <section>
             <h3 class="helvetica">JavaScript is <span class="text-green">great</span> because there
