@@ -5,3 +5,4 @@ Speaking JavaScript
 
 Chapter 15. Functions
 Chapter 16. Variables: Scopes, Environments, and Closures
+Chapter 17. Objects and Inheritance
