@@ -18,27 +18,6 @@ es3.1 -> es5
 Pitfall: Unexpected Optional Parameters ([].map(parseInt))
 
 ------------
-mixin/extend/bind/and so on
+mixin/extend/and so on
 
--------
-function add(x, y) { return x + y; } var plus1 = add.bind(null, 1); console.log(plus1(5)); // 6 
 
-==========
-Object.preventExtensions(obj)
-Object.keys
-Object.defineProperty
-Object.seal
-Object.freeze
-
-enumerable property and json stringify, for in and Object.keys() 
-
-http://speakingjs.com/es5/ch17.html
-
-Listing Own Property Keys
-Listing All Property Keys
-Checking Whether a Property Exists
-The effects of enumerability
-Accessors (Getters and Setters)
-Property Attributes and Property Descriptors
-Enumerability: Best Practices
-Protecting Objects (Sealing, Freezing, Pitfall: Protection Is Shallow)
