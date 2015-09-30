@@ -5,12 +5,6 @@
 </head>
 <body>
 <script type="text/javascript">
-	function Assert(fact) {
-		if (!fact) {
-			alert("Assert failure!");
-		}
-	}
-
 	debugger;
 	function Rectangle(w, h) {
 		this.width = w;
@@ -18,37 +12,34 @@
 	}
 
 	var rect = new Rectangle(2, 4);
-	Assert(rect.constructor == Rectangle);
+	console.assert(rect.constructor == Rectangle);
 	
-	Assert(typeof rect.area == "undefined");
+	console.assert(typeof rect.area == "undefined");
 
 	Rectangle.prototype.area = function() {
 		return this.width * this.height;
 	}
 
-	Assert(typeof rect.area == "function");
+	console.assert(typeof rect.area == "function");
 
 	Rectangle.prototype.id = 1;
-	Assert(rect.hasOwnProperty("id") == false);
+	console.assert(rect.hasOwnProperty("id") == false);
 	rect.id++;
-	Assert(rect.hasOwnProperty("id") == true);
+	console.assert(rect.hasOwnProperty("id") == true);
 	
-	Assert(rect.id == 2);
-	Assert(Rectangle.prototype.id == 1);
+	console.assert(rect.id == 2);
+	console.assert(Rectangle.prototype.id == 1);
 
 	Rectangle.prototype.defaultParams = { width: 10, height: 15 };
 	rect.defaultParams.perimeter = 50;
 
-	Assert(Rectangle.prototype.defaultParams.perimeter == 50);
+	console.assert(Rectangle.prototype.defaultParams.perimeter == 50);
 
 	rect.defaultParams = { width: 5, height: 10 };
 
-	Assert(typeof rect.defaultParams.perimeter == "undefined");
+	console.assert(typeof rect.defaultParams.perimeter == "undefined");
 	delete rect.defaultParams;
-	Assert(typeof rect.defaultParams.perimeter == "number");
-	
-
-	debugger;
+	console.assert(typeof rect.defaultParams.perimeter == "number");
 </script>
 
 </body>
