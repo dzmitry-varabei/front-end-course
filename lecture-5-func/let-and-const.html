@@ -59,24 +59,26 @@
         <section>
             <h3>ES5 Fun</h3>
              <pre><code style="max-height: 550px;" class="hljs javascript">
-                 var x = 'outer scope';
-                 (function() {
-                 console.log(x);
-                 var x = 'inner scope';
-                 }());
+ var x = 'outer scope';
+ (function() {
+ 	console.log(x);
+ 	var x = 'inner scope';
+ }());
              </code></pre>
         </section>
         <section>
             <h3>Short story</h3>
              <pre style="font-size: .65em;"><code style="max-height: 550px;" class="hljs javascript">
-                 function runTowerExperiment(tower, startTime) {
-                 var t = startTime;
-                 tower.on("tick", function () {
-                 //... code that uses t ...
-                 });
-                 //... more code ...
-                 //... more event handlers
-                 }
+  function runTowerExperiment(tower, startTime) {
+  	var t = startTime;
+  	
+  	tower.on("tick", function () {
+  		//... code that uses t ...
+  	});
+
+  	//more code ...
+  	//more event handlers ...
+  }
 
              </code></pre>
         </section>
@@ -86,19 +88,20 @@
         <section>
             <h3>Happy end :) </h3>
              <pre style="font-size: .65em;"><code style="max-height: 550px;" class="hljs javascript">
-                 function runTowerExperiment(tower, startTime) {
-                 var t = startTime;
-
-                 tower.on("tick", function () {
-                 //... code that uses t ...
-                 if (bowlingBall.altitude() <= 0) {
-                 var t = readTachymeter();
-                 //...
-                 }
-                 });
-                 // ... more code ...
-                 // … more event handlers …
-                 }
+function runTowerExperiment(tower, startTime) {
+	var t = startTime;
+	
+	tower.on("tick", function () {
+		//... code that uses t ...
+		if (bowlingBall.altitude() <= 0) {
+			var t = readTachymeter();
+			//...
+		}
+	});
+	
+	// more code ...
+	// more event handlers ...
+}
              </code></pre>
         </section>
 
@@ -116,38 +119,42 @@
             <h2>Let</h2>
             <ul>
                 <li>let variables are block-scoped</li>
-                <li>global let variables are not properties on the global object</li>
-                <li>loops of the form for (let x...) create a fresh binding for x in each iteration. (true for - simple
+                <li class="fragment">global let variables are not properties on the global object</li>
+                <li class="fragment">loops of the form for (let x...) create a fresh binding for x in each iteration. (true for - simple
                     for, for-in, for-of loops)
                 </li>
-                <li>it’s an error to try to use a let variable before its declaration is reached</li>
-                <li>redeclaring a variable with let is a SyntaxError</li>
+                <li class="fragment">it’s an error to try to use a let variable before its declaration is reached</li>
+                <li class="fragment">redeclaring a variable with let is a SyntaxError</li>
             </ul>
         </section>
 
         <section>
             <h3>block-level scope </h3>
              <pre style="font-size: .65em;"><code style="max-height: 550px;" class="hljs javascript">
-                 function func() {
-                 if (true) {
-                 let tmp = 123;
-                 }
-                 console.log(tmp); // ReferenceError: tmp is not defined
-                 }
+ function func() {
+ 	if (true) {
+ 		let tmp = 123;
+ 	}
+
+    // ReferenceError: tmp is not defined
+ 	console.log(tmp);
+ }
              </code></pre>
         </section>
 
         <section>
             <h3>shadow variable within a function </h3>
              <pre style="font-size: .65em;"><code style="max-height: 550px;" class="hljs javascript">
-                 function func() {
-                 let foo = 5;
-                 if (true) {
-                 let foo = 10; // shadows outer `foo`
-                 console.log(foo); // 10
-                 }
-                 console.log(foo); // 5
-                 }
+ function func() {
+ 	let foo = 5;
+
+ 	if (true) {
+ 		let foo = 10; // shadows outer `foo`
+ 		console.log(foo); // 10
+ 	}
+
+ 	console.log(foo); // 5
+ }
              </code></pre>
         </section>
 
@@ -161,14 +168,14 @@
         <section>
             <h3>Const </h3>
 
-           <pre style="font-size: .65em;"><code style="max-height: 550px;" class="hljs javascript">
-               const MAX_CAT_SIZE_KG = 3000;
+           <pre style="font-size: .55em;"><code style="max-height: 550px;" class="hljs javascript">
+const MAX_CAT_SIZE_KG = 3000;
 
-               MAX_CAT_SIZE_KG = 5000; // SyntaxError
+MAX_CAT_SIZE_KG = 5000; // SyntaxError
 
-               MAX_CAT_SIZE_KG++; // nice try, but still a SyntaxError
+MAX_CAT_SIZE_KG++; // nice try, but still a SyntaxError
 
-               const theFairest; // SyntaxError, you troublemaker
+const theFairest; // SyntaxError, you troublemaker
            </code></pre>
         </section>
 
@@ -176,19 +183,21 @@
             <h3><u style="color: #8CD0D3">const</u> variables don’t make the assigned value immutable</h3>
 
            <pre style="font-size: .65em;"><code style="max-height: 550px;" class="hljs javascript">
-               const obj = {};
-               obj.prop = 123;
-               console.log(obj.prop); // 123
-               const obj = Object.freeze({});
-               obj.prop = 123; // TypeError
+ const obj = {};
+ obj.prop = 123;
+
+ console.log(obj.prop); // 123
+
+ const obj = Object.freeze({});
+ obj.prop = 123; // TypeError
            </code></pre>
         </section>
         <section>
             <h3>Temporal Dead Zone</h3>
 
            <pre style="font-size: .65em;"><code style="max-height: 550px;" class="hljs javascript">
-               console.log(x); // throws a ReferenceError
-               let x = 'hey';
+  console.log(x); // throws a ReferenceError
+  let x = 'hey';
            </code></pre>
         </section>
 
@@ -204,11 +213,11 @@
             <h3>Not so simple </h3>
 
            <pre style="font-size: .7em;"><code style="max-height: 550px;" class="hljs javascript">
-               let x = 'outer scope';
-               (function() {
-               console.log(x); // hoist but throw error
-               let x = 'inner scope';
-               }());
+ let x = 'outer scope';
+ (function() {
+ 	console.log(x); // hoist but throw error
+ 	let x = 'inner scope';
+ }());
            </code></pre>
         </section>
 
@@ -216,9 +225,9 @@
             <h3>ReferenceError </h3>
 
            <pre><code style="max-height: 550px;" class="hljs javascript">
-               let a = f();
-               const b = 2;
-               function f() { return b; }
+ let a = f();
+ const b = 2;
+ function f() { return b; }
            </code></pre>
         </section>
 
@@ -226,10 +235,10 @@
             <h3>Example </h3>
 
            <pre><code style="max-height: 550px;" class="hljs javascript">
-               let b = 1;
-               (function(a = b, b) {
-               console.log(a, b);
-               }(undefined, 2));
+ let b = 1;
+ (function(a = b, b) {
+ 	console.log(a, b);
+ }(undefined, 2));
            </code></pre>
         </section>
 
