@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>reveal.js - The HTML Presentation Framework</title>
+
+    <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+    <meta name="author" content="Hakim El Hattab">
+
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <!--<link href='http://fonts.googleapis.com/css?family=Walter+Turncoat' rel='stylesheet' type='text/css'>-->
+    <link href='http://fonts.googleapis.com/css?family=Neucha&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/dist/blackboard.css" id="theme">
+
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+
+    <style>
+        * {
+            font-family: 'Source Sans Pro', Helvetica, sans-serif !important;
+        }
+        b.em {
+            color: orange;
+        }
+
+    </style>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+
+<body>
+
+<div class="reveal">
+
+    <!-- Any section element inside of this container is displayed as a slide -->
+    <div class="slides">
+        <section>
+            <h2>The Rolling Scopes #20</h2>
+            <img style="height:500px; width:500px; border: none; background: none; box-shadow: none;" src="images/rs-on-tour.svg" alt=""/>
+        </section>
+
+        <section>
+            <h2>План на сегодня-завтра</h2>
+        </section>
+
+        <section>
+            <h2>Самый частый вопрос</h2>
+        </section>
+
+        <section>
+            <h2>#rollingscopes</h2>
+        </section>
+
+        <section>
+            <h2><span style="color: gray;">Skype</span></h2>
+            <h2><span style="color: lawngreen">Slack</span></h2>
+            <h3>http://frontendbelarus.herokuapp.com</h3>
+        </section>
+
+        <section>
+            <h2>RS Conf</h2>
+        </section>
+
+        <section>
+            <h3>Теперь будем обсуждать</h3>
+        </section>
+
+        <section>
+            <h2>PDS</h2>
+        </section>
+
+        <section>
+            <h2>О трендах</h2>
+        </section>
+        
+        <section>
+            <img src="images/tech-radar.png" alt=""/>
+        </section>
+
+        <section>
+            <img src="images/tech-radar2.png" alt=""/>
+        </section>
+        
+        <section>
+            <h4>Front-end разработчик глазами Back-end разработчика</h4>
+            <img src="images/as-seen-by-devs.jpg" alt=""/>
+        </section>
+
+        <section>
+            <h3>Предыстория</h3>
+            <ul>
+                <li>dotjs conf</li>
+                <li>POC</li>
+                <li>Team</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3>Год Facebook</h3>
+        </section>
+
+        <section>
+            <h3>Flux</h3>
+            <p><blockquote style="font-size: 36px;">
+            <b class="em">Flux is an application architecture introduced by
+            Facebook.</b> Usually mentioned in conjunction with React.
+            js, Flux is based on a one-way flow of data up through
+            the rendering pipeline...
+        </blockquote>
+        </section>
+
+        <section>
+            <ul>
+                <li>Это flux?</li>
+                <li>Это не чистый flux!</li>
+                <li>Это не по флакс!</li>
+            </ul>
+        </section>
+
+        <section>
+            <p>Я люблю свою работу - я приду туда в субботу!</p>
+        </section>
+
+        <section>
+            <h3>Immutable</h3>
+            <p><blockquote style="font-size: 36px;">
+            <b class="em">Immutable data structures</b> are becoming more popular,
+            with functional languages such as Clojure and Scala
+            providing immutability by default. Immutability allows
+            code to be more easily written, read and reasoned
+            about...
+        </blockquote>
+        </section>
+
+        <section>
+            <h2>Isomorphic</h2>
+        </section>
+
+        <section>
+            <h3>React Native</h3>
+            <p><blockquote style="font-size: 36px;">Facebook’s React Native brings
+            the React.js programming model to iOS and Android
+            developers. <b class="em">React Native programs are written in
+                JavaScript, but unlike a hybrid framework such as
+                Ionic, React Native gives developers access to native UI
+                components on the target platform.</b> ... This
+                framework could play a significant role in the future of
+                mobile app development.</blockquote></p>
+        </section>
+
+        <section>
+            <h3>Material UI</h3>
+            <p>
+            <blockquote style="font-size: 36px;">
+                <b class="em">Material UI provides reusable components for use in
+                    React applications that implement Google’s Material
+                    Design language.</b> Filling a similar space to Twitter
+                Bootstrap, it gets you up and running quickly but doesn’t
+                have the same drawbacks as your application grows.
+                Elemental UI is worth investigating as an alternative.
+            </blockquote>
+            </p>
+        </section>
+
+        <section>
+            <h3>BEM</h3>
+            <p><blockquote style="font-size: 36px;">
+            BEM is a simple CSS naming convention (standing for Block,
+            Element, Modifier) that helps give semantic clarity and
+            structure to your CSS. By using BEM, it becomes much
+            easier to understand which CSS rules are influencing
+            the appearance of an element and, more importantly,
+            the intent of those rules. This approach can be seen
+            as moving the OO lesson of favoring composition over
+            inheritance to the world of CSS.
+        </blockquote>
+        </section>
+
+        <section>
+            <h3>ES6 (ES2015)</h3>
+            <p><blockquote style="font-size: 36px;">
+            <b class="em">For new projects, we strongly suggest starting with
+                ECMAScript 6 from day one.</b>
+        </blockquote>
+            </p>
+        </section>
+
+        <section>
+            <h3>NPM</h3>
+            <p><blockquote style="font-size: 36px;">
+            The JavaScript world has a plethora of dependency and
+            package-management tools, all of which rely on the
+            Node Package Manager (NPM). Teams are starting to see
+            these extra tools as redundant and are recommending
+            that if you can<b class="em"> use solely NPM for package and
+            dependency management</b>, you should.
+        </blockquote>
+        </section>
+
+
+        <section>
+            <h3>Gitflow</h3>
+            <p><blockquote style="font-size: 36px;">
+            We firmly believe that long-lived version-control
+            branches harm valuable engineering practices such
+            as continuous integration, and this belief underlies
+            our <b class="em">dislike for Gitflow</b>.
+        </blockquote>
+        </section>
+
+        <section>
+            <h3>GitUp</h3>
+            <p><blockquote style="font-size: 36px;">
+            ... having an understanding of how
+            Git works under the hood is very useful, and GitUp
+            is a Mac-based tool that gives you exactly that. GitUp
+            provides a graphical representation of what is happening
+            as you type normal Git commands into the terminal.
+            You can learn the various Git commands while also
+            understanding what each one does as you use it. <b class="em">GitUp</b>
+            is a useful tool for both people new to Git and those with
+            more Git experience.
+        </blockquote>
+        </section>
+
+        <section>
+            <h3>Browsersync</h3>
+            <p><blockquote style="font-size: 36px;">
+            Browsersync is a free, open source tool
+            that can dramatically reduce this effort by synchronizing
+            manual browser testing across multiple mobile or desktop
+            browsers. Providing both a CLI and a UI option, the tool
+            is build-pipeline friendly and automates repetitive tasks
+            such as form filling.
+        </blockquote>
+        </section>
+
+        <section>
+            <h3>Docker</h3>
+            <p><blockquote style="font-size: 36px;">
+            Previously, we recommended boot2docker as a way of
+            easily running <b class="em">Docker</b> on your local Windows or OS X
+            machine. Docker Toolbox now replaces boot2docker,
+            adding some tooling as well. Now included is Kitematic
+            for managing your containers, as well as Docker
+            Compose for managing multi-Docker setup (Mac only).
+            It can be used safely as a drop-in replacement for
+            boot2docker, and it will even handle the upgrade for you.
+        </blockquote>
+        </section>
+
+        <section>
+            <h3>IDE</h3>
+            <p><blockquote style="font-size: 36px;">
+            <b class="em">Visual Studio Code</b> is Microsoft’s free IDE editor,
+            available across platforms. We find the version-control
+            integration with Git very beneficial to promoting
+            continuous integration practices. Visual Studio Code also
+            provides a means of integrating with external tools via
+            tasks, with autodetection of grunt/gulp tasks eliminating
+            the need for running grunt/gulp tasks via terminals and
+            simply using the editor. With the growth of the Docker
+            ecosystem, this IDE offers support for the dockerfile.
+        </blockquote>
+            </p>
+        </section>
+
+        <section>
+            <h3>Swagger & RESTful</h3>
+            <p><blockquote style="font-size: 36px;">
+            With a growing landscape of services providing RESTful
+            APIs, it is becoming increasingly important to document
+            them. <b class="em">We have previously mentioned Swagger, and in
+            this Technology Radar we’d like to highlight the RESTful
+            API modeling language (RAML).</b> Our teams feel that in
+            comparison to Swagger it is more lightweight and moves
+            the focus from adding documentation to existing APIs to
+            designing APIs.
+        </blockquote>
+            </p>
+        </section>
+
+        <section>
+            <h3>HTTP/2</h3>
+        </section>
+
+        <section>
+            <h2>Вопросы?</h2>
+            <img style="height:500px; width:500px; border: none; background: none; box-shadow: none;" src="images/rs-on-tour.svg" alt=""/>
+        </section>
+
+        <section>
+            <ul>
+                <li>https://drive.google.com/file/d/0B9KnGhEMmZ58bjUwYlIwVENWZmM/view</li>
+                <li>https://www.thoughtworks.com/radar</li>
+            </ul>
+        </section>
+
+
+
+           </div>
+
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+
+    // Full list of configuration options available at:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+            {
+                src: 'lib/js/classList.js', condition: function () {
+                return !document.body.classList;
+            }
+            },
+            {
+                src: 'plugin/markdown/marked.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            }
+            },
+            {
+                src: 'plugin/markdown/markdown.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            }
+            },
+            {
+                src: 'plugin/highlight/highlight.js', async: true, condition: function () {
+                return !!document.querySelector('pre code');
+            }, callback: function () {
+                hljs.initHighlightingOnLoad();
+            }
+            },
+            {src: 'plugin/zoom-js/zoom.js', async: true},
+            {src: 'plugin/notes/notes.js', async: true}
+        ]
+    });
+
+</script>
+
+</body>
+</html>
