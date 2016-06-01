@@ -414,25 +414,7 @@ console.log(f()[2]()); // 2
       </code></pre>
         </section>
 
-        <section>
-            <p>Keeping data private to all of a constructor </p>
-      <pre style="font-size: .5em; "><code style="max-height: 550px;" class="hljs javascript">
-var StringBuilder = function () { // open IIFE
-    var KEY_BUFFER = '_StringBuilder_buffer_' + uuid.v4();
-
-    function StringBuilder() {
-        this[KEY_BUFFER] = [];
-    }
-
-    StringBuilder.prototype = { // Omitted: methods accessing this[KEY_BUFFER]
-        //….
-    };
-
-    return StringBuilder;
-}(); // close IIFE
-
-      </code></pre>
-        </section>
+        
 
         <section>
             <p>Attaching data to a method</p>
