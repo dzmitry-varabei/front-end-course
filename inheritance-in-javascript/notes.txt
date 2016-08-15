@@ -1,0 +1,4 @@
+Object.create vs Object.assign
+State mutation and pure functions
+get and set # lazy getters # Object.defineProperty
+Functional inheritance
