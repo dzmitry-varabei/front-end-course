@@ -308,10 +308,173 @@ const theFairest; // SyntaxError, you troublemaker
         </section>
 
         <section>
+        	<h3>Arrow function</h3>
+        </section>
+
+        <section>
+        <h3>Less verbose</h3>
+           <pre style="font-size: .7em;"><code style="max-height: 550px;" class="hljs javascript">
+const arr = [1, 2, 3];
+
+// Traditional function expression:
+const squares = arr.map(function (x) { return x * x });
+
+const squares2 = arr.map(x => x * x);
+           </code></pre>
+        </section>
+
+                <section>
+        <h3>Less verbose</h3>
+           <pre style="font-size: .7em;"><code style="max-height: 550px;" class="hljs javascript">
+var a = [
+  "Hydrogen",
+  "Helium",
+  "Lithium",
+  "Beryl­lium"
+];
+
+var a2 = a.map(function(s){ return s.length });
+
+var a3 = a.map( s => s.length );
+           </code></pre>
+        </section>
+
+        <section>
+        	<h3>The following variables are all lexical inside arrow functions:</h3>
+        	<ul>
+        		<li>arguments</li>
+        		<li>this</li>
+        		<li>super</li>
+        	</ul>
+        </section>
+
+         <section>
+           <pre style="font-size: .7em;"><code style="max-height: 550px;" class="hljs javascript">
+function Prefixer(prefix) {
+    this.prefix = prefix;
+}
+Prefixer.prototype.prefixArray = function (arr) { 
+    return arr.map(function (x) { 
+        // Doesn’t work:
+        return this.prefix + x;
+    });
+};
+
+var pre = new Prefixer('Hi ');
+pre.prefixArray(['Joe', 'Alex'])
+           </code></pre>
+        </section>
+
+        <section>
+        	<h3>Possible workarounds</h3>
+        	<ul>
+        		<li>that = this</li>
+        		<li>bind(this)</li>
+            </ul>
+        </section>
+
+        <section>
+           <pre style="font-size: .7em;"><code style="max-height: 550px;" class="hljs javascript">
+function Prefixer(prefix) {
+    this.prefix = prefix;
+}
+Prefixer.prototype.prefixArray = function (arr) {
+    return arr.map((x) => {
+        return this.prefix + x;
+    });
+};
+           </code></pre>
+        </section>
+
+                <section>
+           <pre style="font-size: .7em;"><code style="max-height: 550px;" class="hljs javascript">
+class Prefixer {
+    constructor(prefix) {
+        this.prefix = prefix;
+    }
+    prefixArray(arr) {
+        return arr.map(x => this.prefix + x); 
+    }
+}
+           </code></pre>
+        </section>
+
+             <section>
+           <pre style="font-size: .7em;"><code style="max-height: 550px;" class="hljs javascript">
+function Person() {
+  this.age = 0;
+
+  setInterval(function growUp() {
+    this.age++;
+  }, 1000);
+}
+
+var p = new Person();
+           </code></pre>
+        </section>
+
+            <section>
+           <pre style="font-size: .7em;"><code style="max-height: 550px;" class="hljs javascript">
+var obj = {
+  i: 10,
+  b: () => console.log(this.i, this),
+  c: function() {
+    console.log( this.i, this)
+  }
+}
+obj.b(); // prints undefined, Window
+obj.c(); // prints 10, Object {...}
+           </code></pre>
+        </section>
+
+         <section>
+         <h3>Arrow function syntax</h3>
+           <pre style="font-size: .7em;"><code style="max-height: 550px;" class="hljs javascript">
+() => { ... } // no parameter
+x => { ... } // one parameter, an identifier
+(x, y) => { ... } // several parameters
+
+x => { return x * x }  // block
+x => x * x  // expression, equivalent to previous line
+           </code></pre>
+        </section>
+
+          <section>
+         <h3>Compare</h3>
+           <pre style="font-size: .7em;"><code style="max-height: 550px;" class="hljs javascript">
+let sq1 = [1, 2, 3].map(function (x) { return x * x });
+let sq2 = [1, 2, 3].map(x => x * x);
+let sq3 = [1, 2, 3].map(x => {return x * x});
+           </code></pre>
+        </section>
+
+           <section>
+         <h3>More fun</h3>
+           <pre style="font-size: .7em;"><code style="max-height: 550px;" class="hljs javascript">
+[1,2,3].map(x => 2 * x)
+[[1,2], [3,4]].map(([a,b]) => a + b)
+[1, undefined, 3].map((x='yes') => x)
+           </code></pre>
+        </section>
+
+           <section>
+         <h3>Partial evaluation</h3>
+           <pre style="font-size: .7em;"><code style="max-height: 550px;" class="hljs javascript">
+function add(x, y) {
+    return x + y;
+}
+const plus1 = add.bind(undefined, 1);
+const plus7 = y => add(7, y);
+           </code></pre>
+        </section>
+
+
+
+        <section>
             <h3>References</h3>
 
-            <p><a target="_blank" href="https://hacks.mozilla.org/category/es6-in-depth/">https://hacks.mozilla.org/category/es6-in-depth/</a>
-            </p>
+            <p><a target="_blank" href="https://hacks.mozilla.org/category/es6-in-depth/">https://hacks.mozilla.org/category/es6-in-depth/</a></p>
+            <p><a target="_blank" href="https://hacks.mozilla.org/category/es6-in-depth/">http://exploringjs.com/es6/ch_arrow-functions.html</a></p>
         </section>
 
 
