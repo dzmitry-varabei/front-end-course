@@ -197,82 +197,12 @@ inc(2); // 8
                   </code></pre>
         </section>
         
-        <section>
-            <img src="images/DoNotEnter.jpeg" alt=""/>
-        </section>
+       <section>
+           <h2>Closures</h2>
+           <p><a href="http://mrale.ph/blog/2012/09/23/grokking-v8-closures-for-fun.html">http://mrale.ph/blog/2012/09/23/grokking-v8-closures-for-fun.html</a></p>
+       </section>
 
-        <section>
-            <h3>Starting from ES5 ECMAScript use <b style="color: orange">environment</b> terminology</h3>
-        </section>
-
-        <section>
-            <h3>Environment === Scope</h3>
-        </section>
-
-        <section>
-            <h3>Lexical Environment === Static Scope</h3>
-        </section>
-
-        <section>
-            <h3>Lexical environment</h3>
-            <p>it’s an <b style="color: orange">environment record and a reference</b> to the outer environment</p>
-        </section>
-
-        <section>
-            <h3>Environment record</h3>
-               <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
-var x = 10;
- 
-function foo() {
-  var y = 20;
-}
-                  </code></pre>
-        </section>
-
-        <section>
-            <h3>Environment record</h3>
-             <pre style="font-size: .45em; "><code style="max-height: 550px;" class="hljs javascript">
-// environment of the global context
-globalEnvironment = {
-  environmentRecord: {
-    // built-ins:
-    Object: function,
-    Array: function,
-    // etc ...
- 
-    // our bindings:
-    x: 10
-  },
- 
-  outer: null // no parent environment
-};
- 
-// environment of the "foo" function
-fooEnvironment = {
-  environmentRecord: {
-    arguments: {length: 0, callee: foo},
-    y: 20
-  },
-  outer: globalEnvironment
-};
-                  </code></pre>
-        </section>
-
-        <section>
-            <h3>Structure of execution context</h3>
-                        <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
-ExecutionContext = {
-  ThisBinding: "this value",
-  LexicalEnvironment: { ... },
-}
-                  </code></pre>
-        </section>
-
-        <section>
-            <h3>[[Scope]]</h3>
-        </section>
-
-        <section><h3>Back to closures</h3>
+        <section><h3>Closures</h3>
                   <pre style="font-size: .65em; "><code style="max-height: 550px;" class="hljs javascript">
 function sayHello() {
     var text = "Hello #1";
